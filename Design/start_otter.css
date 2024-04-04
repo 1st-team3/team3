@@ -12,6 +12,7 @@ body{
     background-image:url(../image/main.jpg);
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center;
     display: flex;
     justify-content: center; 
     align-items: center;
@@ -30,17 +31,38 @@ input{
     height: 40px;
     border-radius: 20px;
     font-size: 2.5rem;
+    padding-left: 10px;
 }
 .float{
-    margin: 0 auto;
+    display: inline-block;
+    position: relative;
 }
 a{
     display: inline-block;
-    width: 54px;
+    width: 110px;
     height: 30px;
     border-radius: 20px;
     color: white;
     background-color: #B68AFF;
     text-decoration: none;
     padding-top: 3px;
+    font-size: 2rem;
+}
+input, a {
+    vertical-align: middle; 
+    line-height: 30px;
+}
+.float input {
+    position: relative;
+    z-index: 1;
+    padding-right: 30px;
+}
+.float a {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2; 
+    display: block;
+    height: 100%;
+    line-height: 30px;
 }

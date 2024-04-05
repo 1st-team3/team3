@@ -30,11 +30,6 @@ body {
     height: 100px;
 }
 
-.icon {
-    margin: 0px 0px 0px 10px;
-    width: 100px;
-    height: 125px;
-}
 
 .folder {
     margin-top: 3rem;
@@ -44,6 +39,13 @@ body {
     grid-template-rows: 1fr 1fr;
     padding: 5px;
 }
+
+.icon {
+    margin: 0px 0px 0px 10px;
+    width: 100px;
+    height: 125px;
+}
+
 .folder_header {
     display: flex;
     justify-content: end;
@@ -112,7 +114,7 @@ body {
     grid-template-columns: 1fr 1.5fr;
     grid-template-rows: 1fr 1fr;
     gap: 50px;
-    padding: 25px 50px;
+    padding: 50px 25px 25px 50px;
 }
 
 .calendar {
@@ -193,6 +195,13 @@ a {
     margin-top: -1.5%;
 }
 
+.otter-face {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    margin-left: 1430px;
+}
+
 .sudal-head {
     width: 50px;
     height: 50px;
@@ -268,10 +277,10 @@ a {
     border: 1px solid white;
     color: white;
     text-align: center;
-    width: 200px;
-    border-radius: 15px;
+    width: 100px;
+    border-radius: 20px;
     margin-top: 12px;
-    margin-left: 25%;
+    margin-left: 40%;
     box-shadow: 5px 5px 5px black;
 }
 

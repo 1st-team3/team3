@@ -1,3 +1,0 @@
-sdsdsdsdsdsdsdsd
-
-광부

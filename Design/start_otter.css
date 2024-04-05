@@ -51,6 +51,10 @@ a{
 input, a {
     vertical-align: middle; 
     line-height: 30px;
+    border: none;
+}
+input:focus{
+    outline: none;
 }
 .float input {
     position: relative;

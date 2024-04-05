@@ -43,31 +43,27 @@
                     </div>
                 </div>
                 <div class="insert-list">
-                    <div class="insert-main">
-                        <div class="insert-header">
-
+                    <form action="">
+                        <div class="insert-main">
+                            <div class="insert-header">
+                                <input type="text" name="title" id="title" class="title-text" placeholder="제목을 입력하세요">
+                            </div>
+                            <div class="insert-middle">
+                                <label for="file">
+                                    <div class="btn-upload">이미지 파일</div>
+                                </label>
+                                <input type="file" accept="img/*" name="file" id="file" onchange="readURL(this)">
+                            </div>
+                            <div class="insert-text">
+                                <img id="preview" />
+                                <textarea name="content" id="content" cols="30" rows="10" placeholder="내용을 입력하세요"></textarea>
+                            </div>
                         </div>
-                        <div class="insert-middle">
-
+                        <div class="insert-footer">
+                            <button type="submit" class="button-submit" >작성</button>
+                            <a href="./detail_otter.html/" class="button-submit">취소</a>
                         </div>
-                        <div class="insert-text">
-
-                        </div>
-                    </div>
-                    <div class="insert-footer">
-                        <button type="submit">
-                            이전
-                        </button>
-                        <button type="submit">
-                            수정
-                        </button>
-                        <button type="submit">
-                            삭제
-                        </button>
-                        <button type="submit">
-                            다음
-                        </button>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>

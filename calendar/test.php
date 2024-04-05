@@ -9,6 +9,22 @@
 	$start_week = date('w', $time); // 1. 시작 요일
 	$total_day = date('t', $time); // 2. 현재 달의 총 날짜
 	$total_week = ceil(($total_day + $start_week) / 7);  // 3. 현재 달의 총 주차 (현재 요일부터 요일수를 구한뒤 7로 나눔 ($start_week = 일 = 0 월 = 1 ... 토 = 6))
+
+	// 현재 월의 이전 달을 계산
+    $prev_month = $month - 1;
+    $prev_year = $year;
+    if ($prev_month == 0) {
+        $prev_month = 12;
+        $prev_year--;
+    }
+
+    // 현재 월의 다음 달을 계산
+    $next_month = $month + 1;
+    $next_year = $year;
+    if ($next_month == 13) {
+        $next_month = 1;
+        $next_year++;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -25,19 +41,19 @@
 			<!-- 현재가 1월이라 이전 달이 작년 12월인경우 -->
 			<?php if ($month == 1){ ?>
 				<!-- 작년 12월 -->
-				<a class="calendar-day" href="/?year=<?php echo $year-1 ?>&month=12"><img src="./img/left.png" alt=""></a>
+				<a class="calendar-day" href="./test.php?year=<?php echo $year-1 ?>&month=12"><img src="./img/left.png" alt=""></a>
 			<?php }else{ ?>
 				<!-- 이번 년 이전 월 -->
-				<a class="calendar-day" href="/?year=<?php echo $year ?>&month=<?php echo $month-1 ?>"><img src="./img/left.png" alt=""></a>
+				<a class="calendar-day" href="./test.php?year=<?php echo $year ?>&month=<?php echo $month-1 ?>"><img src="./img/left.png" alt=""></a>
 			<?php }; ?>
 			<div class="calendar-year"><?php echo "$year 년 $month 월" ?></div>
 			<!-- 현재가 12월이라 다음 달이 내년 1월인경우 -->
 			<?php if ($month == 12){ ?>
 				<!-- 내년 1월 -->
-				<a class="calendar-day" href="/?year=<?php echo $year+1 ?>&month=1"><img src="./img/right.png" alt=""></a>
+				<a class="calendar-day" href="./test.php?year=<?php echo $year+1 ?>&month=1"><img src="./img/right.png" alt=""></a>
 			<?php }else{ ?>
 				<!-- 이번 년 다음 월 -->
-				<a class="calendar-day" href="/?year=<?php echo $year ?>&month=<?php echo $month+1 ?>"><img src="./img/right.png" alt=""></a>
+				<a class="calendar-day" href="./test.php?year=<?php echo $year ?>&month=<?php echo $month+1 ?>"><img src="./img/right.png" alt=""></a>
 			<?php }; ?>
 
 
@@ -61,7 +77,7 @@
 								<!-- 시작 요일부터 마지막 날짜까지만 날짜를 보여주도록 -->
 								<?php if ( ($n > 1 || $k >= $start_week) && ($total_day >= $n) ){ ?>
 									<!-- 현재 날짜를 보여주고 1씩 더해줌 -->
-									<button class="day-button" type="submit"><?php echo $n++ ?></button>
+									<a href="" class="day-button"><?php echo $n++ ?></a>
 								<?php }?>
 							</td> 
 						<?php }; ?> 

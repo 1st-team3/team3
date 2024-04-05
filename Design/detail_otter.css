@@ -11,25 +11,38 @@
     font-style : normal;
     font-size : 1.2rem;
 }
-.container {
+body {
     background-image: url("../image/main.jpg");
     background-size : cover;
     background-repeat: no-repeat;
     background-position: center;
-    min-height: 100vh;
+    width: 100%;
+    height: 100%;
+}
+.container {
     display: grid;
     grid-template-columns: 180px 1fr;
 }
-.icon {
-    background-image: url("../image/otter80.png");
+.gbicon {
+    background-image: url("../image/delete_otter.png");
     background-size : cover;
     background-repeat: no-repeat;
     background-position: center;
-    width: 100px;
-    height: 100px;
+    margin: 20px 0px 20px 10px;
+    width: 80px;
+    height: 80px;
     padding: 10px;
 }
-
+.icon {
+    background-image: url("../image/209_2-1.png");
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-left: 15px;
+    width: 80px;
+    height: 80px;
+    padding: 10px;   
+}
 .folder {
     margin-top: 3rem;
     margin-bottom: 3rem;
@@ -55,7 +68,7 @@
 .folder_title{
     display: grid;
     grid-template-columns: 1fr 1fr;
-    background-color: green;
+    background-color: #4A6B74;
     padding: 0 20px;
     margin-bottom: 3px;
 }
@@ -82,6 +95,204 @@
     background-color : white;
     margin: 5px;
 }
-
+.X_btn {
+    display: inline-block;
+    text-decoration: none;
+    font-weight: bold;
+    color : white;
+    margin-top: 4px;
+}
+.back_btn {
+    display: inline-block;
+    text-decoration: none;
+    font-weight: bold;
+    color : white;
+    margin-top: 4px;
+}
 
 /*  본인 작업 시작 */
+
+.folder_main {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 50px;
+    padding: 25px 50px;
+}
+
+.calendar {
+    grid-column: 1/2;
+    grid-row: 1/2;
+    background-color: #4A6B74;
+    width: 600px;
+    height: 315px;
+}
+
+.memo {
+    grid-column: 1/2;
+    grid-row: 2/3;
+    background-color: #4A6B74;
+    width: 600px;
+    height: 315px;
+    padding: 10px 15px;
+}
+
+.memo > h2 {
+    color: #fff;
+    font-size: 2rem;
+}
+
+.memo-board {
+    background-color: #fff;
+    height: 75%;
+    width: 100%;
+}
+
+.text-button {
+    position: relative;
+}
+
+.memo-text {
+    background-color: #4A6B74;
+    border: none;
+    border-radius: 10px;
+    width: 95%;
+    font-size: 1.5rem;
+    margin-left: 10px;
+}
+
+.memo-textarea {
+    width: 100%;
+    height: 80%;
+}
+
+input:focus {
+    outline: none;
+}
+
+.sudal-button {
+    background-color: transparent;
+    border: none;
+    border-radius: 15px;
+    height: 50px;
+    position: absolute;
+    margin-left: -6%;
+    margin-top: -1.5%;
+    cursor: pointer;
+}
+.sudalbutton {
+    background-color: transparent;
+    border: none;
+    border-radius: 15px;
+    height: 50px;
+    position: absolute;
+    margin-left: 1400px;
+    margin-top: -1.3%;
+    cursor: pointer;
+}
+.sudal-head {
+    width: 50px;
+    height: 50px;
+}
+
+.insert-list {
+    grid-column: 2/3;
+    grid-row: 1/3;
+    background-color: #4A6B74;
+    width: 777px;
+    height: 680px;
+}
+
+.insert-list {
+    display: grid;
+    grid-template-rows: 1fr 50px;
+    padding: 10px;
+}
+
+.insert-main {
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: 100px 50px 1fr;
+    padding: 10px 15px;
+    gap: 10px;
+}
+
+.insert-header {
+    background-color: #4A6B74;
+    grid-row: 1/2;
+    height: 100px;
+    margin-top: 10px;
+}
+
+.insert-middle {
+    background-color: #ffffff;
+    grid-row: 2/3;
+}
+
+.insert-text {
+    background-color: #4A6B74;
+    grid-row: 3/4;
+    margin-bottom: 20px;
+}
+
+.insert-footer {
+    background-color: #4A6B74;
+    display: grid;
+    grid-template-columns: 50px 1fr 1fr 50px;
+    
+}
+.updatebtn {
+    background-color: #4A6B74;
+    border: 1px solid white;
+    border-radius: 20px 20px 20px 20px;
+    color: white;
+    height: 35px;
+    width: 100px;
+    margin: 13px auto;
+    box-shadow: 5px 5px 10px rgb(0, 0, 0);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.updatebtn:hover {
+    background-color: #2b3d42;
+    transition: background-color 2s ease;
+}
+.deletebtn {
+    background-color: #4A6B74;
+    border: 1px solid white;
+    border-radius: 20px 20px 20px 20px;
+    color: white;
+    height: 35px;
+    width: 100px;
+    margin: 13px auto;
+    box-shadow: 5px 5px 10px rgb(0, 0, 0);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.deletebtn:hover {
+    background-color: #2b3d42;
+    transition: background-color 2s ease;
+}
+.prevbtn {
+    border: none;
+    background-color: transparent;
+    color: white;
+    text-decoration: none;
+    line-height: 65px;
+    text-align: center;
+    text-shadow: 5px 5px 10px rgb(0, 0, 0);
+    font-size: 2rem;
+}
+
+.nextbtn {
+    border: none;
+    background-color: transparent;
+    color: white;
+    text-decoration: none;
+    line-height: 65px;
+    text-align: center;
+    text-shadow: 5px 5px 10px rgb(0, 0, 0);
+    font-size: 2rem;
+}

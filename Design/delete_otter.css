@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Dongle&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Dongle", sans-serif;
+    font-weight: 400;
+    font-style : normal;
+    font-size : 1.2rem;
+}
+.container {
+    background-image: url("../image/main.jpg");
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 150px 1fr;
+}
+.folder {
+    margin-top: 2rem;
+    margin-right: 2rem;
+}
+/* .folder_header {
+    background-image: url("../image/otter_face.png");
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 50px;
+    height: 50px;
+} */
+.folder_title{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: green;
+}
+
+.folder_back {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: gray;
+}
+
+
+.folder_main{
+    background-color: white;
+}

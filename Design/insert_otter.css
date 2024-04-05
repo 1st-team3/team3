@@ -85,3 +85,35 @@
 
 
 /*  본인 작업 시작 */
+
+.folder_main {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    grid-template-rows: 1.5fr 1fr;
+    gap: 50px;
+    padding: 25px 50px;
+}
+
+.calendar {
+    grid-column: 1/2;
+    grid-row: 1/2;
+    background-color: #4A6B74;
+    width: 500px;
+    height: 400px;
+}
+
+.memo {
+    grid-column: 1/2;
+    grid-row: 2/3;
+    background-color: #4A6B74;
+    width: 500px;
+    height: 260px;
+}
+
+.insert-list {
+    grid-column: 2/3;
+    grid-row: 1/3;
+    background-color: #4A6B74;
+    width: 627px;
+    height: 710px;
+}

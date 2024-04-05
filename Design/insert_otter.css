@@ -23,14 +23,17 @@ body {
     display: grid;
     grid-template-columns: 180px 1fr;
 }
-.icon {
-    background-image: url("../image/209_2-1.png");
-    background-size : cover;
-    background-repeat: no-repeat;
-    background-position: center;
+
+.icon-delete {
+    margin: 50px 0px 0px 10px;
     width: 100px;
     height: 100px;
-    padding: 10px;
+}
+
+.icon {
+    margin: 0px 0px 0px 10px;
+    width: 100px;
+    height: 125px;
 }
 
 .folder {
@@ -58,7 +61,7 @@ body {
 .folder_title{
     display: grid;
     grid-template-columns: 1fr 1fr;
-    background-color: green;
+    background-color: #4A6B74;
     padding: 0 20px;
     margin-bottom: 3px;
 }
@@ -76,7 +79,7 @@ body {
 .folder_back {
     display: grid;
     grid-template-columns: 10px 1fr;
-    background-color: gray;
+    background-color: rgb(168, 168, 168);
     gap: 10px;
     padding: 0 10px;
     margin-bottom: 3px;
@@ -84,6 +87,21 @@ body {
 .folder_back_square {
     background-color : white;
     margin: 5px;
+}
+
+.X_btn {
+    display: inline-block;
+    text-decoration: none;
+    font-weight: bold;
+    color : white;
+    margin-top: 4px;
+}
+.back_btn {
+    display: inline-block;
+    text-decoration: none;
+    font-weight: bold;
+    color : white;
+    margin-top: 4px;
 }
 
 
@@ -94,7 +112,7 @@ body {
     grid-template-columns: 1fr 1.5fr;
     grid-template-rows: 1fr 1fr;
     gap: 50px;
-    padding: 25px 50px;
+    padding: 50px 25px 25px 50px;
 }
 
 .calendar {
@@ -131,11 +149,13 @@ body {
 
 .memo-text {
     background-color: #4A6B74;
+    color: #fff;
     border: none;
     border-radius: 10px;
     width: 95%;
     font-size: 1.5rem;
     margin-left: 10px;
+    padding-left: 10px;
 }
 
 .memo-textarea {
@@ -147,15 +167,37 @@ input:focus {
     outline: none;
 }
 
-.sudal-button {
-    background-color: transparent;
+textarea {
+    resize: none;
+}
+
+textarea:focus {
+    outline: none;
+}
+
+button {
+    cursor: pointer;
     border: none;
+    background-color: transparent;
+}
+
+a {
+    text-decoration: none;
+}
+
+.sudal-button {
     border-radius: 15px;
     height: 50px;
     position: absolute;
     margin-left: -6%;
     margin-top: -1.5%;
-    cursor: pointer;
+}
+
+.otter-face {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    margin-left: 1430px;
 }
 
 .sudal-head {
@@ -189,22 +231,85 @@ input:focus {
 
 .insert-header {
     background-color: #4A6B74;
+    text-align: center;
     grid-row: 1/2;
 }
 
 .insert-middle {
-    background-color: #4A6B74;
+    background-color: #fff;
+    border-radius: 30px;
+    border: 1px solid #4A6B74;
+    width: 75px;
+    height: 40px;
     grid-row: 2/3;
+    text-align: center;
+    margin-left: 86.2%;
+    padding-top: 5px;
+    box-shadow: 5px 5px 5px black;
 }
+
+.insert-middle:active {
+    box-shadow: 1px 1px 0 rgb(0,0,0,0.5);
+}
+
 
 .insert-text {
     background-color: #4A6B74;
+    text-align: center;
     grid-row: 3/4;
 }
 
 .insert-footer {
     background-color: #4A6B74;
     display: grid;
-    grid-template-columns: 50px 1fr 1fr 50px;
+    grid-template-columns: 1fr 1fr;
     padding: 0px 10px;
+}
+
+#file {
+    display: none;
+}
+
+.button-submit {
+    background-color: #4A6B74;
+    border: 1px solid white;
+    color: white;
+    text-align: center;
+    width: 100px;
+    border-radius: 20px;
+    margin-top: 12px;
+    margin-left: 40%;
+    box-shadow: 5px 5px 5px black;
+}
+
+button:active {
+    box-shadow: 1px 1px 0 rgb(0,0,0,0.5);
+}
+
+textarea {
+    background-color: #4A6B74;
+    color: #fff;
+    border: none;
+    width: 95%;
+    height: 95%;
+    margin-top: 10px;
+}
+
+.title-text {
+    background-color: #4A6B74;
+    font-size: 2rem;
+    color: #fff;
+    border: none;
+    width: 95%;
+    height: 80%;
+    margin-top: 10px;
+    text-align: center;
+}
+
+a:active {
+    box-shadow: 1px 1px 0 rgb(0,0,0,0.5);
+}
+
+.btn-upload {
+    cursor: pointer;
 }

@@ -1,3 +1,5 @@
+/*  공통 작업 */
+
 @import url('https://fonts.googleapis.com/css2?family=Dongle&display=swap');
 
 *{
@@ -16,33 +18,70 @@
     background-position: center;
     min-height: 100vh;
     display: grid;
-    grid-template-columns: 150px 1fr;
+    grid-template-columns: 180px 1fr;
 }
-.folder {
-    margin-top: 2rem;
-    margin-right: 2rem;
-}
-/* .folder_header {
-    background-image: url("../image/otter_face.png");
+.icon {
+    background-image: url("../image/209_2-1.png");
     background-size : cover;
     background-repeat: no-repeat;
     background-position: center;
-    width: 50px;
-    height: 50px;
-} */
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+}
+
+.folder {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    margin-right: 180px;
+    background-color: white;
+    grid-template-rows: 1fr 1fr;
+    padding: 5px;
+}
+.folder_header {
+    display: flex;
+    justify-content: end;
+    padding-right: 20px;
+}
+.folder_header_otter4 {
+    background-image: url("../image/otter_face_end.png");
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 40px;
+    height: 40px;
+}
+
 .folder_title{
     display: grid;
     grid-template-columns: 1fr 1fr;
     background-color: green;
+    padding: 0 20px;
+    margin-bottom: 3px;
 }
+.folder_title_circle{
+    background-image: url("../image/window_color.png");
+    background-size : cover;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
 
+}
+.folder_title_x{
+    text-align: end;
+}
 .folder_back {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 10px 1fr;
     background-color: gray;
+    gap: 10px;
+    padding: 0 10px;
+    margin-bottom: 3px;
+}
+.folder_back_square {
+    background-color : white;
+    margin: 5px;
 }
 
 
-.folder_main{
-    background-color: white;
-}
+/*  본인 작업 시작 */

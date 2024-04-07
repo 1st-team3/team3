@@ -20,8 +20,18 @@
     display: grid;
     grid-template-columns: 180px 1fr;
 }
-.icon {
-    background-image: url("../image/209_2-1.png");
+
+
+.side {
+    display: grid;
+    grid-template-rows: 100px 100px;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.icon_1 {
+    background-image: url("../image/delete_otter.png");
     background-size : cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -29,6 +39,19 @@
     height: 100px;
     padding: 10px;
 }
+.icon_2 {
+    background-image: url("../image/otter_face_end.png");
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+}
+
+
+
+
 
 .folder {
     margin-top: 3rem;
@@ -102,3 +125,45 @@
 
 
 /*  본인 작업 시작 */
+.item_icon {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    padding: 10px;
+    gap: 10px;
+}
+
+.item_icon_can {
+    background-image: url("../folder.png");
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 300px;
+    height: 200px;
+    /* border: 1px solid black; */
+    text-align: center;
+    padding: 25px;
+    padding-top: 50px;
+    position: relative;
+}
+ul {
+    display: inline-block;
+}
+ul li {
+    display: none;
+    position: relative;
+}
+
+ul:hover li {
+    display: inline-block;
+}
+
+li {
+    background-color: white;
+    border: 1px solid black;
+    position: absolute;
+}
+
+.form_btn {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}

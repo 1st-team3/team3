@@ -12,12 +12,14 @@
     font-size : 1.2rem;
 }
 .container {
-    background-image: url("../image/main.jpg");
+    background-image: url("../image/main.png");
     background-size : cover;
     background-repeat: no-repeat;
     background-position: center;
     min-height: 100vh;
     display: grid;
+    flex-direction: column;
+    height: 100%;
     grid-template-columns: 180px 1fr;
 }
 .icon {
@@ -100,6 +102,7 @@
 
 
 /*  본인 작업 시작 */
+
 .folder_main {
     display: grid;
     grid-template-columns: 1fr 1.5fr;
@@ -213,25 +216,26 @@ input:focus {
     display: flex;
     align-items: center;
 }
-#text_box{
+.text_box{
     width: 650px;
     color: #4A6B74;
     font-weight: 700;
     font-size: 1.5rem;
     padding-left: 10px;
     margin-left: 10px;
+    pointer-events: none;
 }
-#input_list[type="checkbox"]{
+.input_list[type="checkbox"]{
     display: none;
   }
-#input_list[type="checkbox"] + label{
+.input_list[type="checkbox"] + label{
     display: inline-block;
     width: 30px;
     height: 30px;
     border:3px solid #fff;
     position: relative;
   }
-#input_list:checked + label::after{
+.input_list:checked + label::after{
     content:'✔';
     font-size: 25px;
     width: 30px;
@@ -242,7 +246,21 @@ input:focus {
     top:-6px;
     color: #fff;
 }
-#input_list:checked ~ #text_box {
+.input_list:checked ~ .text_box {
     text-decoration: line-through;
     text-decoration-color: #4A6B74;
+}
+.main-bottom {
+    margin-top: auto;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+}
+.main-bottom > a {
+    text-decoration: none;
+    color : #fff;
+    font-size: 1.5rem; 
+    text-align: center;
+    margin: 5px;
+    padding-left: 10px;
 }

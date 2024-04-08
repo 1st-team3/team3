@@ -12,7 +12,7 @@
     font-size : 1.2rem;
 }
 .container {
-    background-image: url("../image/main.jpg");
+    background-image: url("../image/main.png");
     background-size : cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -133,7 +133,7 @@
 }
 
 .item_icon_can {
-    background-image: url("../folder.png");
+    background-image: url("../image/folder.png");
     background-size : cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -155,6 +155,7 @@ ul li {
 
 ul:hover li {
     display: inline-block;
+    z-index: 1;
 }
 
 li {

@@ -1,30 +1,43 @@
 <?php 
-    require_once($_SERVER["DOCUMENT_ROOT"]."/config.php"); // 설정 파일 호출
-    require_once(FILE_LIB_DB); // DB 관련 라이브러리
-    $list_cnt = 5; // 한 페이지 최대 표시 수									
-    $page_num = 1; // 페이지 번호 초기화									
+    require_once($_SERVER["DOCUMENT_ROOT"]."/config3.php"); 
+    require_once(FILE_LIB_DB); 
+    
+    
+
     try {
-        // DB Connect
-        $conn = my_db_conn(); // connection 함수 호출
+        // DB connect
+        $conn = my_db_conn(); // PDO 인스턴스 생성
     
-        // 파라미터에서 page 획득
-        $page_num = isset($_GET["page"]) ? ($_GET["page"]) : $page_num;   
+        // 게시글 데이터 조회
+        // 파라미터 획득
+        $no = isset($_GET["board_no"]) ? $_GET["board_no"] : ""; // no 획득
+        $page = isset($_GET["page"]) ? $_GET["page"] : ""; // page 획득
     
-        // 게시글 수 조회
-        $result_board_cnt = db_select_boards_cnt($conn);
+        // 파라미터 예외 처리
+        $arr_err_param = [];
+        if($no === "") {
+            $arr_err_param[] = "board_no";
+        }
+        if($page === "") {
+            $arr_err_param[] = "page";
+        }
+        
+        if(count($arr_err_param) > 0) {
+            throw new Exception("parameter Error : ".implode(", ", $arr_err_param));
+        }
     
-        // 페이지 관련 설정 셋팅
-        $max_page_num = ceil($result_board_cnt / $list_cnt); // 최대 페이지 수
-        $offset = $list_cnt * ($page_num - 1); // 오프셋
-        $prev_page_num = ($page_num - 1) < 1 ? 1 : ($page_num - 1); // 이전 버튼 페이지 번호
-        $next_page_num = ($page_num + 1) > $max_page_num ? $max_page_num : ($page_num + 1); // 다음 버튼 페이지 번호
-    
-        // 게시글 리스트 조회
+        // 게시글 정보 획득
         $arr_param = [
-            "list_cnt"  => $list_cnt
-            ,"offset"   => $offset 
+            "board_no" => $no
         ];
-        $result = db_select_boards_paging($conn, $arr_param);
+        $result = db_select_boards_no($conn, $arr_param);
+        if(count($result) !== 1) {
+            throw new Exception("Select boards board_no count");
+        }
+    
+        // 아이템 세팅
+        $item = $result[0];
+    
     } catch (\Throwable $e) {
         echo $e->getMessage();
         exit;
@@ -34,7 +47,51 @@
             $conn = null;
         }
     }
+?>
 
+<?php
+
+try {
+    // DB connect
+    $conn = my_db_conn(); // PDO 인스턴스 생성
+
+    // 게시글 데이터 삭제
+    $no = isset($_POST["board_no"]) ? $_POST["board_no"] : ""; // no 획득
+    
+    // 삭제할 레코드의 board_no 값이 존재하는지 확인
+    if($no !== "") {
+        // 데이터베이스에서 해당 레코드 삭제
+        $arr_param = [
+            "board_no" => $no
+        ];
+        $result = db_delete_board($conn, $arr_param);
+
+        if($result) {
+            // 삭제 성공
+            echo "게시글이 성공적으로 삭제되었습니다.";
+            // 삭제 후 다시 해당 페이지로 리다이렉트할 수 있음
+            // header("Location: 현재페이지URL");
+            exit;
+        } else {
+            // 삭제 실패
+            echo "게시글 삭제에 실패했습니다.";
+        }
+    } else {
+        echo "삭제할 게시글 번호를 찾을 수 없습니다.";
+    }
+} catch (\Throwable $e) {
+    echo $e->getMessage();
+} finally {
+    // PDO 파기
+    if(!empty($conn)) {
+        $conn = null;
+    }
+}
+
+?>
+
+
+<?php
 	// GET으로 넘겨 받은 year값이 있다면 넘겨 받은걸 year변수에 적용하고 없다면 현재 년도
 	$year = isset($_GET['year']) ? $_GET['year'] : date('Y');
 	// GET으로 넘겨 받은 month값이 있다면 넘겨 받은걸 month변수에 적용하고 없다면 현재 월
@@ -56,12 +113,12 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detail page</title>
-    <link rel="stylesheet" href="./detail_otter_test.css">
+    <link rel="stylesheet" href="./css/detail_otter.css">
 </head>
 <body>
     <div class="container">
@@ -89,19 +146,19 @@
                         <!-- 현재가 1월이라 이전 달이 작년 12월인경우 -->
                         <?php if ($month == 1){ ?>
                             <!-- 작년 12월 -->
-                            <a class="calendar-day" href="./detail_otter_test.php?year=<?php echo $year-1 ?>&month=12"><img src="./image/left.png" alt=""></a>
+                            <a class="calendar-day" href="./detail_otter.php?year=<?php echo $year-1 ?>&month=12"><img src="./image/left.png" alt=""></a>
                         <?php }else{ ?>
                             <!-- 이번 년 이전 월 -->
-                            <a class="calendar-day" href="./detail_otter_test.php?year=<?php echo $year ?>&month=<?php echo $month-1 ?>"><img src="./image/left.png" alt=""></a>
+                            <a class="calendar-day" href="./detail_otter.php?year=<?php echo $year ?>&month=<?php echo $month-1 ?>"><img src="./image/left.png" alt=""></a>
                         <?php }; ?>
                         <div class="calendar-year"><?php echo "$year 년 $month 월" ?></div>
                         <!-- 현재가 12월이라 다음 달이 내년 1월인경우 -->
                         <?php if ($month == 12){ ?>
                             <!-- 내년 1월 -->
-                            <a class="calendar-day" href="./detail_otter_test.php?year=<?php echo $year+1 ?>&month=1"><img src="./image/right.png" alt=""></a>
+                            <a class="calendar-day" href="./detail_otter.php?year=<?php echo $year+1 ?>&month=1"><img src="./image/right.png" alt=""></a>
                         <?php }else{ ?>
                             <!-- 이번 년 다음 월 -->
-                            <a class="calendar-day" href="./detail_otter_test.php?year=<?php echo $year ?>&month=<?php echo $month+1 ?>"><img src="./image/right.png" alt=""></a>
+                            <a class="calendar-day" href="./detail_otter.php?year=<?php echo $year ?>&month=<?php echo $month+1 ?>"><img src="./image/right.png" alt=""></a>
                         <?php }; ?>
 
 
@@ -156,25 +213,28 @@
                 <div class="insert-list">
                     <div class="insert-main">
                         <div class="insert-header">
-                            
+                        <div class="line-content"><?php echo $item["board_no"] ?></div>
                         </div>
                         <div class="insert-middle">
 
                         </div>
                         <div class="insert-text">
-
+                        <div class="line-content"><?php echo $item["board_content"] ?></div>
                         </div>
                     </div>
                     <div class="insert-footer">
                         
-                        <a href="./detail_otter_test.php?page=<?php echo $prev_page_num ?>" class="prevbtn">◁</a>
+                        <a href="./detail_otter.php?page=<?php echo $prev_page_num ?>" class="prevbtn">◁</a>
                         
-                        <a href="./update_otter_test.php?no=<?php echo $no ?>&page=<?php echo $page ?>" class="updatebtn">수정</a>
+                        <a href="./update_otter.php?no=<?php echo $no ?>&page=<?php echo $page ?>" class="updatebtn">수정</a>
 
-                        <button type="submit" class="deletebtn">
-                            삭제
-                        </button>
-                        <a href="./detail_otter_test.php?page=<?php echo $next_page_num ?>" class="nextbtn">▷</a>
+                        <form action="./delete_otter.php" method="post">
+                        <input type="hidden" name="board_no" value="<?php echo $no ?>">
+                        <input type="hidden" name="board_content" value="<?php echo $page ?>">
+                        <button type="submit" class="deletebtn" name="deletebtn">삭제</button>
+                        </form>
+
+                        <a href="./detail_otter.php?page=<?php echo $next_page_num ?>" class="nextbtn">▷</a>
                     </div>
                 </div>
             </div>

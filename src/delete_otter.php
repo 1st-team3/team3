@@ -108,49 +108,47 @@ try {
                 <div class="item_icon">
                     
                     <?php
-                                foreach($result as $item) {
-                                    ?>   
-                            <div class="li_main_card">
-                                <div class="item_icon_can">
+                    foreach($result as $item) {
+                    ?>  
+
+                    <div class="li_main_card">
+                        <div class="item_icon_can">
 
 
-                                    <div class="li_card_item">
-                                        <!-- <div class="li_card_no">no</div> -->
-                                        <div class="li_card_no2"><?php echo $item["board_no"] ?> </div>
-                                    </div>
-                                    <div class="li_card_item">
-                                        <!-- <div class="li_card_name">title</div> -->
-                                        <div class="item_card_name"><?php echo $item["board_title"] ?></div>
-                                    </div>
-                                    <div class="li_card_item">
-                                        <!-- <div class="li_card_created_at">created</div> -->
-                                        <div class="li_card_created_at2"><?php echo $item["created_at"] ?></div>
-                                    </div>
-
-
-
-                                    <div class="form_btn">
-                                        <form action="" method="">
-
-                                            <button type="submit">복구</button>
-                                        </form>
-                                        <form action="" method="">
-                                            <ul>
-                                                <button type="submit">삭제</button>
-                                                <li><strong style="color: red;">※주의!!</strong><br>삭제하면 영원히 복구할 수 없습니다.</li>
-                                            </ul>
-                                        </form>
-                                    </div>
-                                </div>
-
-
+                            <div class="li_card_item">
+                                <!-- <div class="li_card_no">no</div> -->
+                                <div class="li_card_no2"><?php echo $item["board_title"] ?> </div>
                             </div>
-                            <?php
-                            }
-                            ?>
+                            <div class="limited-text">
+                                <!-- <div class="li_card_name">title</div> -->
+                                <div class="item_card_name" ><?php echo $item["board_content"] ?></div>
+                            </div>
+                            <div class="li_card_item">
+                                <!-- <div class="li_card_created_at">created</div> -->
+                                <div class="li_card_created_at2"><?php echo $item["deleted_at"] ?></div>
+                            </div>
 
 
-                
+
+                            <div class="form_btn">
+                                <form action="" method="">
+                                    <button type="submit">복구</button>
+                                </form>
+                                <form action="" method="">
+                                    <ul>
+                                        <button type="submit">삭제</button>
+                                        <li><strong style="color: red;">※주의!!</strong><br>삭제하면 영원히 복구할 수 없습니다.</li>
+                                    </ul>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <?php
+                    }
+                    ?>
+
                 </div>
             </div>
         </div>

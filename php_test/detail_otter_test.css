@@ -256,8 +256,7 @@ input:focus {
     width: 100px;
     margin: 13px auto;
     box-shadow: 5px 5px 10px rgb(0, 0, 0);
-    text-decoration: none;
-    text-align: center;
+    
     transition: background-color 0.3s ease;
 }
 .updatebtn:hover {
@@ -271,7 +270,7 @@ input:focus {
     color: white;
     height: 35px;
     width: 100px;
-    margin: 13px 120px;
+    margin: 13px auto;
     box-shadow: 5px 5px 10px rgb(0, 0, 0);
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -310,7 +309,7 @@ input:focus {
 }
 
 .calendar-header {
-    background-image: url(../image/otter_face_end.png); /* ToDo : 마지막에 이미지 수정*/
+    background-image: url(./image/calendar.png); /* ToDo : 마지막에 이미지 수정*/
     margin: auto;
     width: 100%;
     height: 50px;
@@ -342,11 +341,8 @@ input:focus {
 
 th {
     border-bottom: 1px solid #fff;
-    color: white;
 }
-td {
-    text-align: center;
-}
+
 .calendar-year {
     font-size: 1.5rem;
     padding-top: 5px;
@@ -362,7 +358,6 @@ table {
     background-color: transparent;
     border: none;
     color: #fff;
-    text-align: center;
 }
 
 .today {

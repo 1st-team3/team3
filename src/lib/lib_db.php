@@ -15,7 +15,7 @@ function db_select_boards_cnt($conn) {
    
     $sql =
         " SELECT "
-        ."  COUNT(no) as cnt "
+        ."  COUNT(board_no) as cnt "
         ." FROM "
         ."  team3 "
         ." WHERE "
@@ -31,9 +31,9 @@ function db_select_boards_paging(&$conn, &$array_param) {
   
     $sql =
         " SELECT "
-        ."  no "
-        ."  ,title "
-        ."  ,created_at "
+        ."  board_no "
+        ." ,board_title "
+        ." ,created_at "
         ." FROM "
         ."  team3 "
         ." WHERE "

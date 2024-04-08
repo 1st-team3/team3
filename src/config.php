@@ -7,5 +7,5 @@
 	define("MARIADB_CHARSET", "utf8mb4");   
 	define("MARIADB_DSN", "mysql:host=".MARIADB_HOST.";port=".MARIADB_PORT.";dbname=".MARIADB_NAME.";charset=".MARIADB_CHARSET);
 	define("ROOT", $_SERVER["DOCUMENT_ROOT"]."/"); 
-	define("FILE_LIB_DB", ROOT."lib/lib_db.php"); 
+	define("FILE_LIB_DB", ROOT."lib/lib_db_khs.php"); 
     define("REQUEST_METHOD", strtoupper($_SERVER["REQUEST_METHOD"]));

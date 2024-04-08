@@ -1,5 +1,5 @@
 <?php
-require_once( $_SERVER["DOCUMENT_ROOT"]."/src/config.php"); 
+require_once( $_SERVER["DOCUMENT_ROOT"]."/config.php"); 
 require_once(FILE_LIB_DB); // DB관련 라이브러리
 $list_cnt = 8; //한 페이지 최대 표시 수
 $page_num = 1; // 페이지 번호 초기화

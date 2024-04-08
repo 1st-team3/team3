@@ -76,6 +76,8 @@ function db_select_boards_no(&$conn, &$array_param) {
         ."  ,board_title "
         ."  ,board_content "
         ."  ,created_at  "
+        ."  ,board_img  "
+
         ." FROM      "
         ."  boards "
         ." WHERE "

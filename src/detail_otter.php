@@ -5,88 +5,88 @@
     
 
     try {
-        // DB connect
+        // DB Connect
         $conn = my_db_conn(); // PDO 인스턴스 생성
-    
-        // 게시글 데이터 조회
-        // 파라미터 획득
-        $no = isset($_GET["board_no"]) ? $_GET["board_no"] : ""; // no 획득
-        $page = isset($_GET["page"]) ? $_GET["page"] : ""; // page 획득
-    
-        // 파라미터 예외 처리
-        $arr_err_param = [];
-        if($no === "") {
+        // Method가 GET인지 POST인지 판별
+        if(REQUEST_METHOD === "GET") {
+            // 게시글 데이터 조회
+            // 파라미터
+            $no = isset($_GET["board_no"]) ? $_GET["board_no"] : ""; // no 획득
+            $page = isset($_GET["page"]) ? $_GET["page"] : ""; // page 획득
+            $title = isset($_GET["board_title"]) ? $_GET["board_title"] : "";
+            $content = isset($_GET["board_content"]) ? $_GET["board_content"] : "";
+            // 파라미터 예외처리
+            $arr_err_param = [];
+            if($no === "") {
+              $arr_err_param[] = "board_no";
+            }
+            if($page === "") {
+              $arr_err_param[] = "page";
+            }
+            if($title === "") {
+              $arr_err_param[] = "board_title";
+            }
+            if($content === "") {
+              $arr_err_param[] = "board_content";
+            }
+            if(count($arr_err_param) > 0) {
+              throw new Exception("Parameter Error : ".implode(", ", $arr_err_param));
+            }
+            // 게시글 정보 획득
+            $arr_param = [
+              "board_no" => $no
+            ];
+            $result = db_select_boards_no($conn, $arr_param);
+            if(count($result) !== 1) {
+              throw new Exception("Select Boards no count");
+            }
+            // 아이템 셋팅
+            $item = $result[0];
+        }
+        else if (REQUEST_METHOD === "POST") {
+          // 파라미터 획득
+          $no = isset($_POST["board_no"]) ? $_POST["board_no"] : ""; // no 획득
+          $arr_err_param = [];
+          if($no === "") {
             $arr_err_param[] = "board_no";
-        }
-        if($page === "") {
-            $arr_err_param[] = "page";
-        }
-        
-        if(count($arr_err_param) > 0) {
-            throw new Exception("parameter Error : ".implode(", ", $arr_err_param));
-        }
-    
-        // 게시글 정보 획득
-        $arr_param = [
+          }
+          if(count($arr_err_param) > 0) {
+            throw new Exception("Parameter Error : ".implode(", ", $arr_err_param));
+          }
+          // Transaction 시작
+          $conn->beginTransaction();
+          // 게시글 정보 삭제
+          $arr_param = [
             "board_no" => $no
-        ];
-        $result = db_select_boards_no($conn, $arr_param);
-        if(count($result) !== 1) {
-            throw new Exception("Select boards board_no count");
+          ];
+          $result = db_delete_boards_no($conn, $arr_param);
+          // 삭제 예외 처리
+          if($result !== 1) {
+            throw new Exception ("Delete Boards no count");
+          }
+          // commit
+          $conn->commit();
+          // 리스트 페이지로 이동
+          header("Location: list_otter.php");
+          exit;
         }
-    
-        // 아이템 세팅
-        $item = $result[0];
-    
-    } catch (\Throwable $e) {
+      }
+      catch (\Throwable $e) {
+        if(!empty($conn)) {
+          $conn->rollBack();
+        }
         echo $e->getMessage();
         exit;
-    } finally {
+      }
+
+    
+    
+      finally {
         // PDO 파기
         if(!empty($conn)) {
-            $conn = null;
+          $conn = null;
         }
-    }
-?>
-
-<?php
-
-try {
-    // DB connect
-    $conn = my_db_conn(); // PDO 인스턴스 생성
-
-    // 게시글 데이터 삭제
-    $no = isset($_POST["board_no"]) ? $_POST["board_no"] : ""; // no 획득
-    
-    // 삭제할 레코드의 board_no 값이 존재하는지 확인
-    if($no !== "") {
-        // 데이터베이스에서 해당 레코드 삭제
-        $arr_param = [
-            "board_no" => $no
-        ];
-        $result = db_delete_board($conn, $arr_param);
-
-        if($result) {
-            // 삭제 성공
-            echo "게시글이 성공적으로 삭제되었습니다.";
-            // 삭제 후 다시 해당 페이지로 리다이렉트할 수 있음
-            // header("Location: 현재페이지URL");
-            exit;
-        } else {
-            // 삭제 실패
-            echo "게시글 삭제에 실패했습니다.";
-        }
-    } else {
-        echo "삭제할 게시글 번호를 찾을 수 없습니다.";
-    }
-} catch (\Throwable $e) {
-    echo $e->getMessage();
-} finally {
-    // PDO 파기
-    if(!empty($conn)) {
-        $conn = null;
-    }
-}
+      }
 
 ?>
 
@@ -213,13 +213,15 @@ try {
                 <div class="insert-list">
                     <div class="insert-main">
                         <div class="insert-header">
-                        <div class="line-content"><?php echo $item["board_no"] ?></div>
+                        <div class="line-content"><?php echo $item["board_title"] ?></div>
                         </div>
                         <div class="insert-middle">
 
                         </div>
                         <div class="insert-text">
-                        <div class="line-content"><?php echo $item["board_content"] ?></div>
+                            <div class="line-content">
+                                <?php echo '<img src="' . $item["board_img"] . '"><br>' . $item["board_content"]; ?>
+                            </div>
                         </div>
                     </div>
                     <div class="insert-footer">
@@ -228,7 +230,7 @@ try {
                         
                         <a href="./update_otter.php?no=<?php echo $no ?>&page=<?php echo $page ?>" class="updatebtn">수정</a>
 
-                        <form action="./delete_otter.php" method="post">
+                        <form action="./detail_otter.php" method="post">
                         <input type="hidden" name="board_no" value="<?php echo $no ?>">
                         <input type="hidden" name="board_content" value="<?php echo $page ?>">
                         <button type="submit" class="deletebtn" name="deletebtn">삭제</button>

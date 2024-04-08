@@ -125,10 +125,11 @@
                         <?php foreach ($result as $item){ ?>  
                             <div class="list" id="list<?php echo $item["board_no"]; ?>">
                                 <form action="./list_update.php" method="post">
-                                     <input class="input_list" type="hidden"value="<?php  echo $item["board_no"]; ?>">
+                                    <input class="input_list" type="hidden" name="board_no" value="<?php  echo $item["board_no"]; ?>">
+                                    <input type="hidden" name="page" value=<?php echo $page_num; ?>>
                                     <button type="submit" class="btn-update" id="input_listt<?php echo $item["board_no"];?>"></button>
                                     <label class="input_label" for="input_listt<?php echo $item["board_no"]; ?>"><?php echo $item["board_chkbox"] === "1" ? "✔ " : "" ?></label>
-                                    <input class="text_box" type="text" id="text_box_<?php echo $item["board_no"]; ?>" name="page"value ="<?php echo $item["board_title"]; ?>" required> 
+                                    <input class="text_box" type="text" id="text_box_<?php echo $item["board_no"]; ?>" value="<?php echo $item["board_title"]; ?>" required> 
                                 </form>
                             </div>
                         <?php } ?>

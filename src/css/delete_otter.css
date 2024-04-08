@@ -175,3 +175,10 @@ li {
     display: grid;
     grid-template-columns: 1fr 1fr;
 }
+
+/* 긴글 생략하기 */
+.limited-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

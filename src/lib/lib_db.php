@@ -17,7 +17,7 @@ function db_select_boards_cnt($conn) {
         " SELECT "
         ."  COUNT(board_no) as cnt "
         ." FROM "
-        ."  team3 "
+        ."  boards "
         ." WHERE "
         ."  deleted_at IS NULL "
         ;
@@ -34,12 +34,13 @@ function db_select_boards_paging(&$conn, &$array_param) {
         ."  board_no "
         ." ,board_title "
         ." ,created_at "
+        ." ,board_chkbox "
         ." FROM "
-        ."  team3 "
+        ."  boards "
         ." WHERE "
         ."  deleted_at IS NULL "
         ." ORDER BY  "
-        ."  no DESC "
+        ."  board_no DESC "
         ." LIMIT :list_cnt OFFSET :offset "
     ;
     
@@ -122,3 +123,21 @@ function db_update_boards_no(&$conn, &$array_param) {
 
     return $stmt->rowCount();
 }
+
+function db_list_update_no(&$conn, &$array_param) {
+    $sql = 
+        " UPDATE boards"
+        ." SET "
+        ."  board_chkbox = CASE WHEN board_chkbox = '0' THEN '1' ELSE '0' END "
+        ." WHERE "
+        ."  board_no = :board_no "
+    ;
+
+    // Query 실행
+    $stmt = $conn->prepare($sql);
+    $stmt->execute($array_param);
+
+    // return 
+    return $stmt->rowCount();
+}
+    

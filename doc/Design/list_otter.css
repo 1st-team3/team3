@@ -264,3 +264,55 @@ input:focus {
     margin: 5px;
     padding-left: 10px;
 }
+.calendar-header {
+    background-image: url(/img/calendar.png);
+    width: 300px;
+    height: 50px;
+}
+
+.calendar-body {
+    background-color: #4a6b74;
+    color: #fff;
+    width: 300px;
+    height: 300px;
+    text-align: center;
+    display: grid;
+    grid-template-columns: 50px 200px 50px;
+    grid-template-rows: 50px 1fr;
+}
+
+.calendar-day {
+    text-decoration: none;
+    /* background-image: url(./img/left.png); */
+    display: inline-block;
+    padding-left: 10px;
+    width: 40px;
+    height: 40px;
+}
+.calendar-day > img {
+    width: 100%;
+    height: 100%;
+}
+
+th {
+    border-bottom: 1px solid #fff;
+}
+
+.calendar-year {
+    font-size: 1.5rem;
+    padding-top: 5px;
+}
+
+table {
+    grid-column: 1/4;
+}
+
+.day-button {
+    width: 100%;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+}
+

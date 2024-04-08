@@ -39,8 +39,8 @@ function db_select_boards_paging(&$conn, &$array_param) {
         ." WHERE "
         ."  deleted_at IS NULL "
         ." ORDER BY  "
-        ."  no DESC "
-        ." LIMIT :list_cnt OFFSET :offset "
+        ."  Board_no DESC "
+        ." LIMIT :list OFFSET :offset "
     ;
     
     $stmt = $conn->prepare($sql);
@@ -54,12 +54,12 @@ function db_insert_boards(&$conn, &$array_param) {
     
     $sql = 
         " INSERT INTO boards( "
-        ."  title "
-        ."  ,content "
+        ."  board_title "
+        ."  ,board_content "
         ." ) "
         ."  VALUES( "
-        ."  :title "
-        ."  ,:content "
+        ."  :board_title "
+        ."  ,:board_content "
         ." ) "
     ;
 
@@ -112,15 +112,78 @@ function db_update_boards_no(&$conn, &$array_param) {
     $sql = 
         " UPDATE boards"
         ." SET "
-        ."  title = :title "
-        ."  ,content = :content "
+        ."  board_title = :board_title "
+        ."  ,board_content = :board_content "
         ."  ,updated_at = now() "
         ." WHERE "
-        ."  no = :no "
+        ."  board_no = :board_no "
     ;
 
     $stmt = $conn->prepare($sql);
     $stmt->execute($array_param);
 
     return $stmt->rowCount();
+}
+
+function next_btn(&$conn, &$array_param){
+    $sql =
+        " SELECT "
+        ." board_no "
+        ." FROM "
+        ." boards "
+        ." WHERE "
+        ." board_no > :board_no "
+        ." AND deleted_at IS NULL "
+        ." ORDER BY board_no ASC "
+        ." LIMIT 1 "
+    ;
+    $stmt = $conn->prepare($sql);
+    $stmt->execute($array_param);
+    $result = $stmt->fetchColumn();
+    return $result ? $result : null;
+}
+function prev_btn(&$conn, &$array_param){
+    $sql=
+        " SELECT "
+        ." board_no"
+        ." FROM "
+        ." boards "
+        ." WHERE "
+        ." board_no < :board_no "
+        ." AND "
+        ." deleted_at IS NULL "
+        ." ORDER BY board_no DESC "
+        ." LIMIT 1 "
+    ;
+    $stmt = $conn->prepare($sql);
+    $stmt->execute($array_param);
+    $result = $stmt->fetchColumn();
+    return $result ? $result : null;
+}
+function max_no_sql(&$conn){
+    $sql =
+        " SELECT "
+        ." MAX(board_no) board_no "
+        ." FROM boards "
+        ." WHERE "
+        ." deleted_at IS NULL "
+    ;
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetchAll();
+    return $result[0]["board_no"];
+}
+function min_no_sql(&$conn){
+    $sql =
+        " SELECT "
+        ." MIN(board_no) board_no "
+        ." FROM "
+        ." boards "
+        ." WHERE "
+        ." deleted_at IS NULL "
+    ;
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->fetchAll();
+    return $result[0]["board_no"];
 }

@@ -8,7 +8,14 @@
         // DB Connect
         $conn = my_db_conn(); // PDO 인스턴스 생성
         // Method가 GET인지 POST인지 판별
+        
+
         if(REQUEST_METHOD === "GET") {
+            // 상세 페이지에 이전 버튼, 다음 버튼 만들기
+            $max_board_no = max_no_sql($conn);
+            $min_board_no = min_no_sql($conn);
+            $prev_btn_result = prev_btn($conn, $arr_param);
+            $next_btn_result = next_btn($conn, $arr_param);
             // 게시글 데이터 조회
             // 파라미터
             $no = isset($_GET["board_no"]) ? $_GET["board_no"] : ""; // no 획득
@@ -38,7 +45,7 @@
             ];
             $result = db_select_boards_no($conn, $arr_param);
             if(count($result) !== 1) {
-              throw new Exception("Select Boards no count");
+              throw new Exception("Select Boards board_no count");
             }
             // 아이템 셋팅
             $item = $result[0];
@@ -53,6 +60,27 @@
           if(count($arr_err_param) > 0) {
             throw new Exception("Parameter Error : ".implode(", ", $arr_err_param));
           }
+        }
+        } 
+        
+        catch (\Throwable $e) {
+            if(!empty($conn)) {
+              $conn->rollBack();
+            }
+            echo $e->getMessage();
+            exit;
+          }
+        
+        
+        finally {
+            // PDO 파기
+            if(!empty($conn)) {
+                $conn = null;
+            }
+        }
+
+        
+          try {
           // Transaction 시작
           $conn->beginTransaction();
           // 게시글 정보 삭제
@@ -62,7 +90,7 @@
           $result = db_delete_boards_no($conn, $arr_param);
           // 삭제 예외 처리
           if($result !== 1) {
-            throw new Exception ("Delete Boards no count");
+            throw new Exception ("Delete Boards board_no count");
           }
           // commit
           $conn->commit();
@@ -70,7 +98,8 @@
           header("Location: list_otter.php");
           exit;
         }
-      }
+      
+    
       catch (\Throwable $e) {
         if(!empty($conn)) {
           $conn->rollBack();
@@ -78,7 +107,6 @@
         echo $e->getMessage();
         exit;
       }
-
     
     
       finally {
@@ -226,8 +254,10 @@
                     </div>
                     <div class="insert-footer">
                         
-                        <a href="./detail_otter.php?page=<?php echo $prev_page_num ?>" class="prevbtn">◁</a>
+                       
                         
+                        <a href="./detail_otter.php?no=<?php if($prev_btn_result !== null){ echo $prev_btn_result; } if($no == $min_board_no){ echo $min_board_no; }?>&page=<?php echo $page ?>" class="prevbtn">◁</a>
+
                         <a href="./update_otter.php?no=<?php echo $no ?>&page=<?php echo $page ?>" class="updatebtn">수정</a>
 
                         <form action="./detail_otter.php" method="post">
@@ -236,7 +266,8 @@
                         <button type="submit" class="deletebtn" name="deletebtn">삭제</button>
                         </form>
 
-                        <a href="./detail_otter.php?page=<?php echo $next_page_num ?>" class="nextbtn">▷</a>
+                    
+                        <a href="./detail_otter.php?no=<?php if($next_btn_result !== null){ echo $next_btn_result; } if($no == $max_board_no){ echo $max_board_no; } ?>&page=<?php echo $page ?>" class="nextbtn">▷</a>
                     </div>
                 </div>
             </div>

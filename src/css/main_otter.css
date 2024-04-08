@@ -1,0 +1,55 @@
+/*  공통 작업 */
+
+@import url('https://fonts.googleapis.com/css2?family=Dongle&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Dongle", sans-serif;
+    font-weight: 400;
+    font-style : normal;
+    font-size : 1.2rem;
+}
+.container {
+    background-image: url("../image/main.png");
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: black;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 180px 1fr;
+}
+.side {
+    display: grid;
+    grid-template-rows: 100px 100px;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.icon_1 {
+    background-image: url("../image/delete_otter.png");
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+}
+.icon_2 {
+    background-image: url("../image/otter_face_end.png");
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+}
+
+a {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}

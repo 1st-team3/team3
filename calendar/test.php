@@ -9,22 +9,7 @@
 	$start_week = date('w', $time); // 1. 시작 요일
 	$total_day = date('t', $time); // 2. 현재 달의 총 날짜
 	$total_week = ceil(($total_day + $start_week) / 7);  // 3. 현재 달의 총 주차 (현재 요일부터 요일수를 구한뒤 7로 나눔 ($start_week = 일 = 0 월 = 1 ... 토 = 6))
-
-	// 현재 월의 이전 달을 계산
-    $prev_month = $month - 1;
-    $prev_year = $year;
-    if ($prev_month == 0) {
-        $prev_month = 12;
-        $prev_year--;
-    }
-
-    // 현재 월의 다음 달을 계산
-    $next_month = $month + 1;
-    $next_year = $year;
-    if ($next_month == 13) {
-        $next_month = 1;
-        $next_year++;
-    }
+	
 ?>
 
 <!DOCTYPE html>

@@ -30,6 +30,11 @@ body {
     height: 100px;
 }
 
+.icon {
+    margin: 0px 0px 0px 10px;
+    width: 100px;
+    height: 125px;
+}
 
 .folder {
     margin-top: 3rem;
@@ -39,13 +44,6 @@ body {
     grid-template-rows: 1fr 1fr;
     padding: 5px;
 }
-
-.icon {
-    margin: 0px 0px 0px 10px;
-    width: 100px;
-    height: 125px;
-}
-
 .folder_header {
     display: flex;
     justify-content: end;
@@ -115,14 +113,6 @@ body {
     grid-template-rows: 1fr 1fr;
     gap: 50px;
     padding: 50px 25px 25px 50px;
-}
-
-.calendar {
-    grid-column: 1/2;
-    grid-row: 1/2;
-    background-color: #4A6B74;
-    width: 600px;
-    height: 315px;
 }
 
 .memo {
@@ -314,4 +304,70 @@ a:active {
 
 .btn-upload {
     cursor: pointer;
+}
+
+.calendar {
+    grid-column: 1/2;
+    grid-row: 1/2;
+    background-color: #fff;
+    width: 600px;
+    height: 315px;
+}
+
+.calendar-header {
+    background-image: url(/img/calendar.png); /* ToDo : 마지막에 이미지 수정*/
+    margin: auto;
+    width: 100%;
+    height: 50px;
+}
+
+.calendar-body {
+    background-color: #4a6b74;
+    color: #fff;
+    width: 100%;
+    height: 300px;
+    text-align: center;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 50px 1fr 50px;
+    grid-template-rows: 50px 1fr;
+}
+
+.calendar-day {
+    text-decoration: none;
+    display: inline-block;
+    padding-left: 10px;
+    width: 40px;
+    height: 40px;
+}
+.calendar-day > img {
+    width: 100%;
+    height: 100%;
+}
+
+th {
+    border-bottom: 1px solid #fff;
+}
+
+.calendar-year {
+    font-size: 1.5rem;
+    padding-top: 5px;
+}
+
+table {
+    grid-column: 1/4;
+}
+
+.day-button {
+    width: 100%;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+    color: #fff;
+}
+
+.today {
+    background-color: rgb(77, 80, 80);
+    border-radius: 100%;
+    color: #fff;
 }

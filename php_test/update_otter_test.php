@@ -11,11 +11,10 @@
 	$total_week = ceil(($total_day + $start_week) / 7);  // 3. 현재 달의 총 주차 (현재 요일부터 요일수를 구한뒤 7로 나눔 ($start_week = 일 = 0 월 = 1 ... 토 = 6))
 
     // 현재 날짜 표시하기
-    $current_timestamp = time();
-    $current_year = date("Y", $current_timestamp); // 현재 연도
-    $current_month = date("n", $current_timestamp); // 현재 월
-    $current_day = date("d", $current_timestamp); // 현재 일
-    $is_current_month = ($year == $current_year && $month == $current_month); // 현재 날짜가 속한 년도와 월을 확인하여 현재 달인지를 판단합니다.
+    $now_year = date("Y"); // 현재 연도
+    $now_month = date("n"); // 현재 월
+    $now_day = date("d"); // 현재 일
+    $is_now_month = ($year == $now_year && $month == $now_month); // 현재 년도와 달이 맞는지 확인
 	
 ?>
 
@@ -89,7 +88,7 @@
                                         <td> 
                                             <!-- 시작 요일부터 마지막 날짜까지만 날짜를 보여주도록 -->
                                             <?php if ( ($n > 1 || $k >= $start_week) && ($total_day >= $n) ){
-                                                if ($is_current_month && $n == $current_day) {
+                                                if ($is_now_month && $n == $now_day) { // GET으로 가져온 달이 다르면 (출력된 년도나 달이 다르면) false가 돼서 else로 넘어감
                                                     // 현재 날짜에 해당하는 경우
                                                     echo '<div class="today">' . $n++ . '</div>';
                                                 } else {

@@ -125,6 +125,8 @@ function db_update_boards_no(&$conn, &$array_param) {
     return $stmt->rowCount();
 }
 
+
+// 페이지 이전글 다음글
 function next_btn(&$conn, &$array_param){
     $sql =
         " SELECT "

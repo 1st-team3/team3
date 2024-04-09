@@ -292,6 +292,7 @@ input:focus {
     width: 600px;
     height: 315px;
 }
+
 .calendar-header {
     background-image: url(/img/calendar.png); /* ToDo : 마지막에 이미지 수정*/
     margin: auto;
@@ -330,23 +331,30 @@ th {
 table {
     grid-column: 1/4;
 }
+
 td {
     padding: 0px 20px;
 }
+
 .day-button {
     width: 100%;
     height: 100%;
     background-color: transparent;
     border: none;
     color: #fff;
+    cursor: pointer;
 }
+
 .today {
-    background-color: #a4bec5;
+    background-color: #c4c4c4;
     width: 100%;
     height: 100%;
+    border: none;
     border-radius: 100%;
     color: #fff;
+    cursor: pointer;
 }
+
 .main-bottom > a:hover {
     background-color:  #7697a0;
 }

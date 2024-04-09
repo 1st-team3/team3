@@ -196,19 +196,19 @@ require_once(FILE_LIB_DB);
                         <!-- 현재가 1월이라 이전 달이 작년 12월인경우 -->
                         <?php if ($month == 1){ ?>
                             <!-- 작년 12월 -->
-                            <a class="calendar-day" href="./update_otter.php?year=<?php echo $year-1 ?>&month=12"><img src="./image/left.png" alt=""></a>
+                            <a class="calendar-day" href="./update_otter.php?board_no=<?php echo $no ?>&page=<?php echo $page ?>&year=<?php echo $year-1 ?>&month=12"><img src="./image/left.png" alt=""></a>
                         <?php }else{ ?>
                             <!-- 이번 년 이전 월 -->
-                            <a class="calendar-day" href="./update_otter.php?year=<?php echo $year ?>&month=<?php echo $month-1 ?>"><img src="./image/left.png" alt=""></a>
+                            <a class="calendar-day" href="./update_otter.php?board_no=<?php echo $no ?>&page=<?php echo $page ?>&year=<?php echo $year ?>&month=<?php echo $month-1 ?>"><img src="./image/left.png" alt=""></a>
                         <?php }; ?>
                         <div class="calendar-year"><?php echo "$year 년 $month 월" ?></div>
                         <!-- 현재가 12월이라 다음 달이 내년 1월인경우 -->
                         <?php if ($month == 12){ ?>
                             <!-- 내년 1월 -->
-                            <a class="calendar-day" href="./update_otter.php?year=<?php echo $year+1 ?>&month=1"><img src="./image/right.png" alt=""></a>
+                            <a class="calendar-day" href="./update_otter.php?board_no=<?php echo $no ?>&page=<?php echo $page ?>&year=<?php echo $year+1 ?>&month=1"><img src="./image/right.png" alt=""></a>
                         <?php }else{ ?>
                             <!-- 이번 년 다음 월 -->
-                            <a class="calendar-day" href="./update_otter.php?year=<?php echo $year ?>&month=<?php echo $month+1 ?>"><img src="./image/right.png" alt=""></a>
+                            <a class="calendar-day" href="./update_otter.php?board_no=<?php echo $no ?>&page=<?php echo $page ?>&year=<?php echo $year ?>&month=<?php echo $month+1 ?>"><img src="./image/right.png" alt=""></a>
                         <?php }; ?>
 
 
@@ -255,7 +255,7 @@ require_once(FILE_LIB_DB);
                         </div>
                         <div class="text-button">
                             <form action="">
-                                <input type="text" name="memo-text" class="memo-text" required>
+                                <input type="text" name="memo-text" class="memo-text" required placeholder="일정 추가하기">
                                 <button class="sudal-button" type="submit" name="memo-text"><img class="sudal-head" src="./image/otter_face_end.png"></button>
                             </form>
                         </div>
@@ -285,7 +285,7 @@ require_once(FILE_LIB_DB);
                         </div>
                         <div class="insert-footer">
                             <button type="submit" class="button-submit" >수정 완료</button>
-                            <a href="./detail_otter.html/" class="button-submit">취소</a>
+                            <a href="./detail_otter.php?board_no=<?php echo $no ?>&page=<?php echo $page ?>" class="button-submit">취소</a>
                         </div>
                     </form>
                 </div>

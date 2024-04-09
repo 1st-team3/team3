@@ -4,7 +4,7 @@
     $list_cnt = 8; 
     $page_num = 1; 
 
-    	// GET으로 넘겨 받은 year값이 있다면 넘겨 받은걸 year변수에 적용하고 없다면 현재 년도
+    // GET으로 넘겨 받은 year값이 있다면 넘겨 받은걸 year변수에 적용하고 없다면 현재 년도
 	$year = isset($_GET['year']) ? $_GET['year'] : date('Y');
 	// GET으로 넘겨 받은 month값이 있다면 넘겨 받은걸 month변수에 적용하고 없다면 현재 월
 	$month = isset($_GET['month']) ? $_GET['month'] : date('m');
@@ -163,10 +163,14 @@
                     <div class="memo">
                         <h2>MEMO</h2>
                         <div class="memo-board">
-                            <div class="memo-textarea"></div>
-                            <div class="text-button">
+                            <div class="memo-textarea">
                                 <form action="">
-                                    <input type="text" name="memo-text" class="memo-text">
+                                    <input type="text" class="memo_list">
+                                </form>
+                            </div>
+                            <div class="text-button">
+                                <form action="./memo_insert.php" method="post">
+                                    <input type="text" name="memo-text" class="memo-text" autocomplete="off">
                                     <button class="sudal-button" type="submit" name="memo-text"><img class="sudal-head" src="../image/otter_face_end.png"></button>
                                 </form>
                             </div>
@@ -185,8 +189,8 @@
                                     <input class="input_list" type="hidden" name="board_no" value="<?php  echo $item["board_no"]; ?>">
                                     <input type="hidden" name="page" value=<?php echo $page_num; ?>>
                                     <button type="submit" class="btn-update" id="input_listt<?php echo $item["board_no"];?>"></button>
-                                    <label class="input_label" for="input_listt<?php echo $item["board_no"]; ?>"><?php echo $item["board_chkbox"] === "1" ? "✔ " : "" ?></label>
-                                    <input class="text_box" type="text" id="text_box_<?php echo $item["board_no"]; ?>" value="<?php echo $item["board_title"]; ?>" required> 
+                                    <label class="input_label" for="input_listt<?php echo $item["board_no"]; ?>"><?php echo $item["board_chkbox"] === 1 ? "<span>✔</span>": "" ?></label>
+                                    <input class="text_box <?php echo $item["board_chkbox"] === 1 ? "strikethrough" : "" ?>" type="text" id="text_box_<?php echo $item["board_no"]; ?>" value="<?php echo $item["board_title"]; ?>" required> 
                                 </form>
                             </div>
                         <?php }?>

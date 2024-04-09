@@ -139,6 +139,10 @@
     width: 90%;
 }
 
+.memo_list{
+    
+}
+
 .text-button {
     position: relative;
 }
@@ -239,9 +243,10 @@ input:focus {
     width: 20px;
     flex: 0 0 auto;
 }
-.input_list[type="checkbox"]{
+ .input_list[type="checkbox"]{
     display: none;
-  }
+} 
+
 .input_list[type="checkbox"] + label{
     display: inline-block;
     width: 30px;
@@ -259,10 +264,7 @@ input:focus {
     top:-6px;
     color: #fff;
 }
-.input_list:checked ~ .text_box {
-    text-decoration: line-through;
-    text-decoration-color: #4A6B74;
-}
+
 .main-bottom {
     margin-top: auto;
     display: flex; 
@@ -291,9 +293,8 @@ input:focus {
     width: 100%;
     height: 50px;
 }
-
 .calendar-body {
-    background-color: #4a6b74;
+    background-color: #4A6B74;
     color: #fff;
     width: 100%;
     height: 300px;
@@ -303,7 +304,6 @@ input:focus {
     grid-template-columns: 50px 1fr 50px;
     grid-template-rows: 50px 1fr;
 }
-
 .calendar-day {
     text-decoration: none;
     display: inline-block;
@@ -315,16 +315,13 @@ input:focus {
     width: 100%;
     height: 100%;
 }
-
 th {
     border-bottom: 1px solid #fff;
 }
-
 .calendar-year {
     font-size: 1.5rem;
     padding-top: 5px;
 }
-
 table {
     grid-column: 1/4;
 }
@@ -356,3 +353,42 @@ td {
     background-color:  #7697a0;
 }
 
+.btn-update{
+    display: none;
+  }
+.btn-update + label{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border:3px solid #fff;
+    font-size: 25px;
+    text-align: center;
+    color: #fff;
+  }
+span{
+    position: absolute;
+    top: -4px;
+    left: 3px;
+}
+.input_label {
+    position: relative;
+}
+/* .input_list:checked + .input_label .text_box {
+    text-decoration: line-through;
+    text-decoration-color: #4A6B74;
+} */
+/* .input_list:checked + .input_label::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #4A6B74; /* 취소선 색상 */
+
+
+.strikethrough {
+    text-decoration: line-through;
+    color:  #7697a0;
+}

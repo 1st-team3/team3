@@ -36,7 +36,9 @@ function db_select_delete_boards_list(&$conn, &$array_param) {
         " SELECT "
         ."  board_no "
         ." ,board_title "
+        ." ,board_content "
         ." ,created_at "
+        ." ,deleted_at "
         ." FROM "
         ."  boards "
         ." WHERE "
@@ -53,7 +55,7 @@ function db_select_delete_boards_list(&$conn, &$array_param) {
 }
 
 
-// 퐉구
+// 복구
 function db_restore_boards(&$conn, &$array_param) {
     $sql = 
         " UPDATE boards"
@@ -65,9 +67,14 @@ function db_restore_boards(&$conn, &$array_param) {
 
     $stmt = $conn->prepare($sql);
     $stmt->execute($array_param);
+    $result = $stmt->fetchAll();
 
-    return $stmt->rowCount();
+    return $stmt();
 }
+
+
+
+
 
 
 
@@ -107,7 +114,7 @@ function db_update_boards_no(&$conn, &$array_param) {
         ." SET "
         ."  board_title = :title "
         ."  ,board_content = :content "
-        ."  ,board_updated_at = now() "
+        ."  ,updated_at = now() "
         ." WHERE "
         ."  board_no = :board_no "
     ;

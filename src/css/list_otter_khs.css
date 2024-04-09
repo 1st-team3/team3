@@ -167,35 +167,7 @@
     width: 100%;
     height: 80%;
     color: #4A6B74;
-    overflow: scroll;
-    overflow-x: hidden;
 }
-
-
-.memo_main {
-    display: flex; 
-    align-items: center;
-    font-size: 1.4rem;
-    padding-left: 10px; 
-    justify-content: space-between;
-}
-
-.divbutton {
-    border: none;
-    background-color:transparent;
-    color: #4A6B74;
-    padding-right: 15px;
-    cursor: pointer;
-}
-
-.memo_con{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 1.4rem;
-    padding-left: 10px;
-}
-
 
 input:focus {
     outline: none;
@@ -223,6 +195,8 @@ input:focus {
     background-color: #4A6B74;
     width: 777px;
     height: 680px;
+    position: relative;
+    text-align: center;
 }
 .header{
     display: flex;
@@ -300,10 +274,11 @@ input:focus {
 }
 
 .main-bottom {
-    margin-top: auto;
-    display: flex; 
-    justify-content: center;
-    align-items: center;
+    position: absolute; /* 절대 위치로 설정하여 상위 컨테이너에 대해 상대적으로 위치시킵니다. */
+    bottom: 0; /* 하단에 고정합니다. */
+    width: 100%; /* 가로 너비를 차지합니다. */
+    background-color: #4A6B74; /* 배경색을 지정합니다. */
+    padding: 10px; /* 내부 여백을 설정합니다. */
 }
 .main-bottom > a {
     text-decoration: none;
@@ -356,14 +331,6 @@ th {
     font-size: 1.5rem;
     padding-top: 5px;
 }
-
-.calendar-header {
-    background-image: url(../image/header3.png);
-    background-size: contain;
-    margin: auto;
-    width: 100%;
-    height: 30px;
-}
 table {
     grid-column: 1/4;
 }
@@ -379,6 +346,8 @@ td {
     border: none;
     color: #fff;
     cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
 }
 
 .today {
@@ -389,6 +358,8 @@ td {
     border-radius: 100%;
     color: #fff;
     cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
 }
 
 .main-bottom > a:hover {
@@ -433,4 +404,8 @@ span{
 .strikethrough {
     text-decoration: line-through;
     color:  #7697a0;
+}
+
+.selected {
+    background-color: #000;
 }

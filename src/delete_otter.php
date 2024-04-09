@@ -3,8 +3,6 @@
 require_once( $_SERVER["DOCUMENT_ROOT"]."/config_sbw.php"); // 설정 파일 호출																		
 require_once(FILE_LIB_DB); // DB관련 라이브러리
 
-// $page_num = 1; // 페이지 번호 초기화
-
 try {
     // DB Connect
     $conn = my_db_conn(); // connection 함수 호출
@@ -12,57 +10,10 @@ try {
     if(REQUEST_METHOD === "GET") {
     // 파라미터 획득
     $board_no = isset($_GET["board_no"]) ? $_GET["board_no"] : ""; // no 획득
-
-    // 파라미터 예외처리
-    // $arr_err_param = [];
-    // if( $board_no === "") {
-    //     $arr_err_param[] = "board_no";
-    // }
-    //   if(count($arr_err_param) > 0) {
-    //     throw new Exception("Parameter Error : ".implode(",", $arr_err_param));
-    //   }
-    
     var_dump($board_no);
-
-    // 삭제된 파일 불러오기
-    $result_board_cnt = db_select_delete_boards_cnt($conn);
-    
     // 삭제된 파일 정보 불러오기
-    $result = db_select_delete_boards_list($conn, $arr_param);
-
-    } else if (REQUEST_METHOD === "POST") {
-        // 파라미터 획득
-          $board_no = isset($_POST["board_no"]) ? $_POST["board_no"] : "";
-          $arr_err_param = [];
-          if($board_no === ""){
-              $arr_err_param[] = "board_no";
-          }
-          if(count($arr_err_param) > 0) {
-              throw new Exception("Parameter Error : ".implode(",", $arr_err_param));
-          }
-  
-          //Transaction 시작
-          $conn->beginTransaction();
-  
-          // 게시글 정보 삭제
-          $arr_param = [
-              "board_no" => $board_no
-          ];
-          $result = db_restore_boards($conn, $arr_param);
-  
-          // 복구 예외 처리
-          if($result !== 1 ){
-              throw new Exception("Restore Boards no count");
-          }
-  
-          // commmit
-          $conn->commit();
-          header("Location: delete_otter.php");
-          exit;
-      }
-    
-
-
+    $result = db_select_delete_boards_list($conn);
+    } 
 } catch (\Throwable $err) {
     echo $err->getMessage();
     exit;
@@ -72,6 +23,8 @@ try {
         $conn = null;
     }
 }
+
+
 ?>
 
 
@@ -117,7 +70,7 @@ try {
 
                             <div class="icon_item_title">
                                 <div class="icon_item_title1">title</div>
-                                <div class="icon_item_title2"><?php echo $item["board_title"] ?> </div>
+                                <div class="icon_item_title2"><?php echo $item["board_no"] ?> </div>
                             </div>
                             <div class="icon_item_content">
                                 <div class="icon_item_content1">content</div>
@@ -131,8 +84,8 @@ try {
 
 
                             <div class="form_btn">
-                                <form action="./delete_otter.php" method="POST">
-                                    <input type="hidden" name="board_no" value="<?php echo $board_no; ?>">
+                                <form action="./delete_otter2.php" method="POST">
+                                    <input type="hidden" name="board_no" value="<?php echo $_GET["board_no"]; ?>">
                                     <button type="submit">복구</button>
                                 </form>
                                 <form action="" method="POST">

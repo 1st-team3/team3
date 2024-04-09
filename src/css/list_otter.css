@@ -139,6 +139,16 @@
     width: 90%;
 }
 
+.memo_list{
+    border: none;
+    border-radius: 10px;
+    width: 95%;
+    font-size: 1.5rem;
+    margin-left: 25px;
+    margin-top: 10px;
+    color: #4A6B74;
+}
+
 .text-button {
     position: relative;
 }

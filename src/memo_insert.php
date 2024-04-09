@@ -27,10 +27,10 @@ if(REQUEST_METHOD === "POST") {
     $arr_param = [
       "memo_content" => $content
     ];
-    $result = db_memo_insert($conn, $arr_param);
+    $result_memo = db_memo_insert($conn, $arr_param);
 
     
-    if($result !== 1) {
+    if($result_memo !== 1) {
       throw new Exception("Insert memos count");
     }
     

@@ -2,9 +2,9 @@
     require_once( $_SERVER["DOCUMENT_ROOT"]."/config.php"); 
     require_once(FILE_LIB_DB); 
     $list_cnt = 8; 
-    $page_num = 1; 
+    $page_num = 1;  
 
-    // GET으로 넘겨 받은 year값이 있다면 넘겨 받은걸 year변수에 적용하고 없다면 현재 년도
+    	// GET으로 넘겨 받은 year값이 있다면 넘겨 받은걸 year변수에 적용하고 없다면 현재 년도
 	$year = isset($_GET['year']) ? $_GET['year'] : date('Y');
 	// GET으로 넘겨 받은 month값이 있다면 넘겨 받은걸 month변수에 적용하고 없다면 현재 월
 	$month = isset($_GET['month']) ? $_GET['month'] : date('m');
@@ -24,10 +24,13 @@
 
     try{
         $conn = my_db_conn();
+    
 
-        
-        $page_num = isset($_GET["page"]) ? $_GET["page"] : $page_num;
+            $page_num = isset($_GET["page"]) ? $_GET["page"] : $page_num;
             
+
+                
+    
         $result_board_cnt = db_select_boards_cnt($conn);
 
         $max_page_num = ceil($result_board_cnt / $list_cnt);   
@@ -41,30 +44,9 @@
         ];
         $result = db_select_boards_paging($conn, $arr_param);
 
-        if(REQUEST_METHOD === "GET") {
+        
 
-            $date = isset($_GET["date"]) ? $_GET["date"] : $date;
-            $month = str_pad($month, 2, '0', STR_PAD_LEFT); // 한 자리 숫자를 왼쪽에 0을 추가하여 두 자리 숫자로 만듦
-            $date = str_pad($date, 2, '0', STR_PAD_LEFT); // 한 자리 숫자를 왼쪽에 0을 추가하여 두 자리 숫자로 만듦
-            $days = "$year-$month-$date";
-            $start_date = "";
-            $end_date = "";
-            if(isset($_GET["date"])) {
-                $start_date = $year.$month.$date."000000";
-                $end_date = $year.$month.$date."235959";
-            }
-
-            // 예외 처리
-
-            $arr_param = [
-                "start" => $start_date,
-                "end" => $end_date
-            ];
-
-            $result2 = db_select_boards_title($conn, $arr_param);
-
-        }
-
+        
     }   catch(\Throwable $e){
         echo $e ->getMessage();
         exit;
@@ -101,81 +83,62 @@
                     </div>
                 </div>
                 <div class="folder_main">
-                    <form action="./list_otter.php/" method="GET">
-                        <div class="calendar">
-                            <div class="calendar-header"></div>
-                            <div class="calendar-body">
-                                <!-- 현재가 1월이라 이전 달이 작년 12월인경우 -->
-                                <?php if ($month == 1){ ?>
-                                    <!-- 작년 12월 -->
-                                    <a class="calendar-day" href="./list_otter.php?year=<?php echo $year-1 ?>&month=12"><img src="./image/left.png" alt=""></a>
-                                <?php }else{ ?>
-                                    <!-- 이번 년 이전 월 -->
-                                    <a class="calendar-day" href="./list_otter.php?year=<?php echo $year ?>&month=<?php echo $month-1 ?>"><img src="./image/left.png" alt=""></a>
-                                <?php }; ?>
-                                <div class="calendar-year"><?php echo "$year 년 $month 월" ?></div>
-                                <!-- 현재가 12월이라 다음 달이 내년 1월인경우 -->
-                                <?php if ($month == 12){ ?>
-                                    <!-- 내년 1월 -->
-                                    <a class="calendar-day" href="./list_otter.php?year=<?php echo $year+1 ?>&month=1"><img src="./image/right.png" alt=""></a>
-                                <?php }else{ ?>
-                                    <!-- 이번 년 다음 월 -->
-                                    <a class="calendar-day" href="./list_otter.php?year=<?php echo $year ?>&month=<?php echo $month+1 ?>"><img src="./image/right.png" alt=""></a>
-                                <?php }; ?>
-                                <table>
+                    <div class="calendar">
+                        <div class="calendar-header"></div>
+                        <div class="calendar-body">
+                            <!-- 현재가 1월이라 이전 달이 작년 12월인경우 -->
+                            <?php if ($month == 1){ ?>
+                                <!-- 작년 12월 -->
+                                <a class="calendar-day" href="./list_otter.php?year=<?php echo $year-1 ?>&month=12"><img src="./image/left.png" alt=""></a>
+                            <?php }else{ ?>
+                                <!-- 이번 년 이전 월 -->
+                                <a class="calendar-day" href="./list_otter.php?year=<?php echo $year ?>&month=<?php echo $month-1 ?>"><img src="./image/left.png" alt=""></a>
+                            <?php }; ?>
+                            <div class="calendar-year"><?php echo "$year 년 $month 월" ?></div>
+                            <!-- 현재가 12월이라 다음 달이 내년 1월인경우 -->
+                            <?php if ($month == 12){ ?>
+                                <!-- 내년 1월 -->
+                                <a class="calendar-day" href="./list_otter.php?year=<?php echo $year+1 ?>&month=1"><img src="./image/right.png" alt=""></a>
+                            <?php }else{ ?>
+                                <!-- 이번 년 다음 월 -->
+                                <a class="calendar-day" href="./list_otter.php?year=<?php echo $year ?>&month=<?php echo $month+1 ?>"><img src="./image/right.png" alt=""></a>
+                            <?php }; ?>
+                            <table>
+                                <tr>
+                                    <th>일</th>
+                                    <th>월</th>
+                                    <th>화</th>
+                                    <th>수</th>
+                                    <th>목</th>
+                                    <th>금</th>
+                                    <th>토</th>
+                                </tr>
+                                <!-- 총 주차를 반복합니다. -->
+                                <?php for ($n = 1, $i = 0; $i < $total_week; $i++){ ?>
                                     <tr>
-                                        <th>일</th>
-                                        <th>월</th>
-                                        <th>화</th>
-                                        <th>수</th>
-                                        <th>목</th>
-                                        <th>금</th>
-                                        <th>토</th>
+                                        <!-- 1일부터 7일 (한 주) -->
+                                        <?php for ($k = 0; $k < 7; $k++){ ?>
+                                            <td>
+                                                <!-- 시작 요일부터 마지막 날짜까지만 날짜를 보여주도록 -->
+                                                <?php if ( ($n > 1 || $k >= $start_week) && ($total_day >= $n) ){
+                                                    if ($is_now_month && $n == $now_day) { // GET으로 가져온 달이 다르면 (출력된 년도나 달이 다르면) false가 돼서 else로 넘어감
+                                                        // 현재 날짜에 해당하는 경우
+                                                        echo '<div class="today">' . $n++ . '</div>';
+                                                    } else {
+                                                        // 다른 날짜에 해당하는 경우
+                                                        echo '<div class="day-button">' . $n++ . '</div>';
+                                                    }
+                                                }?>
+                                            </td>
+                                        <?php }; ?>
                                     </tr>
-                                    <!-- 총 주차를 반복합니다. -->
-                                    <?php for ($n = 1, $i = 0; $i < $total_week; $i++){ ?>
-                                        <tr>
-                                            <!-- 1일부터 7일 (한 주) -->
-                                            <?php for ($k = 0; $k < 7; $k++){ ?>
-                                                <td>
-                                                    <!-- 시작 요일부터 마지막 날짜까지만 날짜를 보여주도록 -->
-                                                    <?php if ( ($n > 1 || $k >= $start_week) && ($total_day >= $n) ){
-                                                        $button_date = date('Y-m-d', strtotime($year . '-' . $month . '-' . $n)); // 날짜를 YYYY-MM-DD 형식으로 변환
-                                                        if ($is_now_month && $n == $now_day) { // GET으로 가져온 달이 다르면 (출력된 년도나 달이 다르면) false가 돼서 else로 넘어감
-                                                            // 현재 날짜에 해당하는 경우
-                                                            echo '<a href="./list_otter.php?year=' . $year . '&month=' . $month . '&date=' . $n . '" class="today">' . $n++ . '</a>';
-                                                        } else {
-                                                            // 다른 날짜에 해당하는 경우
-                                                            echo '<a href="./list_otter.php?year=' . $year . '&month=' . $month . '&date=' . $n . '" class="day-button">' . $n++ . '</a>';
-                                                        }
-                                                        echo '<input type="hidden" name="year" value="' . $year . '">';
-                                                        echo '<input type="hidden" name="month" value="' . $month . '">';
-                                                        echo '<input type="hidden" name="date" value="' . $n . '">';
-                                                    }?>
-                                                </td>
-                                            <?php }; ?>
-                                        </tr>
-                                    <?php }; ?>
-                                </table>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="memo">
-                        <h2>MEMO</h2>
-                        <div class="memo-board">
-                            <div class="memo-textarea">
-                                <form action="">
-                                    <input type="text" class="memo_list">
-                                </form>
-                            </div>
-                            <div class="text-button">
-                                <form action="./memo_insert.php" method="post">
-                                    <input type="text" name="memo-text" class="memo-text" autocomplete="off">
-                                    <button class="sudal-button" type="submit" name="memo-text"><img class="sudal-head" src="../image/otter_face_end.png"></button>
-                                </form>
-                            </div>
+                                <?php }; ?>
+                            </table>
                         </div>
                     </div>
+                    
+                    <?php require_once(ROOT."/memo_list.php"); ?>
+
                     <div class="insert-list">
                             <div class="header">
                                 <div class="todaylist">오늘 할 일</div>
@@ -193,7 +156,7 @@
                                     <input class="text_box <?php echo $item["board_chkbox"] === 1 ? "strikethrough" : "" ?>" type="text" id="text_box_<?php echo $item["board_no"]; ?>" value="<?php echo $item["board_title"]; ?>" required> 
                                 </form>
                             </div>
-                        <?php }?>
+                        <?php } ?>
                         <div class="main-bottom">
                         <a href="./list_otter.php?page=<?php echo $prev_page_num ?>" class ="number_button">이전</a>
                         <?php

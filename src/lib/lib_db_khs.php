@@ -11,8 +11,12 @@ function my_db_conn() {
     return new PDO(MARIADB_DSN, MARIADB_USER, MARIADB_PASSWORD, $option);
 }
 
-function db_select_boards_cnt($conn) {
-   
+function db_select_boards_cnt(&$conn, &$array_param) {
+    $add_date = "";
+    if(isset($array_param["start"] ) && isset($array_param["end"])) {
+        $add_date = " and created_at between :start and :end ";
+    }
+
     $sql =
         " SELECT "
         ."  COUNT(board_no) as cnt "
@@ -20,26 +24,30 @@ function db_select_boards_cnt($conn) {
         ."  boards "
         ." WHERE "
         ."  deleted_at IS NULL "
+        .$add_date
         ;
     
-    $stmt = $conn->query($sql);
+    $stmt = $conn->prepare($sql);
+    $stmt->execute($array_param);
     $result = $stmt->fetchAll();
     
     return (int)$result[0]["cnt"];
 }
+
 function db_select_boards_paging(&$conn, &$array_param) {
   
     $sql =
         " SELECT "
         ."  board_no "
-        ."  ,board_title "
-        ."  ,created_at "
+        ." ,board_title "
+        ." ,created_at "
+        ." ,board_chkbox "
         ." FROM "
         ."  boards "
         ." WHERE "
         ."  deleted_at IS NULL "
         ." ORDER BY  "
-        ."  no DESC "
+        ."  board_no DESC "
         ." LIMIT :list_cnt OFFSET :offset "
     ;
     
@@ -130,4 +138,71 @@ function db_update_boards_no(&$conn, &$array_param) {
     $stmt->execute($array_param);
 
     return $stmt->rowCount();
+}
+
+function db_list_update_no(&$conn, &$array_param) {
+    $sql = 
+        " UPDATE boards"
+        ." SET "
+        ."  board_chkbox = CASE WHEN board_chkbox = '0' THEN '1' ELSE '0' END "
+        ." WHERE "
+        ."  board_no = :board_no "
+    ;
+
+    // Query 실행
+    $stmt = $conn->prepare($sql);
+    $stmt->execute($array_param);
+
+    // return 
+    return $stmt->rowCount();
+}
+
+function db_select_boards_title(&$conn, &$array_param) {
+    $add_date = "";
+    if(isset($array_param["start"] ) && isset($array_param["end"])) {
+        $add_date = " and created_at between :start and :end ";
+    }
+
+
+    $sql =
+        " SELECT "
+        ." board_no "
+        ." ,board_title "
+        ." ,created_at "
+        ." ,board_chkbox "
+        ." FROM "
+        ."  boards "
+        ." WHERE "
+        ."  deleted_at IS NULL "
+        .$add_date
+        ." ORDER BY  "
+        ."  board_no DESC "
+        ." LIMIT :list_cnt OFFSET :offset "
+    ;
+    
+    $stmt = $conn->prepare($sql);
+    $stmt->execute($array_param);
+    $result = $stmt->fetchAll();
+    
+    return $result;
+}
+
+function db_memo_insert(&$conn, &$array_param) {
+    $sql = 
+        " INSERT INTO memos( "
+        ." memo_content "
+        ." )"
+        ." VALUES( "
+        ." :memo_content "
+        ." ) "
+        ;
+
+    // Query 실행
+    $stmt = $conn->prepare($sql);
+    $stmt->execute($array_param);
+
+
+    // 리턴
+    return $stmt->rowCount();
+
 }

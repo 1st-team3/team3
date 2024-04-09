@@ -131,7 +131,7 @@
     overflow: auto;
 }
 
-.item_icon {
+.folder_icon {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     padding: 10px;
@@ -139,7 +139,7 @@
 
 }
 
-.item_icon_can {
+.icon_item_card {
     background-image: url("../image/folder.png");
     background-size : cover;
     background-repeat: no-repeat;
@@ -152,6 +152,30 @@
     padding-top: 50px;
     position: relative;
 }
+
+/* 폴더안 내용 위치 조정 */
+.icon_item_title {
+    width: 230px;
+    display: grid;
+    grid-template-columns: 50px 180px;
+    gap: 10px;
+}
+
+.icon_item_content, .icon_item_deleted {
+    display: grid;
+    grid-template-columns: 50px 190px;
+    gap: 10px;
+}
+
+/* 긴글 생략하기 */
+.icon_item_title2, .icon_item_content2, .icon_item_deleted2{  
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* 주의 표시 호출 */
 ul {
     display: inline-block;
 }
@@ -174,11 +198,4 @@ li {
 .form_btn {
     display: grid;
     grid-template-columns: 1fr 1fr;
-}
-
-/* 긴글 생략하기 */
-.limited-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }

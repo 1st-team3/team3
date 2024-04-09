@@ -183,7 +183,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="memo">
+                <!-- <div class="memo">
                     <h2>MEMO</h2>
                     <div class="memo-board">
                         <div class="memo-textarea">
@@ -195,7 +195,10 @@
                             </form>
                         </div>
                     </div>
-                </div>
+                </div> -->
+
+                <?php require_once(ROOT."/memo_list_ksh.php"); ?>
+
                 <div class="insert-list">
                     <div class="insert-main">
                         <div class="insert-header">

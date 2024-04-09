@@ -140,4 +140,23 @@ function db_list_update_no(&$conn, &$array_param) {
     // return 
     return $stmt->rowCount();
 }
-    
+
+function db_memo_insert(&$conn, &$array_param) {
+    $sql = 
+        " INSERT INTO memos( "
+        ." memo_content "
+        ." )"
+        ." VALUES( "
+        ." :memo_content "
+        ." ) "
+        ;
+
+    // Query 실행
+    $stmt = $conn->prepare($sql);
+    $stmt->execute($array_param);
+
+
+    // 리턴
+    return $stmt->rowCount();
+
+}

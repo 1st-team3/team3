@@ -167,7 +167,35 @@
     width: 100%;
     height: 80%;
     color: #4A6B74;
+    overflow: scroll;
+    overflow-x: hidden;
 }
+
+
+.memo_main {
+    display: flex; 
+    align-items: center;
+    font-size: 1.4rem;
+    padding-left: 10px; 
+    justify-content: space-between;
+}
+
+.divbutton {
+    border: none;
+    background-color:transparent;
+    color: #4A6B74;
+    padding-right: 15px;
+    cursor: pointer;
+}
+
+.memo_con{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1.4rem;
+    padding-left: 10px;
+}
+
 
 input:focus {
     outline: none;
@@ -327,6 +355,14 @@ th {
 .calendar-year {
     font-size: 1.5rem;
     padding-top: 5px;
+}
+
+.calendar-header {
+    background-image: url(../image/header3.png);
+    background-size: contain;
+    margin: auto;
+    width: 100%;
+    height: 30px;
 }
 table {
     grid-column: 1/4;

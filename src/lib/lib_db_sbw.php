@@ -11,44 +11,25 @@ function my_db_conn() {
     return new PDO(MARIADB_DSN, MARIADB_USER, MARIADB_PASSWORD, $option);
 }
 
-// 삭제된 파일 불러오기
-function db_select_delete_boards_cnt($conn) {
-   
-    $sql =
-        " SELECT "
-        ."  COUNT(board_no) as cnt "
-        ." FROM "
-        ."  boards "
-        ." WHERE "
-        ."  deleted_at IS NOT NULL "
-        ;
-    
-    $stmt = $conn->query($sql);
-    $result = $stmt->fetchAll();
-    
-    return (int)$result[0]["cnt"];
-}
 
 // 삭제된 파일 정보 불러오기
-function db_select_delete_boards_list(&$conn, &$array_param) {
+function db_select_delete_boards_list($conn) {
   
     $sql =
         " SELECT "
         ."  board_no "
         ." ,board_title "
         ." ,board_content "
-        ." ,created_at "
         ." ,deleted_at "
         ." FROM "
         ."  boards "
         ." WHERE "
         ."  deleted_at IS NOT NULL "
         ." ORDER BY  "
-        ."  board_no DESC "
+        ."  deleted_at DESC, board_no DESC"
     ;
     
-    $stmt = $conn->prepare($sql);
-    $stmt->execute($array_param);
+    $stmt = $conn->query($sql);
     $result = $stmt->fetchAll();
     
     return $result;
@@ -71,6 +52,26 @@ function db_restore_boards(&$conn, &$array_param) {
 
     return $stmt();
 }
+
+
+// 삭제
+function db_delete_boards(&$conn, &$array_param) {
+    $sql =
+	    " DELETE FROM "
+	    ."  boards "
+	    ." WHERE "
+	    ."  board_no = :board_no "
+    ;
+
+    $stmt = $conn->prepare($sql);
+    $stmt->execute($array_param);
+    $result = $stmt->fetchAll();
+
+    return $stmt();
+}
+
+
+
 
 
 

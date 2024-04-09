@@ -200,6 +200,7 @@
                     <div class="insert-main">
                         <div class="insert-header">
                         <div class="line-content"><?php echo $item["board_title"] ?></div>
+                        <div class=""><?php echo $item["created_at"] ?></div>
                         </div>
                         <div class="insert-middle">
 

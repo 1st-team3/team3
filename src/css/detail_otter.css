@@ -323,7 +323,6 @@ input:focus {
 .calendar-header {
     background-image: url(../image/header3.png); 
     background-size: contain;
-    
     margin: auto;
     width: 100%;
     height: 30px;

@@ -203,7 +203,7 @@ if (REQUEST_METHOD === "POST") {
                             </div>
                             <div class="text-button">
                                 <form action="">
-                                    <input type="text" name="memo-text" class="memo-text" required>
+                                    <input type="text" name="memo-text" class="memo-text" required placeholder="일정 추가하기">
                                     <button class="sudal-button" type="submit" name="memo-text"><img class="sudal-head" src="./image/otter_face_end.png"></button>
                                 </form>
                             </div>

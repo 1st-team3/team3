@@ -140,4 +140,30 @@ function db_list_update_no(&$conn, &$array_param) {
     // return 
     return $stmt->rowCount();
 }
+
+function db_select_boards_title(&$conn, &$array_param) {
+    $add_date = "";
+    if(isset($arr_param["start"] ) && isset($arr_param["end"])) {
+        $add_date = " and created_at between :start and :end ";
+    }
+
+
+    $sql =
+        " SELECT "
+        ." board_no "
+        ." ,board_title "
+        ." FROM "
+        ."  boards "
+        ." WHERE "
+        ."  deleted_at IS NULL "
+        .$add_date
+        ." ORDER BY  "
+        ."  board_no DESC "
+    ;
     
+    $stmt = $conn->prepare($sql);
+    $stmt->execute($array_param);
+    $result = $stmt->fetchAll();
+    
+    return $result;
+}

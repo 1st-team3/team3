@@ -117,7 +117,7 @@
             <div class="folder_1">
                 <div class="folder_title">
                     <div class="folder_title_circle"></div>
-                    <div class="folder_title_x"><a href="./main_otter.html" class="X_btn">X</a>
+                    <div class="folder_title_x"><a href="./main_otter.php" class="X_btn">X</a>
                     </div>
                 </div>
                 <div class="folder_back">
@@ -198,7 +198,7 @@
                 </div> -->
 
                 <?php require_once(ROOT."/memo_list_ksh.php"); ?>
-
+                <?php foreach ($result as $item){ ?>  
                 <div class="insert-list">
                     <div class="insert-main">
                         <div class="insert-header">
@@ -238,6 +238,7 @@
             </div>
         </div>
     </div>
+    <?php } ?>
     <!-- <div class="folder_header">
         <div class="folder_header_otter4"></div>
         <div class="folder_header_otter4"></div>

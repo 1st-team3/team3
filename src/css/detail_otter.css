@@ -128,6 +128,27 @@ body {
     height: 315px;
 }
 
+.memo_main {
+    display: flex; 
+    align-items: center;
+    font-size: 1.4rem;
+    padding-left: 10px; 
+    justify-content: space-between;
+}
+.memo_con{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1.4rem;
+    padding-left: 10px;
+}
+.divbutton {
+    border: none;
+    background-color:transparent;
+    color: #4A6B74;
+    padding-right: 15px;
+    cursor: pointer;
+}
 .memo {
     grid-column: 1/2;
     grid-row: 2/3;
@@ -165,9 +186,12 @@ body {
 input[type=text]::placeholder {
     color: white;
   }
-.memo-textarea {
+  .memo-textarea {
     width: 100%;
     height: 80%;
+    color: #4A6B74;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
 input:focus {

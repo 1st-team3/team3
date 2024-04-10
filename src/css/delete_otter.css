@@ -195,7 +195,30 @@ li {
     position: absolute;
 }
 
+
 .form_btn {
     display: grid;
     grid-template-columns: 1fr 1fr;
+}
+
+.form_margin{
+    margin-top: 5px;
+}
+
+.form_btn_restore, .form_btn_delete {
+    background-color: transparent;
+    width : 3rem;
+    border: 1px solid black;
+    border-radius: 1rem;    
+}
+
+.form_btn_all_delete {
+    background-color: transparent;
+    width : 5rem;
+    border: 1px solid black;
+    border-radius: 1rem;    
+}
+
+.form_btn_restore:hover, .form_btn_delete:hover, .form_btn_all_delete:hover{
+    cursor: pointer;
 }

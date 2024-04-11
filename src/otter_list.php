@@ -100,26 +100,26 @@
                     </div>
                 </div>
                 <div class="folder_main">
-                <form action="./list_otter.php/" method="GET">
+                <form action="./otter_list.php/" method="GET">
                         <div class="calendar">
                             <div class="calendar-header"></div>
                             <div class="calendar-body">
                                 <!-- 현재가 1월이라 이전 달이 작년 12월인경우 -->
                                 <?php if ($month == 1){ ?>
                                     <!-- 작년 12월 -->
-                                    <a class="calendar-day" href="./list_otter.php?year=<?php echo $year-1 ?>&month=12"><img src="./image/left.png" alt=""></a>
+                                    <a class="calendar-day" href="./otter_list.php?year=<?php echo $year-1 ?>&month=12"><img src="./image/left.png" alt=""></a>
                                 <?php }else{ ?>
                                     <!-- 이번 년 이전 월 -->
-                                    <a class="calendar-day" href="./list_otter.php?year=<?php echo $year ?>&month=<?php echo $month-1 ?>"><img src="./image/left.png" alt=""></a>
+                                    <a class="calendar-day" href="./otter_list.php?year=<?php echo $year ?>&month=<?php echo $month-1 ?>"><img src="./image/left.png" alt=""></a>
                                 <?php }; ?>
                                 <div class="calendar-year"><?php echo "$year 년 $month 월" ?></div>
                                 <!-- 현재가 12월이라 다음 달이 내년 1월인경우 -->
                                 <?php if ($month == 12){ ?>
                                     <!-- 내년 1월 -->
-                                    <a class="calendar-day" href="./list_otter.php?year=<?php echo $year+1 ?>&month=1"><img src="./image/right.png" alt=""></a>
+                                    <a class="calendar-day" href="./otter_list.php?year=<?php echo $year+1 ?>&month=1"><img src="./image/right.png" alt=""></a>
                                 <?php }else{ ?>
                                     <!-- 이번 년 다음 월 -->
-                                    <a class="calendar-day" href="./list_otter.php?year=<?php echo $year ?>&month=<?php echo $month+1 ?>"><img src="./image/right.png" alt=""></a>
+                                    <a class="calendar-day" href="./otter_list.php?year=<?php echo $year ?>&month=<?php echo $month+1 ?>"><img src="./image/right.png" alt=""></a>
                                 <?php }; ?>
                                 <table>
                                     <tr>
@@ -142,10 +142,10 @@
                                                         $button_date = date('Y-m-d', strtotime($year . '-' . $month . '-' . $n)); // 날짜를 YYYY-MM-DD 형식으로 변환
                                                         if ($is_now_month && $n == $now_day) { // GET으로 가져온 달이 다르면 (출력된 년도나 달이 다르면) false가 돼서 else로 넘어감
                                                             // 현재 날짜에 해당하는 경우
-                                                            echo '<a href="./list_otter.php?year=' . $year . '&month=' . $month . '&date=' . $n . '" class="today">' . $n++ . '</a>';
+                                                            echo '<a href="./otter_list.php?year=' . $year . '&month=' . $month . '&date=' . $n . '" class="today">' . $n++ . '</a>';
                                                         } else {
                                                             // 다른 날짜에 해당하는 경우
-                                                            echo '<a href="./list_otter.php?year=' . $year . '&month=' . $month . '&date=' . $n . '" class="day-button' . (($date == $n) ? ' selected' : '') . '">' . $n++ . '</a>';
+                                                            echo '<a href="./otter_list.php?year=' . $year . '&month=' . $month . '&date=' . $n . '" class="day-button' . (($date == $n) ? ' selected' : '') . '">' . $n++ . '</a>';
 
                                                         }
                                                         echo '<input type="hidden" name="year" value="' . $year . '">';
@@ -167,7 +167,7 @@
                             <div class="header">
                                 <div class="todaylist">오늘 할 일</div>
                                 <!-- <button type="submit">작성하기</button> -->
-                                <a href="./insert_otter.php">작성하기</a>
+                                <a href="./otter_insert.php">작성하기</a>
                             </div>
 
                         <?php foreach ($result as $item){ ?>  
@@ -177,22 +177,22 @@
                                     <input type="hidden" name="page" value=<?php echo $page_num; ?>>
                                     <button type="submit" class="btn-update" id="input_listt<?php echo $item["board_no"];?>"></button>
                                     <label class="input_label" for="input_listt<?php echo $item["board_no"]; ?>"><?php echo $item["board_chkbox"] === 1 ? "<span>✔</span>": "" ?></label>
-                                    <a href="./detail_otter.php?board_no=<?php echo $item["board_no"]; ?>&page=<?php echo $page_num ; ?>" class="text_box <?php echo $item["board_chkbox"] === 1 ? "strikethrough" : ""; ?>" id="text_box_<?php echo $item["board_no"]; ?>">
+                                    <a href="./otter_detail.php?board_no=<?php echo $item["board_no"]; ?>&page=<?php echo $page_num ; ?>" class="text_box <?php echo $item["board_chkbox"] === 1 ? "strikethrough" : ""; ?>" id="text_box_<?php echo $item["board_no"]; ?>">
                                         <?php echo $item["board_title"]; ?>
                                     </a>
                                 </form>
                             </div>
                         <?php } ?>
                         <div class="main-bottom">
-                        <a href="./list_otter.php?year=<?php echo $year ?>&month=<?php echo $month ?>&date=<?php echo $date ?>&page=<?php echo $prev_page_num ?>" class ="number_button">이전</a>
+                        <a href="./otter_list.php?year=<?php echo $year ?>&month=<?php echo $month ?>&date=<?php echo $date ?>&page=<?php echo $prev_page_num ?>" class ="number_button">이전</a>
                         <?php
                         for($num = 1; $num <= $max_page_num; $num++){
                             ?>
-                        <a href="./list_otter.php?year=<?php echo $year ?>&month=<?php echo $month ?>&date=<?php echo $date ?>&page=<?php echo $num ?>" class ="number_button"><?php echo $num ?></a>
+                        <a href="./otter_list.php?year=<?php echo $year ?>&month=<?php echo $month ?>&date=<?php echo $date ?>&page=<?php echo $num ?>" class ="number_button"><?php echo $num ?></a>
                         <?php
                         }
                         ?>
-                        <a href="./list_otter.php?year=<?php echo $year ?>&month=<?php echo $month ?>&date=<?php echo $date ?>&page=<?php echo $next_page_num?>" class ="number_button">다음</a> 
+                        <a href="./otter_list.php?year=<?php echo $year ?>&month=<?php echo $month ?>&date=<?php echo $date ?>&page=<?php echo $next_page_num?>" class ="number_button">다음</a> 
                     </div>
                     </div>
                 </div>

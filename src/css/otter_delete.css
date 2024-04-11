@@ -202,7 +202,12 @@ li {
 }
 
 .form_margin{
-    margin-top: 5px;
+    margin: 5px 20px;
+    padding : 5px;
+    background-color: white;
+    position: sticky;
+    top: 0;
+    z-index: 2;
 }
 
 .form_btn_restore, .form_btn_delete {
@@ -213,10 +218,11 @@ li {
 }
 
 .form_btn_all_delete {
-    background-color: transparent;
+    color : black;
+    background-color: rgb(168, 168, 168);
     width : 5rem;
-    border: 1px solid black;
-    border-radius: 1rem;    
+    border: none;
+    border-radius: 1rem;
 }
 
 .form_btn_restore:hover, .form_btn_delete:hover, .form_btn_all_delete:hover{

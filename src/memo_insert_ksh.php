@@ -34,11 +34,16 @@ if(REQUEST_METHOD === "POST") {
       throw new Exception("Insert memos count");
     }
     
+    // 이전페이지
+    if(isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER'])){
+      $previous_page = $_SERVER['HTTP_REFERER'];
+    }
+
     $conn->commit();
 
     
-    header("Location: list_otter.php?");
-    exit;
+    header("Location: " . $previous_page);
+   
 
   } catch (\Throwable $e) {
     if(!empty($conn)){

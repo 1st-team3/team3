@@ -252,7 +252,9 @@ input:focus {
 
 .insert-header {
     background-color: #4A6B74;
-    
+    overflow: hidden; /* 넘치는 부분 숨김 */
+    text-overflow: ellipsis; /*넘칠 때 말줄임 표시 */
+    white-space: nowrap; /* 줄바꿈 방지 */
     grid-row: 1/2;
     height: 100px;
     margin-top: 10px;

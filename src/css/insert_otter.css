@@ -141,13 +141,12 @@ body {
 
 .memo-text {
     background-color: #4A6B74;
-    color: #fff;
     border: none;
     border-radius: 10px;
     width: 95%;
     font-size: 1.5rem;
     margin-left: 10px;
-    padding-left: 10px;
+    color: white;
 }
 
 input[type=text]::placeholder {
@@ -157,7 +156,35 @@ input[type=text]::placeholder {
 .memo-textarea {
     width: 100%;
     height: 80%;
+    color: #4A6B74;
+    overflow: scroll;
+    overflow-x: hidden;
 }
+
+.memo_main {
+    display: flex; 
+    align-items: center;
+    font-size: 1.4rem;
+    padding-left: 10px; 
+    justify-content: space-between;
+}
+
+.divbutton {
+    border: none;
+    background-color:transparent;
+    color: #4A6B74;
+    padding-right: 15px;
+    cursor: pointer;
+}
+
+.memo_con{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1.4rem;
+    padding-left: 10px;
+}
+
 
 input:focus {
     outline: none;
@@ -377,4 +404,10 @@ td {
     height: 100%;
     border-radius: 100%;
     color: #fff;
+}
+
+span{
+    position: absolute;
+    top: -4px;
+    left: 3px;
 }

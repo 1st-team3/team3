@@ -174,25 +174,24 @@ finally {
     <link rel="stylesheet" href="./css/update_otter.css">
 </head>
 <body>
-  <div class="container">
-    <div class="side">
-    <img class="icon-delete" src="./image/delete_otter.png" alt="">
-    <br>
-    <img class="icon" src="./image/209_2-1.png" alt="">
-  </div>
-  <div class="folder">
-    <div class="folder_1">
-              <div class="folder_title">
-                    <div class="folder_title_circle"></div>
-                    <div class="folder_title_x"><a href="./main_otter.html" class="X_btn">X</a>
-                    </div>
-                </div>
-                <div class="folder_back">
-                    <div class="folder_back_btn"><a href="" class="back_btn">◁</a></div>
-                    <div class="folder_back_square"></div>
-                </div>
+    <div class="container">
+        <div class="side">
+        <img class="icon-delete" src="./image/delete_otter.png" alt="">
+        <br>
+        <img class="icon" src="./image/209_2-1.png" alt="">
+    </div>
+    <div class="folder">
+        <div class="folder_1">
+            <div class="folder_title">
+                <div class="folder_title_circle"></div>
+                <div class="folder_title_x"><a href="./main_otter.html" class="X_btn">X</a></div>
             </div>
-            <img class="otter-face" src="./image/otter_face_end.png" alt="">
+            <div class="folder_back">
+                <div class="folder_back_btn"><a href="" class="back_btn">◁</a></div>
+                <div class="folder_back_square"></div>
+            </div>
+        </div>
+        <img class="otter-face" src="./image/otter_face_end.png" alt="">
             <div class="folder_main">
                 <div class="calendar">
                     <div class="calendar-header"></div>
@@ -251,20 +250,9 @@ finally {
                         </table>
                     </div>
                 </div>
-                <div class="memo">
-                    <h2>MEMO</h2>
-                    <div class="memo-board">
-                        <div class="memo-textarea">
 
-                        </div>
-                        <div class="text-button">
-                            <form action="">
-                                <input type="text" name="memo-text" class="memo-text" required placeholder="일정 추가하기">
-                                <button class="sudal-button" type="submit" name="memo-text"><img class="sudal-head" src="./image/otter_face_end.png"></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                <?php require_once(ROOT."/memo_list_khs.php"); ?>
+
                 <div class="insert-list">
                     <form action="./update_otter.php" method="post"  enctype="multipart/form-data">
                     <input type="hidden" name="board_no" value="<?php echo $no; ?>">

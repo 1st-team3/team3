@@ -187,6 +187,70 @@ function db_select_boards_title(&$conn, &$array_param) {
     return $result;
 }
 
+function db_select_memos_cnt($conn) {
+   
+    $sql =
+        " SELECT "
+        ."  COUNT(memo_no) as cnt "
+        ." FROM "
+        ."  memos "
+        ." WHERE "
+        ."  deleted_at IS NULL "
+    ;
+
+    $stmt = $conn->query($sql);
+    $result = $stmt->fetchAll();
+    
+    return (int)$result[0]["cnt"];
+}
+
+
+function db_select_memo_no(&$conn, &$array_param) {
+    $sql =
+        " SELECT "
+        ."  memo_no  "
+        ."  ,memo_content "
+        ."  ,created_at  "
+        ."  , memo_chkbox "
+        ."FROM      "
+        ."  memos "
+        ."WHERE "
+        ."  memo_no = :memo_no "
+;
+
+    // Query 실행
+    $stmt = $conn-> prepare($sql);
+    $stmt->execute($array_param);
+    $result = $stmt->fetchAll();
+
+    // 리턴
+    return $result;   
+
+}
+
+function db_select_memos_all(&$conn) {
+
+    $sql =
+        " SELECT "
+        ."  memo_no "
+        ." ,memo_content "
+        ." ,memo_chkbox "
+        ." ,created_at "
+        ." FROM "
+        ."  memos "
+        ." WHERE "
+        ."  deleted_at IS NULL "
+        ." ORDER BY  "
+        ."  memo_no DESC "
+    ;
+    
+    $stmt = $conn->query($sql);
+    $result = $stmt->fetchAll();
+
+    return $result;
+}
+
+
 function db_memo_insert(&$conn, &$array_param) {
     $sql = 
         " INSERT INTO memos( "
@@ -195,7 +259,7 @@ function db_memo_insert(&$conn, &$array_param) {
         ." VALUES( "
         ." :memo_content "
         ." ) "
-        ;
+    ;
 
     // Query 실행
     $stmt = $conn->prepare($sql);
@@ -203,6 +267,25 @@ function db_memo_insert(&$conn, &$array_param) {
 
 
     // 리턴
+    return $stmt->rowCount();
+
+}
+
+function db_memo_delete(&$conn, &$array_param) {
+        // SQL
+        $sql =
+        " UPDATE memos"
+        ." SET "
+        ."  deleted_at = NOW() "
+        ." WHERE "
+        ."  memo_no = :memo_no "
+    ;
+
+    // Query 실행
+    $stmt = $conn->prepare($sql);
+    $stmt->execute($array_param);
+
+    // return 
     return $stmt->rowCount();
 
 }

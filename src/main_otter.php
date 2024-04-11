@@ -18,7 +18,7 @@ require_once(FILE_LIB_DB); // DB관련 라이브러리
     <div class="container">
         <div class="side">
             <div class="icon_1"><a href="./delete_otter.php"></a></div>
-            <div class="icon_2"><a href="./list_otter.php"></a></div>
+            <div class="icon_2"><a href="./list_otter_sbw.php"></a></div>
         </div>
 </body>
 </html>

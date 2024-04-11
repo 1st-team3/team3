@@ -5,6 +5,8 @@ require_once(FILE_LIB_DB);
 try {
     $conn = my_db_conn();
 
+    $current_url = $_SERVER['REQUEST_URI'];   
+
     $result_memo = db_select_memos_all($conn);
 } catch (\Throwable $e) {
     echo $e->getMessage();

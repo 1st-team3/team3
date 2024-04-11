@@ -3,9 +3,14 @@
 require_once( $_SERVER["DOCUMENT_ROOT"]."/config_khs.php");
 require_once(FILE_LIB_DB); 
 
-if(REQUEST_METHOD === "POST") {
+
   try{
-    
+    $conn = my_db_conn(); 
+
+    if(REQUEST_METHOD === "POST") {
+
+      $previous_page = $_SERVER['HTTP_REFERER'];
+
     $content = isset($_POST["memo_content"]) ? trim($_POST["memo_content"]) : ""; 
     
     $arr_err_param = [];
@@ -15,11 +20,7 @@ if(REQUEST_METHOD === "POST") {
     if(count($arr_err_param) > 0 ){
       throw new Exception("errrrrrr");
     }
-
    
-    $conn = my_db_conn(); 
-
-    
     $conn->beginTransaction();
     
     
@@ -35,8 +36,9 @@ if(REQUEST_METHOD === "POST") {
     $conn->commit();
 
     
-    header("Location: insert_otter.php");
+    header("Location:  $previous_page");
     exit;
+  }
 
   } catch (\Throwable $e) {
     if(!empty($conn)){
@@ -50,7 +52,6 @@ if(REQUEST_METHOD === "POST") {
       $conn = null;
     }
   }
-}
 
 
 

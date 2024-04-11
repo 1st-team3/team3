@@ -1,76 +1,79 @@
 <?php
-require_once( $_SERVER["DOCUMENT_ROOT"]."/config_khs.php"); 
-require_once(FILE_LIB_DB); 
-$list_cnt = 8; 
-$page_num = 1; 
+    require_once( $_SERVER["DOCUMENT_ROOT"]."/config_khs.php"); 
+    require_once(FILE_LIB_DB); 
+    $list_cnt = 8; 
+    $page_num = 1; 
 
-    // GET으로 넘겨 받은 year값이 있다면 넘겨 받은걸 year변수에 적용하고 없다면 현재 년도
-    $year = isset($_GET['year']) ? $_GET['year'] : date('Y');
-    // GET으로 넘겨 받은 month값이 있다면 넘겨 받은걸 month변수에 적용하고 없다면 현재 월
-    $month = isset($_GET['month']) ? $_GET['month'] : date('m');
+    try{
+        $conn = my_db_conn();
 
-    $first_date = "$year-$month-01"; // 현재 날짜의 1일
-    $time = strtotime($first_date); // 현재 날짜의 타임스탬프
-    $start_week = date('w', $time); // 1. 시작 요일
-    $total_day = date('t', $time); // 2. 현재 달의 총 날짜
-    $total_week = ceil(($total_day + $start_week) / 7);  // 3. 현재 달의 총 주차 (현재 요일부터 요일수를 구한뒤 7로 나눔 ($start_week = 일 = 0 월 = 1 ... 토 = 6))
+        if(REQUEST_METHOD === "GET") {
+            $page_num = isset($_GET["page"]) ? $_GET["page"] : $page_num;
+
+            // GET으로 넘겨 받은 year값이 있다면 넘겨 받은걸 year변수에 적용하고 없다면 현재 년도
+            $year = isset($_GET['year']) ? $_GET['year'] : date('Y');
+            // GET으로 넘겨 받은 month값이 있다면 넘겨 받은걸 month변수에 적용하고 없다면 현재 월
+            $month = isset($_GET['month']) ? $_GET['month'] : date('m');
+
+            $date = "$year-$month-01"; // 현재 날짜의 1일
+            $time = strtotime($date); // 현재 날짜의 타임스탬프
+            $start_week = date('w', $time); // 1. 시작 요일
+            $total_day = date('t', $time); // 2. 현재 달의 총 날짜
+            $total_week = ceil(($total_day + $start_week) / 7);  // 3. 현재 달의 총 주차 (현재 요일부터 요일수를 구한뒤 7로 나눔 ($start_week = 일 = 0 월 = 1 ... 토 = 6))
 
 
-    // 현재 날짜 표시하기
-    $now_year = date("Y"); // 현재 연도
-    $now_month = date("n"); // 현재 월
-    $now_day = date("d"); // 현재 일
-    $is_now_month = ($year == $now_year && $month == $now_month); // 현재 년도와 달이 맞는지 확인
+            // 현재 날짜 표시하기
+            $now_year = date("Y"); // 현재 연도
+            $now_month = date("n"); // 현재 월
+            $now_day = date("d"); // 현재 일
+            $is_now_month = ($year == $now_year && $month == $now_month); // 현재 년도와 달이 맞는지 확인
 
-try{
-    $conn = my_db_conn();
+            $date = isset($_GET["date"]) ? $_GET["date"] : $date;
+            $month = str_pad($month, 2, '0', STR_PAD_LEFT); // 한 자리 숫자를 왼쪽에 0을 추가하여 두 자리 숫자로 만듦
+            $date = str_pad($date, 2, '0', STR_PAD_LEFT); // 한 자리 숫자를 왼쪽에 0을 추가하여 두 자리 숫자로 만듦
+            $days = "$year-$month-$date";
+            $start_date = "";
+            $end_date = "";
 
-    if(REQUEST_METHOD === "GET") {
-        $page_num = isset($_GET["page"]) ? $_GET["page"] : $page_num;
+            if(isset($_GET["date"])) {
+                $start_date = $year.$month.$date."000000";
+                $end_date = $year.$month.$date."235959";
+            }
 
-        $date = isset($_GET["date"]) ? $_GET["date"] : 1;
-        $month = str_pad($month, 2, '0', STR_PAD_LEFT); // 한 자리 숫자를 왼쪽에 0을 추가하여 두 자리 숫자로 만듦
-        $date = str_pad($date, 2, '0', STR_PAD_LEFT); // 한 자리 숫자를 왼쪽에 0을 추가하여 두 자리 숫자로 만듦
-        $days = "$year-$month-$date";
-        $start_date = "";
-        $end_date = "";
-
-        if(isset($_GET["date"])) {
-            $start_date = $year.$month.$date."000000";
-            $end_date = $year.$month.$date."235959";
-        }
-
-        $arr_param = [
-            "start" => $start_date,
-            "end" => $end_date
-        ];
-        
-        
-        $result_board_cnt = db_select_boards_cnt($conn, $arr_param);
-        
-        $max_page_num = ceil($result_board_cnt / $list_cnt);   
-        $offset = $list_cnt * ($page_num - 1); 
-        $prev_page_num = ($page_num -1) < 1 ? 1 : ($page_num - 1) ; 
-        $next_page_num = ($page_num + 1) > $max_page_num  ? $max_page_num : ($page_num + 1); // 다음 버튼 페이지 번호
-    
-        $arr_param = [
-            "start" => $start_date
-            ,"end" => $end_date
-            ,"list_cnt" => $list_cnt
-            ,"offset" => $offset
-        ];  
+            $arr_param = [
+                "start" => $start_date,
+                "end" => $end_date
+            ];
             
-        $result = db_select_boards_title($conn, $arr_param);
+            
+            $result_board_cnt = db_select_boards_cnt($conn, $arr_param);
+            
+            $max_page_num = ceil($result_board_cnt / $list_cnt);   
+            $offset = $list_cnt * ($page_num - 1); 
+            $prev_page_num = ($page_num -1) < 1 ? 1 : ($page_num - 1) ; 
+            $next_page_num = ($page_num + 1) > $max_page_num  ? $max_page_num : ($page_num + 1); // 다음 버튼 페이지 번호
+        
+            $arr_param = [
+                "start" => $start_date
+                ,"end" => $end_date
+                ,"list_cnt" => $list_cnt
+                ,"offset" => $offset
+            ];  
+                
+            $result = db_select_boards_title($conn, $arr_param);
 
     }
 
     if (REQUEST_METHOD === "POST") {
 
+    // GET으로 넘겨 받은 year값이 있다면 넘겨 받은걸 year변수에 적용하고 없다면 현재 년도
+    $post_year = isset($_POST['year']) ? $_POST['year'] : date('Y');
+    // GET으로 넘겨 받은 month값이 있다면 넘겨 받은걸 month변수에 적용하고 없다면 현재 월
+    $post_month = isset($_POST['month']) ? $_POST['month'] : date('m');
+    $post_date = isset($_POST['date']) ? $_POST['date'] : date('n');
+
     $board_no = isset($_POST["board_no"]) ? $_POST["board_no"] : "";
     $page = isset($_POST["page"]) ? $_POST["page"] : ""; 
-    $post_year = isset($_POST["year"]) ? $_POST["year"] : "";
-    $post_month = isset($_POST["month"]) ? $_POST["month"] : "";
-    $post_date = isset($_POST["date"]) ? $_POST["date"] : "";
 
    
     $arr_err_param = [];
@@ -90,7 +93,9 @@ try{
        "board_no" => $board_no
    ];
    $conn->beginTransaction();
+
    $result = db_list_update_no($conn, $arr_param);    
+   
    $conn->commit();
 
    header("Location: list_otter_khs.php?year=" . $post_year . "&month=" . $post_month . "&date=" . $post_date . "&page=" . $page . "#list" . $board_no);
@@ -211,6 +216,11 @@ try{
                                     <button type="submit" class="btn-update" id="input_listt<?php echo $item["board_no"];?>"></button>
                                     <label class="input_label" for="input_listt<?php echo $item["board_no"]; ?>"><?php echo $item["board_chkbox"] === 1 ? "<span>✔</span>": "" ?></label>
                                     <input class="text_box <?php echo $item["board_chkbox"] === 1 ? "strikethrough" : "" ?>" type="text" id="text_box_<?php echo $item["board_no"]; ?>" value="<?php echo $item["board_title"]; ?>" required> 
+                                    <?php 
+                                        echo '<input type="hidden" name="year" value="' . $year . '">';
+                                        echo '<input type="hidden" name="month" value="' . $month . '">';
+                                        echo '<input type="hidden" name="date" value="' . $date . '">'; 
+                                    ?>
                                 </form>
                             </div>
                         <?php } ?>

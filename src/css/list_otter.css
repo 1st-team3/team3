@@ -21,6 +21,10 @@
     flex-direction: column;
     height: 100%;
     grid-template-columns: 180px 1fr;
+    /* position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; */
 }
 .icon {
     background-image: url("../image/209_2-1.png");
@@ -223,6 +227,8 @@ input:focus {
     background-color: #4A6B74;
     width: 777px;
     height: 680px;
+    position: relative;
+    text-align: center;
 }
 .header{
     display: flex;
@@ -263,15 +269,34 @@ input:focus {
     align-items: center;
 }
 .text_box{
+    background-color: #fff;
     width: 650px;
     color: #4A6B74;
     font-weight: 700;
     font-size: 1.5rem;
     padding-left: 10px;
     margin-left: 10px;
-    pointer-events: none;
     flex: 1;
+    text-align: left;
 }
+
+.strikethrough {
+    text-decoration: line-through;
+    color: #7697a0;
+}
+
+a.text_box {
+    text-decoration: none; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.text_box.strikethrough {
+    text-decoration: line-through;
+    color:  #7697a0;
+}
+
 .input_list{
     margin-right: 10px;     
     width: 20px;
@@ -300,10 +325,11 @@ input:focus {
 }
 
 .main-bottom {
-    margin-top: auto;
-    display: flex; 
-    justify-content: center;
-    align-items: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #4A6B74;
+    padding: 10px;
 }
 .main-bottom > a {
     text-decoration: none;
@@ -430,7 +456,3 @@ span{
     background-color: #4A6B74; /* 취소선 색상 */
 
 
-.strikethrough {
-    text-decoration: line-through;
-    color:  #7697a0;
-}

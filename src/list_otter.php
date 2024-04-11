@@ -78,7 +78,7 @@
                         <div class="folder_title_x"><a href="./main_otter.html" class="X_btn">X</a></div>
                     </div>
                     <div class="folder_back">
-                        <div class="folder_back_btn"><a href="" class="back_btn">◁</a></div>
+                        <div class="folder_back_btn"><a href="./list_otter.php" class="back_btn">◁</a></div>
                         <div class="folder_back_square"></div>
                     </div>
                 </div>
@@ -153,7 +153,9 @@
                                     <input type="hidden" name="page" value=<?php echo $page_num; ?>>
                                     <button type="submit" class="btn-update" id="input_listt<?php echo $item["board_no"];?>"></button>
                                     <label class="input_label" for="input_listt<?php echo $item["board_no"]; ?>"><?php echo $item["board_chkbox"] === 1 ? "<span>✔</span>": "" ?></label>
-                                    <input class="text_box <?php echo $item["board_chkbox"] === 1 ? "strikethrough" : "" ?>" type="text" id="text_box_<?php echo $item["board_no"]; ?>" value="<?php echo $item["board_title"]; ?>" required> 
+                                    <a href="./detail_otter.php?board_no=<?php echo $item["board_no"]; ?>&page=<?php echo $page_num ; ?>" class="text_box <?php echo $item["board_chkbox"] === 1 ? "strikethrough" : ""; ?>" id="text_box_<?php echo $item["board_no"]; ?>">
+                                        <?php echo $item["board_title"]; ?>
+                                    </a>
                                 </form>
                             </div>
                         <?php } ?>

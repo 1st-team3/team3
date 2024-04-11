@@ -121,7 +121,7 @@
                     </div>
                 </div>
                 <div class="folder_back">
-                    <div class="folder_back_btn"><a href="" class="back_btn">◁</a></div>
+                    <div class="folder_back_btn"><a href="./list_otter.php?board_no=<?php echo $no ?>&page=<?php echo $page ?>" class="back_btn">◁</a></div>
                     <div class="folder_back_square"></div>
                 </div>
             </div>
@@ -220,7 +220,7 @@
                         
                        
                         
-                        <a href="./detail_otter.php?board_no=<?php if($prev_btn_result !== null){ echo $prev_btn_result; } if($no == $min_board_no){ echo $min_board_no; }?>&page=<?php echo $page ?>" class="prevbtn">◁</a>
+                        <a href="./detail_otter.php?year=<?php echo $year ?>&month=<?php echo $month ?>&board_no=<?php if($prev_btn_result !== null){ echo $prev_btn_result; } if($no == $min_board_no){ echo $min_board_no; }?>&page=<?php echo $page ?>" class="prevbtn">◁</a>
 
                         <a href="./update_otter.php?board_no=<?php echo $no ?>&page=<?php echo $page ?>" class="updatebtn">수정</a>
 
@@ -230,7 +230,7 @@
                         </form>
 
                     
-                        <a href="./detail_otter.php?board_no=<?php if($next_btn_result !== null){ echo $next_btn_result; } if($no == $max_board_no){ echo $max_board_no; } ?>&page=<?php echo $page ?>" class="nextbtn">▷</a>
+                        <a href="./detail_otter.php?year=<?php echo $year ?>&month=<?php echo $month ?>&board_no=<?php if($next_btn_result !== null){ echo $next_btn_result; } if($no == $max_board_no){ echo $max_board_no; } ?>&page=<?php echo $page ?>" class="nextbtn">▷</a>
                         
 
                     </div>

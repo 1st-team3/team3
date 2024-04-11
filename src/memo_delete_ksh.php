@@ -77,10 +77,15 @@ if(count($result_board) !== 1) {
         throw new Exception("Delete memos no count");
     }
 
+    // 이전페이지
+    if(isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER'])){
+        $previous_page = $_SERVER['HTTP_REFERER'];
+    }
+
     // commit
     $conn->commit();
     
-    header("Location: detail_otter.php?board_no=" . $board_no . "&page=" . $page);
+    header("Location: " . $previous_page);
 
 }   catch (\Throwable $e) {
     if(!empty($conn) && $conn->inTransaction()) {

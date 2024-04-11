@@ -118,7 +118,7 @@ if (REQUEST_METHOD === "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./css/insert_otter.css">
+    <link rel="stylesheet" href="./css/otter_insert.css">
 </head>
 <body>
     <div class="container">

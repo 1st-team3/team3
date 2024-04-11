@@ -129,9 +129,9 @@
                     <?php $created_at = $item["created_at"]; // 예시 데이터베이스에서 날짜 정보를 가져온다고 가정
                     // 가져온 날짜 정보를 이용하여 연도와 월을 추출합니다.
                     $day = date('j', strtotime($created_at));
-                    $month = date('n', strtotime($created_at));
+                    $mon = date('n', strtotime($created_at));
                     // BACK_BTN의 링크에 GET 파라미터를 추가합니다.
-                    $back_btn_link = "./list_otter.php?year=$year&month=$month&date=$day";
+                    $back_btn_link = "./list_otter.php?year=$year&month=$mon&date=$day";
                     ?>
 
                     <div class="folder_back_btn"><a href="<?php echo $back_btn_link; ?>" class="back_btn">◁</a></div>

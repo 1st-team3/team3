@@ -179,7 +179,7 @@
                     <div class="insert-list">
                             <div class="header">
                                 <div class="todaylist">오늘 할 일</div>
-                                <a href="./insert.php">작성하기</a>
+                                <a href="./insert_otter.php">작성하기</a>
                             </div>
 
                         <?php foreach ($result as $item){ ?>  

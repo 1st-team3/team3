@@ -13,7 +13,6 @@ if(REQUEST_METHOD === "POST") {
       $arr_err_param[] ="memo_content";
     }
     if(count($arr_err_param) > 0 ){
-
       throw new Exception("errrrrrr");
     }
 
@@ -29,7 +28,6 @@ if(REQUEST_METHOD === "POST") {
     ];
     $result_memo = db_memo_insert($conn, $arr_param);
 
-    
     if($result_memo !== 1) {
       throw new Exception("Insert memos count");
     }

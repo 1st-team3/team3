@@ -11,3 +11,4 @@ function readURL(input) {
         document.getElementById('preview').src = "";
     }
 }
+

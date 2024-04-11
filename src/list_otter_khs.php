@@ -53,17 +53,6 @@
             $prev_page_num = ($page_num -1) < 1 ? 1 : ($page_num - 1) ; 
             $next_page_num = ($page_num + 1) > $max_page_num  ? $max_page_num : ($page_num + 1); // 다음 버튼 페이지 번호
         
-            // $arr_param = [
-            //     "list_cnt" => $list_cnt
-            //     ,"offset" => $offset
-            //     ,"start" => $start_date
-            //     ,"end" => $end_date
-            // ];
-            
-            // $result = db_select_boards_paging($conn, $arr_param);
-
-                // 예외 처리
-
             $arr_param = [
                 "start" => $start_date
                 ,"end" => $end_date
@@ -91,7 +80,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>문서</title>
-        <link rel="stylesheet" href="./css/list_otter.css">
+        <link rel="stylesheet" href="./css/list_otter_khs.css">
     </head>
     <body>
         <div class="container">
@@ -156,7 +145,8 @@
                                                             echo '<a href="./list_otter_khs.php?year=' . $year . '&month=' . $month . '&date=' . $n . '" class="today">' . $n++ . '</a>';
                                                         } else {
                                                             // 다른 날짜에 해당하는 경우
-                                                            echo '<a href="./list_otter_khs.php?year=' . $year . '&month=' . $month . '&date=' . $n . '" class="day-button">' . $n++ . '</a>';
+                                                            echo '<a href="./list_otter_khs.php?year=' . $year . '&month=' . $month . '&date=' . $n . '" class="day-button' . (($date == $n) ? ' selected' : '') . '">' . $n++ . '</a>';
+
                                                         }
                                                         echo '<input type="hidden" name="year" value="' . $year . '">';
                                                         echo '<input type="hidden" name="month" value="' . $month . '">';
@@ -189,8 +179,7 @@
                     <div class="insert-list">
                             <div class="header">
                                 <div class="todaylist">오늘 할 일</div>
-                                <!-- <button type="submit">작성하기</button> -->
-                                <a href="./insert.php">작성하기</a>
+                                <a href="./insert_otter.php">작성하기</a>
                             </div>
 
                         <?php foreach ($result as $item){ ?>  

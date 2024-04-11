@@ -3,8 +3,6 @@
 require_once( $_SERVER["DOCUMENT_ROOT"]."/config_sbw.php"); // 설정 파일 호출																		
 require_once(FILE_LIB_DB); // DB관련 라이브러리
 
-// $page_num = 1; // 페이지 번호 초기화
-
 try {
     // DB Connect
     $conn = my_db_conn(); // connection 함수 호출
@@ -12,57 +10,10 @@ try {
     if(REQUEST_METHOD === "GET") {
     // 파라미터 획득
     $board_no = isset($_GET["board_no"]) ? $_GET["board_no"] : ""; // no 획득
-
-    // 파라미터 예외처리
-    // $arr_err_param = [];
-    // if( $board_no === "") {
-    //     $arr_err_param[] = "board_no";
-    // }
-    //   if(count($arr_err_param) > 0) {
-    //     throw new Exception("Parameter Error : ".implode(",", $arr_err_param));
-    //   }
-    
-    var_dump($board_no);
-
-    // 삭제된 파일 불러오기
-    $result_board_cnt = db_select_delete_boards_cnt($conn);
-    
+    // var_dump($board_no);
     // 삭제된 파일 정보 불러오기
-    $result = db_select_delete_boards_list($conn, $arr_param);
-
-    } else if (REQUEST_METHOD === "POST") {
-        // 파라미터 획득
-          $board_no = isset($_POST["board_no"]) ? $_POST["board_no"] : "";
-          $arr_err_param = [];
-          if($board_no === ""){
-              $arr_err_param[] = "board_no";
-          }
-          if(count($arr_err_param) > 0) {
-              throw new Exception("Parameter Error : ".implode(",", $arr_err_param));
-          }
-  
-          //Transaction 시작
-          $conn->beginTransaction();
-  
-          // 게시글 정보 삭제
-          $arr_param = [
-              "board_no" => $board_no
-          ];
-          $result = db_restore_boards($conn, $arr_param);
-  
-          // 복구 예외 처리
-          if($result !== 1 ){
-              throw new Exception("Restore Boards no count");
-          }
-  
-          // commmit
-          $conn->commit();
-          header("Location: delete_otter.php");
-          exit;
-      }
-    
-
-
+    $result = db_boards_select_delete_list($conn);
+    }
 } catch (\Throwable $err) {
     echo $err->getMessage();
     exit;
@@ -72,6 +23,8 @@ try {
         $conn = null;
     }
 }
+
+
 ?>
 
 
@@ -99,7 +52,7 @@ try {
                     </div>
                 </div>
                 <div class="folder_back">
-                    <div class="folder_back_btn">◁</div>
+                    <div class="folder_back_btn"><a href="#" class="back_btn">◁</a></div>
                     <div class="folder_back_square"></div>
                 </div>
             </div>
@@ -116,29 +69,29 @@ try {
 
 
                             <div class="icon_item_title">
-                                <div class="icon_item_title1">title</div>
+                                <div class="icon_item_title1">제목</div>
                                 <div class="icon_item_title2"><?php echo $item["board_title"] ?> </div>
                             </div>
                             <div class="icon_item_content">
-                                <div class="icon_item_content1">content</div>
+                                <div class="icon_item_content1">내용</div>
                                 <div class="icon_item_content2" ><?php echo $item["board_content"] ?></div>
                             </div>
                             <div class="icon_item_deleted">
-                                <div class="icon_item_deleted1">deleted</div>
+                                <div class="icon_item_deleted1">삭제일</div>
                                 <div class="icon_item_deleted2"><?php echo $item["deleted_at"] ?></div>
                             </div>
 
 
 
                             <div class="form_btn">
-                                <form action="./delete_otter.php" method="POST">
-                                    <input type="hidden" name="board_no" value="<?php echo $board_no; ?>">
-                                    <button type="submit">복구</button>
+                                <form action="./delete_otter_restore.php" method="POST">
+                                    <input type="hidden" name="board_no" value="<?php echo $item["board_no"]; ?>">
+                                    <button class="form_btn_restore" type="submit">복구</button>
                                 </form>
-                                <form action="" method="POST">
+                                <form  action="./delete_otter_delete.php" method="POST">
                                     <ul>
-                                        <button type="submit">삭제</button>
-                                        <input type="hidden" name="" value="">
+                                        <button class="form_btn_delete" type="submit">삭제</button>
+                                        <input type="hidden" name="board_no" value="<?php echo $item["board_no"]; ?>">
                                         <li><strong style="color: red;">※주의!!</strong><br>삭제하면 영원히 복구할 수 없습니다.</li>
                                     </ul>
                                 </form>
@@ -153,14 +106,12 @@ try {
 
                 </div>
             </div>
-            전체삭제 버튼
-            <!-- TODO : 주의 메세지 위치 수정 필요 -->
-            <!-- <form action="" method="POST">
-                <ul class="ul_1">
-                    <button type="submit">전체 삭제</button>
-                    <li class="li_1"><strong style="color: red;">※주의!!</strong><br>삭제하면 영원히 복구할 수 없습니다.</li>
-                </ul>
-            </form> -->
+                <form class="form_margin" action="./delete_otter_all_delete.php" method="POST">
+                    <ul>
+                        <button class="form_btn_all_delete" type="submit">전체 삭제</button>
+                        <li><strong style="color: red;">※주의!!</strong>&nbsp삭제하면 영원히 복구할 수 없습니다.</li>
+                    </ul>
+                </form>
         </div>
     </div>
     <!-- <div class="folder_header">

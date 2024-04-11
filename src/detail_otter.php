@@ -2,9 +2,8 @@
     require_once($_SERVER["DOCUMENT_ROOT"]."/config3.php"); 
     require_once(FILE_LIB_DB); 
     
-    
     try {
-        // DB connect
+        
         $conn = my_db_conn(); // PDO 인스턴스 생성
         
         // 게시글 데이터 조회
@@ -79,12 +78,7 @@
             $conn = null;
         }
     }
-    
-          
-
 ?>
-
-
 <?php
 	// GET으로 넘겨 받은 year값이 있다면 넘겨 받은걸 year변수에 적용하고 없다면 현재 년도
 	$year = isset($_GET['year']) ? $_GET['year'] : date('Y');
@@ -105,13 +99,12 @@
     $is_current_month = ($year == $current_year && $month == $current_month); // 현재 날짜가 속한 년도와 월을 확인하여 현재 달인지를 판단합니다.
 	
 ?>
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail page</title>
+    <title>디테일 페이지</title>
     <link rel="stylesheet" href="./css/detail_otter.css">
 </head>
 <body>
@@ -124,7 +117,7 @@
             <div class="folder_1">
                 <div class="folder_title">
                     <div class="folder_title_circle"></div>
-                    <div class="folder_title_x"><a href="./main_otter.html" class="X_btn">X</a>
+                    <div class="folder_title_x"><a href="./main_otter.php" class="X_btn">X</a>
                     </div>
                 </div>
                 <div class="folder_back">
@@ -132,7 +125,7 @@
                     <div class="folder_back_square"></div>
                 </div>
             </div>
-            <button class="sudalbutton" type="submit"><img class="sudal-head" src="../image/otter_face_end.png"></button>
+            <button class="sudalbutton sb2" type="submit"><img class="sudal-head" src="../image/otter_face_end.png"></button>
             <div class="folder_main">
             <div class="calendar">
                     <div class="calendar-header"></div>
@@ -155,8 +148,6 @@
                             <!-- 이번 년 다음 월 -->
                             <a class="calendar-day" href="./detail_otter.php?year=<?php echo $year ?>&month=<?php echo $month+1 ?>&board_no=<?php echo $no ?>&page=<?php echo $page ?>"><img src="./image/right.png" alt=""></a>
                         <?php }; ?>
-
-
                         <table>
                             <tr>
                                 <th>일</th> 
@@ -166,8 +157,8 @@
                                 <th>목</th> 
                                 <th>금</th> 
                                 <th>토</th>
+                                
                             </tr> 
-
                             <!-- 총 주차를 반복합니다. -->
                             <?php for ($n = 1, $i = 0; $i < $total_week; $i++){ ?> 
                                 <tr> 
@@ -192,7 +183,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="memo">
+                <!-- <div class="memo">
                     <h2>MEMO</h2>
                     <div class="memo-board">
                         <div class="memo-textarea">
@@ -204,11 +195,15 @@
                             </form>
                         </div>
                     </div>
-                </div>
+                </div> -->
+
+                <?php require_once(ROOT."/memo_list_ksh.php"); ?>
+                <?php foreach ($result as $item){ ?>  
                 <div class="insert-list">
                     <div class="insert-main">
                         <div class="insert-header">
                         <div class="line-content"><?php echo $item["board_title"] ?></div>
+                        <div class=""><?php echo $item["created_at"] ?></div>
                         </div>
                         <div class="insert-middle">
 
@@ -217,7 +212,8 @@
  
                                 <!-- 이미지 출력 -->
                                 <?php echo '<img src="' . $item["board_img"] . '"><br>' . $item["board_content"]; ?>
-                  
+                                
+                                
                         </div>
                     </div>
                     <div class="insert-footer">
@@ -242,6 +238,7 @@
             </div>
         </div>
     </div>
+    <?php } ?>
     <!-- <div class="folder_header">
         <div class="folder_header_otter4"></div>
         <div class="folder_header_otter4"></div>

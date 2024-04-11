@@ -83,3 +83,52 @@ function db_boards_all_delete($conn) {
 
     return $stmt->rowCount();
 }
+
+
+
+
+
+
+
+
+// list 관련 작업 04/11
+
+
+function db_select_boards_all($conn) {
+    
+    $sql =
+        " SELECT "
+        ."  board_no "
+        ." FROM "
+        ."  boards "
+        ." WHERE "
+        ."  deleted_at IS NULL "
+    ;
+    
+    $stmt = $conn->query($sql);
+    $result = $stmt->fetchAll();
+
+    return $result;
+}
+
+function a(&$conn, &$array_param) {
+
+    $sql =
+        " SELECT "
+        ."  board_no "
+        ." FROM "
+        ."  boards "
+        ." WHERE "
+        ."  deleted_at IS NULL "
+        ."  AND board_no = :board_no "
+    ;
+
+// Query 실행
+$stmt = $conn-> prepare($sql);
+$stmt->execute($array_param);
+$result = $stmt->fetchAll();
+
+// 리턴
+return $result;   
+
+}

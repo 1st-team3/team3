@@ -162,8 +162,6 @@ function db_select_boards_title(&$conn, &$array_param) {
     if(isset($array_param["start"] ) && isset($array_param["end"])) {
         $add_date = " and created_at between :start and :end ";
     }
-
-
     $sql =
         " SELECT "
         ." board_no "
@@ -179,13 +177,12 @@ function db_select_boards_title(&$conn, &$array_param) {
         ."  board_no DESC "
         ." LIMIT :list_cnt OFFSET :offset "
     ;
-    
     $stmt = $conn->prepare($sql);
     $stmt->execute($array_param);
     $result = $stmt->fetchAll();
-    
     return $result;
 }
+
 
 function db_select_memos_cnt($conn) {
    

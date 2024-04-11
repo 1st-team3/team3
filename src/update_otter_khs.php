@@ -1,29 +1,27 @@
 <?php 
 require_once( $_SERVER["DOCUMENT_ROOT"]."/config_khs.php"); // 설정 파일 호출
 require_once(FILE_LIB_DB);
-
-
-// GET으로 넘겨 받은 year값이 있다면 넘겨 받은걸 year변수에 적용하고 없다면 현재 년도
-$year = isset($_GET['year']) ? $_GET['year'] : date('Y');
-// GET으로 넘겨 받은 month값이 있다면 넘겨 받은걸 month변수에 적용하고 없다면 현재 월
-$month = isset($_GET['month']) ? $_GET['month'] : date('m');
-
-$date = "$year-$month-01"; // 현재 날짜의 1일
-$time = strtotime($date); // 현재 날짜의 타임스탬프
-$start_week = date('w', $time); // 1. 시작 요일
-$total_day = date('t', $time); // 2. 현재 달의 총 날짜
-$total_week = ceil(($total_day + $start_week) / 7);  // 3. 현재 달의 총 주차 (현재 요일부터 요일수를 구한뒤 7로 나눔 ($start_week = 일 = 0 월 = 1 ... 토 = 6))
-
-// 현재 날짜 표시하기
-$now_year = date("Y"); // 현재 연도
-$now_month = date("n"); // 현재 월
-$now_day = date("d"); // 현재 일
-$is_now_month = ($year == $now_year && $month == $now_month); // 현재 년도와 달이 맞는지 확인
 	
 
 try {
   // DB Connect
   $conn = my_db_conn(); // PDO 인스턴스 생성
+
+  $year = isset($_GET['year']) ? $_GET['year'] : date('Y');
+  // GET으로 넘겨 받은 month값이 있다면 넘겨 받은걸 month변수에 적용하고 없다면 현재 월
+  $month = isset($_GET['month']) ? $_GET['month'] : date('m');
+
+  $date = "$year-$month-01"; // 현재 날짜의 1일
+  $time = strtotime($date); // 현재 날짜의 타임스탬프
+  $start_week = date('w', $time); // 1. 시작 요일
+  $total_day = date('t', $time); // 2. 현재 달의 총 날짜
+  $total_week = ceil(($total_day + $start_week) / 7);  // 3. 현재 달의 총 주차 (현재 요일부터 요일수를 구한뒤 7로 나눔 ($start_week = 일 = 0 월 = 1 ... 토 = 6))
+
+  // 현재 날짜 표시하기
+  $now_year = date("Y"); // 현재 연도
+  $now_month = date("n"); // 현재 월
+  $now_day = date("d"); // 현재 일
+  $is_now_month = ($year == $now_year && $month == $now_month); // 현재 년도와 달이 맞는지 확인
       
   if(REQUEST_METHOD === "GET") {
       
@@ -208,10 +206,10 @@ finally {
                         <!-- 현재가 12월이라 다음 달이 내년 1월인경우 -->
                         <?php if ($month == 12){ ?>
                             <!-- 내년 1월 -->
-                            <a class="calendar-day" href="./update_otter.php?board_no=<?php echo $no ?>&page=<?php echo $page ?>&year=<?php echo $year+1 ?>&month=1"><img src="./image/right.png" alt=""></a>
+                            <a name="memo-month" class="calendar-day" href="./update_otter.php?board_no=<?php echo $no ?>&page=<?php echo $page ?>&year=<?php echo $year+1 ?>&month=1"><img src="./image/right.png" alt=""></a>
                         <?php }else{ ?>
                             <!-- 이번 년 다음 월 -->
-                            <a class="calendar-day" href="./update_otter.php?board_no=<?php echo $no ?>&page=<?php echo $page ?>&year=<?php echo $year ?>&month=<?php echo $month+1 ?>"><img src="./image/right.png" alt=""></a>
+                            <a name="memo-month" class="calendar-day" href="./update_otter.php?board_no=<?php echo $no ?>&page=<?php echo $page ?>&year=<?php echo $year ?>&month=<?php echo $month+1 ?>"><img src="./image/right.png" alt=""></a>
                         <?php }; ?>
 
 
@@ -284,12 +282,6 @@ finally {
             </div>
         </div>
     </div>
-    <!-- <div class="folder_header">
-        <div class="folder_header_otter4"></div>
-        <div class="folder_header_otter4"></div>
-        <div class="folder_header_otter4"></div>
-        <div class="folder_header_otter4"></div>
-    </div> -->
 </body>
 <script src="./js/img.js"></script>
 </html>

@@ -109,53 +109,6 @@ if (REQUEST_METHOD === "POST") {
         $conn = null;
     }
 
-    try{
-    
-        $content = isset($_POST["memo_content"]) ? trim($_POST["memo_content"]) : ""; 
-        
-        $arr_err_param = [];
-        if($content === ""){
-          $arr_err_param[] ="memo_content";
-        }
-        if(count($arr_err_param) > 0 ){
-          throw new Exception("errrrrrr");
-        }
-    
-       
-        $conn = my_db_conn(); 
-    
-        
-        $conn->beginTransaction();
-        
-        
-        $arr_param = [
-          "memo_content" => $content
-        ];
-        
-        $result_memo = db_memo_insert($conn, $arr_param);
-        
-        if($result_memo !== 1) {
-          throw new Exception("Insert memos count");
-        }
-        
-        $conn->commit();
-    
-        
-        header("Location: list_otter.php");
-        exit;
-    
-      } catch (\Throwable $e) {
-        if(!empty($conn)){
-          $conn->rollBack();
-        }
-        echo $e->getMessage();
-        exit;
-    
-      } finally {
-        if(!empty($conn)) {
-          $conn = null;
-        }
-      }
 }
 ?>
 
@@ -250,25 +203,9 @@ if (REQUEST_METHOD === "POST") {
                         </table>
                     </div>
                 </div>
-                <div class="memo">
-                    <h2>MEMO</h2>
-                    <div class="memo-board">
-                        <div class="memo-textarea">
-                            <?php foreach ($result_memo as $item){ ?>
-                                <div class="memo_main"><div class="memo_con"><?php echo $item["memo_content"] ?></div>
-                                <form action="memo_delete.php" method="post">
-                                <input type="hidden" name="memo_no" value="<?php echo $item["memo_no"]; ?>">
-                                <button type="submit" class ="divbutton">x</button></form></div>
-                            <?php } ?>
-                        </div>
-                        <div class="text-button">
-                            <form action="./memo_insert.php" method="post" >
-                                <input type="text" class="memo-text" autocomplete="off" name="memo_content">
-                                <button class="sudal-button" type="submit" ><img class="sudal-head" src="../image/otter_face_end.png"></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+
+                <?php require_once(ROOT."/memo_list_khs.php"); ?>
+
                 <div class="insert-list">
                     <form action="./insert_otter.php" method="post" enctype="multipart/form-data">
                         <div class="insert-main">

@@ -43,7 +43,7 @@ try {
         </div>
 
         <div class="text-button">
-            <form action="./memo_insert.php" method="post" >
+            <form action="./memo_insert_ksh.php" method="post" >
                 <input type="text" class="memo-text" autocomplete="off" name="memo_content">
                                     <input type="hidden" name="memo_no" value="<?php echo $item["board_no"]; ?>">
                 <button class="sudal-button" type="submit" ><img class="sudal-head" src="../image/otter_face_end.png"></button>

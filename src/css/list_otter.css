@@ -26,14 +26,17 @@
     left: 0;
     width: 100%; */
 }
-.icon {
-    background-image: url("../image/209_2-1.png");
-    background-size : cover;
-    background-repeat: no-repeat;
-    background-position: center;
+
+.icon-delete {
+    margin: 50px 0px 0px 10px;
     width: 100px;
     height: 100px;
-    padding: 10px;
+}
+
+.icon {
+    margin: 0px 0px 0px 10px;
+    width: 100px;
+    height: 125px;
 }
 
 .folder {
@@ -230,10 +233,12 @@ input:focus {
     position: relative;
     text-align: center;
 }
+
 .header{
     display: flex;
     justify-content: space-between;
 }
+
 .header > a {
     background-color: #4A6B74;
     border: 1px solid white;
@@ -331,6 +336,7 @@ a.text_box {
     background-color: #4A6B74;
     padding: 10px;
 }
+
 .main-bottom > a {
     text-decoration: none;
     color : #fff;
@@ -382,14 +388,6 @@ th {
     font-size: 1.5rem;
     padding-top: 5px;
 }
-
-.calendar-header {
-    background-image: url(../image/header3.png);
-    background-size: contain;
-    margin: auto;
-    width: 100%;
-    height: 30px;
-}
 table {
     grid-column: 1/4;
 }
@@ -405,6 +403,8 @@ td {
     border: none;
     color: #fff;
     cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
 }
 
 .today {
@@ -415,6 +415,8 @@ td {
     border-radius: 100%;
     color: #fff;
     cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
 }
 
 .main-bottom > a:hover {
@@ -459,5 +461,9 @@ span{
 /* .strikethrough {
     text-decoration: line-through;
     color:  #7697a0;
-} */
+}
+*/
 
+.selected {
+    background-color: #000;
+}

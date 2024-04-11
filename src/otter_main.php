@@ -60,7 +60,7 @@ try {
 <body>
     <div class="container">
         <div class="side">
-            <div class="icon_1"><a href="./delete_otter.php"></a></div>
+            <div class="icon_1"><a href="./otter_delete_otter.php"></a></div>
             
             <?php $created_at = $item["created_at"]; // 예시 데이터베이스에서 날짜 정보를 가져온다고 가정
                     // 가져온 날짜 정보를 이용하여 연도와 월을 추출합니다.

@@ -48,7 +48,7 @@ try {
             <div class="folder_1">
                 <div class="folder_title">
                     <div class="folder_title_circle"></div>
-                    <div class="folder_title_x"><a href="./main_otter.php" class="X_btn">X</a>
+                    <div class="folder_title_x"><a href="./otter_main.php" class="X_btn">X</a>
                     </div>
                 </div>
                 <div class="folder_back">

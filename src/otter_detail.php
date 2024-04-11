@@ -121,7 +121,7 @@
             <div class="folder_1">
                 <div class="folder_title">
                     <div class="folder_title_circle"></div>
-                    <div class="folder_title_x"><a href="./main_otter.php" class="X_btn">X</a>
+                    <div class="folder_title_x"><a href="./otter_main.php" class="X_btn">X</a>
                     </div>
                 </div>
                 <div class="folder_back">
@@ -131,7 +131,7 @@
                     $day = date('j', strtotime($created_at));
                     $mon = date('n', strtotime($created_at));
                     // BACK_BTN의 링크에 GET 파라미터를 추가합니다.
-                    $back_btn_link = "./list_otter.php?year=$year&month=$mon&date=$day";
+                    $back_btn_link = "./otter_list.php?year=$year&month=$mon&date=$day";
                     ?>
 
                     <div class="folder_back_btn"><a href="<?php echo $back_btn_link; ?>" class="back_btn">◁</a></div>

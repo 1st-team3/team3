@@ -130,10 +130,10 @@ if (REQUEST_METHOD === "POST") {
             <div class="folder_1">
                 <div class="folder_title">
                     <div class="folder_title_circle"></div>
-                    <div class="folder_title_x"><a href="./main_otter.php" class="X_btn">X</a></div>
+                    <div class="folder_title_x"><a href="./otter_main.php" class="X_btn">X</a></div>
                 </div>
                 <div class="folder_back">
-                    <div class="folder_back_btn"><a href="./list_otter.php" class="back_btn">◁</a></div>
+                    <div class="folder_back_btn"><a href="./otter_list.php" class="back_btn">◁</a></div>
                     <div class="folder_back_square"></div>
                 </div>
             </div>

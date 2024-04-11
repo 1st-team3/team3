@@ -123,18 +123,17 @@ if (REQUEST_METHOD === "POST") {
 <body>
     <div class="container">
         <div class="side">
-            <img class="icon-delete" src="./image/delete_otter.png" alt="">
-            <br>
-            <img class="icon" src="./image/209_2-1.png" alt="">
+            <div class="icon_1"></div>
+            <div class="icon_2"></div>
         </div>
         <div class="folder">
             <div class="folder_1">
                 <div class="folder_title">
                     <div class="folder_title_circle"></div>
-                    <div class="folder_title_x"><a href="./main_otter.html" class="X_btn">X</a></div>
+                    <div class="folder_title_x"><a href="./main_otter.php" class="X_btn">X</a></div>
                 </div>
                 <div class="folder_back">
-                    <div class="folder_back_btn"><a href="" class="back_btn">◁</a></div>
+                    <div class="folder_back_btn"><a href="./list_otter.php" class="back_btn">◁</a></div>
                     <div class="folder_back_square"></div>
                 </div>
             </div>

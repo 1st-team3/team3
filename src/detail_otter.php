@@ -113,9 +113,9 @@
 </head>
 <body>
     <div class="container">
-        <div class="side">
-            <div class="gbicon"></div>
-            <div class="icon"></div>
+    <div class="side">
+            <div class="icon_1"></div>
+            <div class="icon_2"></div>
         </div>
         <div class="folder">
             <div class="folder_1">

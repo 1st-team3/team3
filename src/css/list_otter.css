@@ -27,7 +27,36 @@
     width: 100%; */
 }
 
-.icon-delete {
+.side {
+    display: grid;
+    grid-template-rows: 100px 100px;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.icon_1 {
+    background-image: url("../image/delete_otter.png");
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+}
+.icon_2 {
+    background-image: url("../image/otter_face_end.png");
+    background-size : cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+}
+
+
+/* 아이콘 수정 작업 - 서보원 : 내용 확인후 삭제 */
+/* .icon-delete {
     margin: 50px 0px 0px 10px;
     width: 100px;
     height: 100px;
@@ -37,7 +66,7 @@
     margin: 0px 0px 0px 10px;
     width: 100px;
     height: 125px;
-}
+} */
 
 .folder {
     margin-top: 3rem;

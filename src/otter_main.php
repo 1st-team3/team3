@@ -1,56 +1,46 @@
 <?php
-// 설정 정보
-require_once( $_SERVER["DOCUMENT_ROOT"]."/config_sbw.php"); // 설정 파일 호출																		
-require_once(FILE_LIB_DB); // DB관련 라이브러리
-    
+require_once($_SERVER["DOCUMENT_ROOT"] . "/config_sbw.php");
+require_once(FILE_LIB_DB);
+
 try {
-    
-    $conn = my_db_conn(); // PDO 인스턴스 생성
-    
-    // 게시글 데이터 조회
-    // 파라미터 획득
-    $no = isset($_GET["board_no"]) ? $_GET["board_no"] : ""; // no 획득
+    $conn = my_db_conn();
+    $today = date('Y-m-d');
+    // $today = isset($_GET["today"]) ? $_GET["today"] : date('Y-m-d');
 
-    // 파라미터 예외 처리
-    $arr_err_param = [];
-    if($no === "") {
-        $arr_err_param[] = "board_no";
-    }
-    if(count($arr_err_param) > 0) {
-        throw new Exception("parameter Error : ".implode(", ", $arr_err_param));
-    }
-
-    // 게시글 정보 획득
-    $arr_param = [
-        ":board_no" => $no
+    $arr_param =[
+        "today" => $today
     ];
-    $result = db_select_boards_no($conn, $arr_param);
-    if(count($result) !== 1) {
-        throw new Exception("Select Boards board_no count");
+    $result = db_boards_select_created_at($conn, $arr_param);
+    var_dump($result);
+    // 쿼리 결과가 비어 있는지 확인하고, 비어 있지 않은 경우에만 변수를 설정합니다.
+    if (!empty($result)) {
+        // 쿼리 결과에서 날짜를 추출합니다.
+        $created_at = $result[0]['created_at'];
+        // 첫 번째 결과의 'created_at' 값을 사용합니다.
+        
+        // 추출한 날짜에서 연, 월, 일을 추출합니다.
+        $year = date('Y', strtotime($created_at));
+        $day = date('j', strtotime($created_at));
+        $mon = date('n', strtotime($created_at));
+        
+        // 버튼 링크를 생성합니다.
+        $back_btn_link = "./otter_list.php?year=$year&month=$mon&date=$day";
+    } else {
+        // 오늘 생성된 데이터가 없을 경우, 기본 링크를 생성합니다.
+        $back_btn_link = "./otter_list.php"; // 기본 링크는 필요에 따라 변경할 수 있습니다.
     }
-
-
-    // 아이템 세팅
-    $item = $result[0];
-}catch (\Throwable $e) {
-    if(!empty($conn) && $conn->inTransaction()) {
-        $conn->rollBack();
-    }
+} catch (\Throwable $e) {
     echo $e->getMessage();
     exit;
 } finally {
-   
-    if(!empty($conn)) {
+    if (!empty($conn)) {
         $conn = null;
     }
 }
-
-
 ?>
 
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,19 +48,14 @@ try {
     <link rel="stylesheet" href="./css/otter_main.css">
 </head>
 <body>
-    <div class="container">
-        <div class="side">
-            <div class="icon_1"><a href="./otter_delete_otter.php"></a></div>
-            
-            <?php $created_at = $item["created_at"]; // 예시 데이터베이스에서 날짜 정보를 가져온다고 가정
-                    // 가져온 날짜 정보를 이용하여 연도와 월을 추출합니다.
-                    $day = date('j', strtotime($created_at));
-                    $mon = date('n', strtotime($created_at));
-                    // BACK_BTN의 링크에 GET 파라미터를 추가합니다.
-                    $back_btn_link = "./list_otter.php?year=$year&month=$mon&date=$day";
-                    ?>
-
+<div class="container">
+    <div class="side">
+        <div class="icon_1"><a href="./otter_delete.php"></a></div>
+        <!-- 수정된 버튼 링크를 사용합니다. -->
+        <?php if(isset($back_btn_link)): ?>
             <div class="icon_2"><a href="<?php echo $back_btn_link; ?>"></a></div>
-        </div>
+        <?php endif; ?>
+    </div>
+</div>
 </body>
 </html>

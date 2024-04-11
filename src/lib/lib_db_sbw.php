@@ -87,6 +87,40 @@ function db_boards_all_delete($conn) {
 
 
 
+// function db_boards_select_created_at($conn) {
+//     $today = date('Y-m-d');
+//     $sql =
+//         " SELECT "
+//         ."  created_at  "
+//         ." FROM      "
+//         ."  boards "
+//         ." WHERE DATE(created_at) = :today";
+
+//     $stmt = $conn->prepare($sql);
+//     $stmt->execute(array(':today' => $today)); // :today 값을 바인딩하여 쿼리 실행
+//     $result = $stmt->fetchAll();
+
+//     return $result;
+// }
+
+
+function db_boards_select_created_at(&$conn, &$array_param) {
+
+    $sql =
+        " SELECT "
+        ."  created_at  "
+        ." FROM      "
+        ."  boards "
+        ." WHERE DATE(created_at) = :today"
+        ."  AND deleted_at IS NULL";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->execute($array_param);
+    $result = $stmt->fetchAll();
+
+    return $result;
+}
+
 
 
 

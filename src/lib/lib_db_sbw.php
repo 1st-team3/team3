@@ -13,7 +13,7 @@ function my_db_conn() {
 
 
 // 삭제된 파일 정보 불러오기
-function db_select_delete_boards_list($conn) {
+function db_boards_select_delete_list($conn) {
   
     $sql =
         " SELECT "
@@ -37,7 +37,7 @@ function db_select_delete_boards_list($conn) {
 
 
 // 복구
-function db_restore_boards(&$conn, &$array_param) {
+function db_boards_restore(&$conn, &$array_param) {
     $sql = 
         " UPDATE boards"
         ." SET "
@@ -48,14 +48,14 @@ function db_restore_boards(&$conn, &$array_param) {
 
     $stmt = $conn->prepare($sql);
     $stmt->execute($array_param);
-    $result = $stmt->fetchAll();
 
-    return $stmt();
+    return $stmt->rowCount();
+
 }
 
 
 // 삭제
-function db_delete_boards(&$conn, &$array_param) {
+function db_boards_delete(&$conn, &$array_param) {
     $sql =
 	    " DELETE FROM "
 	    ."  boards "
@@ -65,63 +65,21 @@ function db_delete_boards(&$conn, &$array_param) {
 
     $stmt = $conn->prepare($sql);
     $stmt->execute($array_param);
-    $result = $stmt->fetchAll();
 
-    return $stmt();
+    return $stmt->rowCount();
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-function db_select_boards_no(&$conn, &$array_param) {
+// 전체 삭제
+function db_boards_all_delete($conn) {
     $sql =
-        " SELECT "
-        ."  board_no  "
-        ."  ,board_title "
-        ."  ,board_content "
-        ."  ,created_at  "
-        ." FROM      "
-        ."  boards "
-        ." WHERE "
-        ."  board_no = :board_no "
-;
-
-    $stmt = $conn->prepare($sql);
-    $stmt->execute($array_param);
-    $result = $stmt->fetchAll();
-
-    return $result;
-}
-
-
-
-
-
-
-function db_update_boards_no(&$conn, &$array_param) {
-   
-    $sql = 
-        " UPDATE boards"
-        ." SET "
-        ."  board_title = :title "
-        ."  ,board_content = :content "
-        ."  ,updated_at = now() "
-        ." WHERE "
-        ."  board_no = :board_no "
+	    " DELETE FROM "
+	    ."  boards "
+	    ." WHERE "
+	    ."  deleted_at IS NOT NULL "
     ;
 
-    $stmt = $conn->prepare($sql);
-    $stmt->execute($array_param);
+    $stmt = $conn->query($sql);
 
     return $stmt->rowCount();
 }

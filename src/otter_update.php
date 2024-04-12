@@ -1,5 +1,5 @@
 <?php 
-require_once( $_SERVER["DOCUMENT_ROOT"]."/config_khs.php"); // 설정 파일 호출
+require_once( $_SERVER["DOCUMENT_ROOT"]."/config.php"); // 설정 파일 호출
 require_once(FILE_LIB_DB);
 
 
@@ -141,7 +141,7 @@ try {
     $conn->commit();
       
     // 상세 페이지 이동
-    header("Location: update_otter.php?no={$no}&page={$page}");
+    header("Location: otter_detail.php?board_no={$no}&page={$page}");
           
   }
 }

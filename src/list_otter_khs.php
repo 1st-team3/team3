@@ -1,5 +1,5 @@
 <?php
-    require_once( $_SERVER["DOCUMENT_ROOT"]."/config_khs.php"); 
+    require_once( $_SERVER["DOCUMENT_ROOT"]."/config.php"); 
     require_once(FILE_LIB_DB); 
     $list_cnt = 8; 
     $page_num = 1; 
@@ -117,7 +117,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>문서</title>
-        <link rel="stylesheet" href="./css/list_otter.css">
+        <link rel="stylesheet" href="./css/otter_list.css">
     </head>
     <body>
         <div class="container">
@@ -199,7 +199,7 @@
                         </div>
                     </form>
                     
-                    <?php require_once(ROOT."/memo_list_khs.php"); ?>
+                    <?php require_once(ROOT."/memo_list.php"); ?>
 
                     <div class="insert-list">
                             <div class="header">

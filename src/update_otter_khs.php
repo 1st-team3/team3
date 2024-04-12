@@ -249,7 +249,7 @@ finally {
                     </div>
                 </div>
 
-                <?php require_once(ROOT."/memo_list_khs.php"); ?>
+                <?php require_once(ROOT."/memo_list_update.php"); ?>
 
                 <div class="insert-list">
                     <form action="./update_otter.php" method="post"  enctype="multipart/form-data">

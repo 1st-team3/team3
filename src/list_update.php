@@ -29,7 +29,7 @@ try{
     $result = db_list_update_no($conn, $arr_param);    
     $conn->commit();
 
-    header("Location: list_otter.php?page=".$page."#list".$board_no);
+    header("Location: otter_list.php?page=".$page."#list".$board_no);
 } catch(\Throwable $e){
     if(!empty($conn) && $conn->inTransaction()) {
         $conn->rollBack();

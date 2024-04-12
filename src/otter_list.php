@@ -72,7 +72,7 @@
    $conn->beginTransaction();
    $result = db_list_update_no($conn, $arr_param);
    $conn->commit();
-   header("Location: list_otter_khs.php?year=" . $post_year . "&month=" . $post_month . "&date=" . $post_date . "&page=" . $page . "#list" . $board_no);
+   header("Location: otter_list.php?year=" . $post_year . "&month=" . $post_month . "&date=" . $post_date . "&page=" . $page . "#list" . $board_no);
     }
 }   catch(\Throwable $e){
     echo $e ->getMessage();

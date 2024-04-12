@@ -141,7 +141,7 @@ try {
     $conn->commit();
       
     // 상세 페이지 이동
-    header("Location: update_otter.php?no={$no}&page={$page}");
+    header("Location: otter_detail.php?board_no={$no}&page={$page}");
           
   }
 }

@@ -7,8 +7,8 @@ require_once(FILE_LIB_DB);
 	// GET으로 넘겨 받은 month값이 있다면 넘겨 받은걸 month변수에 적용하고 없다면 현재 월
 	$month = isset($_GET['month']) ? $_GET['month'] : date('m');
 
-	$date = "$year-$month-01"; // 현재 날짜의 1일
-	$time = strtotime($date); // 현재 날짜의 타임스탬프
+	$first_date = "$year-$month-01"; // 현재 날짜의 1일
+	$time = strtotime($first_date); // 현재 날짜의 타임스탬프
 	$start_week = date('w', $time); // 1. 시작 요일
 	$total_day = date('t', $time); // 2. 현재 달의 총 날짜
 	$total_week = ceil(($total_day + $start_week) / 7);  // 3. 현재 달의 총 주차 (현재 요일부터 요일수를 구한뒤 7로 나눔 ($start_week = 일 = 0 월 = 1 ... 토 = 6))
@@ -92,7 +92,7 @@ if (REQUEST_METHOD === "POST") {
         $conn->commit();
 
         //리스트 페이지로 이동
-        header("Location: otter_list.php"); 
+        header("Location: otter_list.php?year=$now_year&month=$now_month&date=$now_day"); 
         // 위의 입력 처리를 한 후에 list.php에서 추가된 데이터를 포함해서 새로 리스트를 만들고 사용자에게 출력해줌
     }
 
@@ -203,7 +203,7 @@ if (REQUEST_METHOD === "POST") {
                     </div>
                 </div>
 
-                <?php require_once(ROOT."/memo_list_khs.php"); ?>
+                <?php require_once(ROOT."/memo_list_update.php"); ?>
 
                 <div class="insert-list">
                     <form action="./otter_insert.php" method="post" enctype="multipart/form-data">

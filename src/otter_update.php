@@ -141,7 +141,7 @@ try {
     $conn->commit();
       
     // 상세 페이지 이동
-    header("Location: update_otter.php?no={$no}&page={$page}");
+    header("Location: otter_detail.php?board_no={$no}&page={$page}");
           
   }
 }
@@ -250,7 +250,7 @@ finally {
                     </div>
                 </div>
 
-                <?php require_once(ROOT."/memo_list_khs.php"); ?>
+                <?php require_once(ROOT."/memo_list.php"); ?>
 
                 <div class="insert-list">
                     <form action="./otter_update.php" method="post"  enctype="multipart/form-data">

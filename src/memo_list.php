@@ -20,10 +20,10 @@ try {
     <h2>MEMO</h2>
     <div class="memo-board">
         <div class="memo-textarea">
-            <?php foreach ($result_memo as $item){ ?>
-            <div class="memo_main"><div class="memo_con"><?php echo $item["memo_content"] ?></div>
+            <?php foreach ($result_memo as $memo_item){ ?>
+            <div class="memo_main"><div class="memo_con"><?php echo $memo_item["memo_content"] ?></div>
             <form action="memo_delete.php" method="post">
-                <input type="hidden" name="memo_no" value="<?php echo $item["memo_no"]; ?>">
+                <input type="hidden" name="memo_no" value="<?php echo $memo_item["memo_no"]; ?>">
                 <button type="submit" class ="divbutton">x</button>
             </form>
             <?php } ?>
@@ -31,7 +31,7 @@ try {
 
         <div class="text-button">
             <form action="./memo_insert.php" method="post" >
-                <input type="hidden" name="memo_no" value="<?php echo $item["memo_no"]; ?>">
+                <input type="hidden" name="memo_no" value="<?php echo $memo_item["memo_no"]; ?>">
                 <input type="text" class="memo-text" autocomplete="off" name="memo_content">
                 <button class="sudal-button" type="submit" ><img class="sudal-head" src="../image/otter_face_end.png"></button>
             </form>

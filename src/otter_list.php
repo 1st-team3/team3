@@ -3,6 +3,8 @@
     require_once(FILE_LIB_DB);
     $list_cnt = 8;
     $page_num = 1;
+    $page_cnt = 5; // 페이지네이션 페이지 번호 개수
+
     try{
         $conn = my_db_conn();
         if(REQUEST_METHOD === "GET") {
@@ -31,15 +33,22 @@
                 $start_date = $year.$month.$date."000000";
                 $end_date = $year.$month.$date."235959";
             }
+
             $arr_param = [
                 "start" => $start_date,
                 "end" => $end_date
             ];
             $result_board_cnt = db_select_boards_cnt($conn, $arr_param);
+            
             $max_page_num = ceil($result_board_cnt / $list_cnt);
             $offset = $list_cnt * ($page_num - 1);
             $prev_page_num = ($page_num -1) < 1 ? 1 : ($page_num - 1) ;
             $next_page_num = ($page_num + 1) > $max_page_num  ? $max_page_num : ($page_num + 1); // 다음 버튼 페이지 번호
+            // 페이지네이션
+            $start_page = (int)(ceil($page_num / $page_cnt) * $page_cnt - ($page_cnt - 1));
+            $end_page = $start_page + ($page_cnt - 1);
+            $end_page = $end_page > $max_page_num ? $max_page_num : $end_page;
+
             $arr_param = [
                 "start" => $start_date
                 ,"end" => $end_date
@@ -199,7 +208,7 @@
                     <div class="main-bottom">
                         <a href="./otter_list.php?year=<?php echo $year ?>&month=<?php echo $month ?>&date=<?php echo $date ?>&page=<?php echo $prev_page_num ?>" class ="number_button">이전</a>
                         <?php
-                        for($num = 1; $num <= $max_page_num; $num++){
+                        for($num = $start_page; $num <= $end_page; $num++){
                         ?>
                             <a href="./otter_list.php?year=<?php echo $year ?>&month=<?php echo $month ?>&date=<?php echo $date ?>&page=<?php echo $num ?>" class ="number_button"><?php echo $num ?></a>
                         <?php

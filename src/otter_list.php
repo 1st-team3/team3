@@ -94,8 +94,8 @@
 <body>
     <div class="container">
         <div class="side">
-            <div class="icon_1">나중에 아이콘 수정</div>
-            <div class="icon_2">나중에 아이콘 수정</div>
+            <div class="icon_1"></div>
+            <div class="icon_2"></div>
         </div>
         <div class="folder">
             <div class="folder_1">

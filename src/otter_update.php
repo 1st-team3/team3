@@ -166,12 +166,13 @@ finally {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="KO">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>OTTER OS</title>
     <link rel="stylesheet" href="./css/otter_update.css">
+    <link rel="icon" href="./image/otter_face_end.png">
 </head>
 <body>
     <div class="container">

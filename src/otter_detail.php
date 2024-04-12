@@ -175,7 +175,7 @@
                     <div class="folder_back_square"></div>
                 </div>
             </div>
-            <button class="sudalbutton sb2" type="submit"><img class="sudal-head" src="../image/otter_face_end.png"></button>
+            <div class="sudaldiv"><img class="sudal-head" src="../image/otter_face_end.png"></div>
             <div class="folder_main">
             <div class="calendar">
                     <div class="calendar-header"></div>

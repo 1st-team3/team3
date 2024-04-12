@@ -211,7 +211,7 @@
                     </div>
                 </div> -->
 
-                <?php require_once(ROOT."/memo_list_ksh.php"); ?>
+                <?php require_once(ROOT."/memo_list.php"); ?>
                 <?php foreach ($result as $item){ ?>  
                 
                 <div class="insert-list">

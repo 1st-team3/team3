@@ -250,7 +250,7 @@ finally {
                     </div>
                 </div>
 
-                <?php require_once(ROOT."/memo_list_khs.php"); ?>
+                <?php require_once(ROOT."/memo_list.php"); ?>
 
                 <div class="insert-list">
                     <form action="./otter_update.php" method="post"  enctype="multipart/form-data">

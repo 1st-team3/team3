@@ -11,8 +11,12 @@ function my_db_conn() {
     return new PDO(MARIADB_DSN, MARIADB_USER, MARIADB_PASSWORD, $option);
 }
 
-function db_select_boards_cnt($conn) {
-   
+function db_select_boards_cnt(&$conn, &$array_param) {
+    $add_date = "";
+    if(isset($array_param["start"] ) && isset($array_param["end"])) {
+        $add_date = " and created_at between :start and :end ";
+    }
+
     $sql =
         " SELECT "
         ."  COUNT(board_no) as cnt "
@@ -20,13 +24,16 @@ function db_select_boards_cnt($conn) {
         ."  boards "
         ." WHERE "
         ."  deleted_at IS NULL "
+        .$add_date
         ;
     
-    $stmt = $conn->query($sql);
+    $stmt = $conn->prepare($sql);
+    $stmt->execute($array_param);
     $result = $stmt->fetchAll();
     
     return (int)$result[0]["cnt"];
 }
+
 function db_select_boards_paging(&$conn, &$array_param) {
   
     $sql =
@@ -54,13 +61,15 @@ function db_select_boards_paging(&$conn, &$array_param) {
 function db_insert_boards(&$conn, &$array_param) {
     
     $sql = 
-        " INSERT INTO team3( "
-        ."  title "
-        ."  ,content "
+        " INSERT INTO boards( "
+        ."  board_title "
+        ."  ,board_content "
+        ."  ,board_img "
         ." ) "
         ."  VALUES( "
-        ."  :title "
-        ."  ,:content "
+        ."  :board_title "
+        ."  ,:board_content "
+        ."  ,:board_img "
         ." ) "
     ;
 
@@ -73,14 +82,15 @@ function db_insert_boards(&$conn, &$array_param) {
 function db_select_boards_no(&$conn, &$array_param) {
     $sql =
         " SELECT "
-        ."  no  "
-        ."  ,title "
-        ."  ,content "
+        ."  board_no  "
+        ."  ,board_title "
+        ."  ,board_content "
         ."  ,created_at  "
+        ."  ,board_img "
         ." FROM      "
-        ."  team3 "
+        ."  boards "
         ." WHERE "
-        ."  no = :no "
+        ."  board_no = :board_no "
 ;
 
     $stmt = $conn->prepare($sql);
@@ -93,11 +103,11 @@ function db_select_boards_no(&$conn, &$array_param) {
 function db_delete_boards_no(&$conn, &$array_param) {
     
     $sql = 
-        " UPDATE team3"
+        " UPDATE boards"
         ." SET "
         ."  deleted_at = NOW() "
         ." WHERE "
-        ."  no = :no "
+        ."  board_no = :board_no "
     ;
 
     $stmt = $conn->prepare($sql);
@@ -107,15 +117,21 @@ function db_delete_boards_no(&$conn, &$array_param) {
 }
 
 function db_update_boards_no(&$conn, &$array_param) {
-   
+    $add_file_path = "";
+    if(isset($array_param["board_img"])) {
+        $add_file_path = " ,board_img = :board_img ";
+    }
+
+
     $sql = 
-        " UPDATE team3"
+        " UPDATE boards"
         ." SET "
-        ."  title = :title "
-        ."  ,content = :content "
+        ."  board_title = :board_title "
+        ."  ,board_content = :board_content "
         ."  ,updated_at = now() "
+        .$add_file_path
         ." WHERE "
-        ."  no = :no "
+        ."  board_no = :board_no "
     ;
 
     $stmt = $conn->prepare($sql);
@@ -143,15 +159,15 @@ function db_list_update_no(&$conn, &$array_param) {
 
 function db_select_boards_title(&$conn, &$array_param) {
     $add_date = "";
-    if(isset($arr_param["start"] ) && isset($arr_param["end"])) {
+    if(isset($array_param["start"] ) && isset($array_param["end"])) {
         $add_date = " and created_at between :start and :end ";
     }
-
-
     $sql =
         " SELECT "
         ." board_no "
         ." ,board_title "
+        ." ,created_at "
+        ." ,board_chkbox "
         ." FROM "
         ."  boards "
         ." WHERE "
@@ -159,12 +175,11 @@ function db_select_boards_title(&$conn, &$array_param) {
         .$add_date
         ." ORDER BY  "
         ."  board_no DESC "
+        ." LIMIT :list_cnt OFFSET :offset "
     ;
-    
     $stmt = $conn->prepare($sql);
     $stmt->execute($array_param);
     $result = $stmt->fetchAll();
-    
     return $result;
 }
 

@@ -284,12 +284,6 @@ finally {
             </div>
         </div>
     </div>
-    <!-- <div class="folder_header">
-        <div class="folder_header_otter4"></div>
-        <div class="folder_header_otter4"></div>
-        <div class="folder_header_otter4"></div>
-        <div class="folder_header_otter4"></div>
-    </div> -->
 </body>
 <script src="./js/img.js"></script>
 </html>

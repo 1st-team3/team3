@@ -133,7 +133,7 @@ if (REQUEST_METHOD === "POST") {
                     <div class="folder_title_x"><a href="./otter_main.php" class="X_btn">X</a></div>
                 </div>
                 <div class="folder_back">
-                    <div class="folder_back_btn"><a href="./otter_list.php" class="back_btn">◁</a></div>
+                    <div class="folder_back_btn"><a href="./otter_list.php?year=<?php echo $now_year ?>&month=<?php echo $now_month ?>&date=<?php echo $now_day ?>" class="back_btn">◁</a></div>
                     <div class="folder_back_square"></div>
                 </div>
             </div>

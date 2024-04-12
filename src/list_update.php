@@ -8,9 +8,8 @@ try{
    
      $board_no = isset($_POST["board_no"]) ? $_POST["board_no"] : "";
      $page = isset($_POST["page"]) ? $_POST["page"] : ""; 
-     $year = isset($_POST["year"]) ? $_POST["year"] : ""; 
-     $month = isset($_POST["month"]) ? $_POST["month"] : ""; 
-     $date = isset($_POST["date"]) ? $_POST["date"] : ""; 
+
+     $previous_page = $_SERVER['HTTP_REFERER'];
 
 
     $arr_err_param = [];
@@ -20,15 +19,6 @@ try{
     }
     if($page === "") {
         $arr_err_param[] = "page";
-    }
-    if($year === "") {
-        $arr_err_param[] = "year";
-    }
-    if($month === "") {
-        $arr_err_param[] = "month";
-    }
-    if($date === "") {
-        $arr_err_param[] = "date";
     }
     if(count($arr_err_param) > 0) {
         throw new Exception("Parameter Error : ".implode(",", $arr_err_param));
@@ -42,7 +32,7 @@ try{
     $result = db_list_update_no($conn, $arr_param);    
     $conn->commit();
 
-    header("Location: otter_list.php?year=".$year."&month=".$month."&date=".$date);
+    header("Location: $previous_page");
 } catch(\Throwable $e){
     if(!empty($conn) && $conn->inTransaction()) {
         $conn->rollBack();

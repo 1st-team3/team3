@@ -39,7 +39,7 @@ try {
   
         // commmit
         $conn->commit();
-        header("Location: delete_otter.php");
+        header("Location: otter_delete.php");
         exit;
       }
   

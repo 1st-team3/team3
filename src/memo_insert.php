@@ -15,7 +15,7 @@ if(REQUEST_METHOD === "POST") {
       $arr_err_param[] ="memo_content";
     }
     if(count($arr_err_param) > 0 ){
-      throw new Exception("errrrrrr");
+      throw new Exception("메모를 입력해주세요 errrrrrrrrrrrrrr");
     }
 
    

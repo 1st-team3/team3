@@ -22,7 +22,7 @@ try {
         
   
         // 복구 예외 처리
-        if($resul === 0 ){
+        if($result === 0 ){
           throw new Exception("삭제할 파일이 없습니다.");
         }
   

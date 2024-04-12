@@ -1,5 +1,5 @@
 <?php 
-require_once( $_SERVER["DOCUMENT_ROOT"]."/config_khs.php"); // 설정 파일 호출
+require_once( $_SERVER["DOCUMENT_ROOT"]."/config.php"); // 설정 파일 호출
 require_once(FILE_LIB_DB);
 
 

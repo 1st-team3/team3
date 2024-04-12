@@ -1,10 +1,30 @@
 <?php 
-    require_once($_SERVER["DOCUMENT_ROOT"]."/config3.php"); 
+    require_once($_SERVER["DOCUMENT_ROOT"]."/config.php"); 
     require_once(FILE_LIB_DB); 
     
     try {
         
         $conn = my_db_conn(); // PDO 인스턴스 생성
+
+        // GET으로 넘겨 받은 year값이 있다면 넘겨 받은걸 year변수에 적용하고 없다면 현재 년도
+        $year = isset($_GET['year']) ? $_GET['year'] : date('Y');
+        // GET으로 넘겨 받은 month값이 있다면 넘겨 받은걸 month변수에 적용하고 없다면 현재 월
+        $month = isset($_GET['month']) ? $_GET['month'] : date('m');
+
+        $date = "$year-$month-01"; // 현재 날짜의 1일
+        $time = strtotime($date); // 현재 날짜의 타임스탬프
+        $start_week = date('w', $time); // 1. 시작 요일
+        $total_day = date('t', $time); // 2. 현재 달의 총 날짜
+        $total_week = ceil(($total_day + $start_week) / 7);  // 3. 현재 달의 총 주차 (현재 요일부터 요일수를 구한뒤 7로 나눔 ($start_week = 일 = 0 월 = 1 ... 토 = 6))
+
+        // 현재 날짜 표시하기
+        $current_timestamp = time();
+        $current_year = date("Y", $current_timestamp); // 현재 연도
+        $current_month = date("n", $current_timestamp); // 현재 월
+        $current_day = date("d", $current_timestamp); // 현재 일
+        $is_current_month = ($year == $current_year && $month == $current_month); // 현재 날짜가 속한 년도와 월을 확인하여 현재 달인지를 판단합니다.
+
+
         
         // 게시글 데이터 조회
         // 파라미터 획득
@@ -42,6 +62,42 @@
     
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
             $no = isset($_POST["board_no"]) ? $_POST["board_no"] : "";
+            $year = isset($_GET['year']) ? $_GET['year'] : date('Y');
+
+
+            $date = "$year-$month-01"; // 현재 날짜의 1일
+            $time = strtotime($date); // 현재 날짜의 타임스탬프
+            $start_week = date('w', $time); // 1. 시작 요일
+            $total_day = date('t', $time); // 2. 현재 달의 총 날짜
+            $total_week = ceil(($total_day + $start_week) / 7);  // 3. 현재 달의 총 주차 (현재 요일부터 요일수를 구한뒤 7로 나눔 ($start_week = 일 = 0 월 = 1 ... 토 = 6))
+
+            // 현재 날짜 표시하기
+            $current_timestamp = time();
+            $current_year = date("Y", $current_timestamp); // 현재 연도
+            $current_month = date("n", $current_timestamp); // 현재 월
+            $current_day = date("d", $current_timestamp); // 현재 일
+            $is_current_month = ($year == $current_year && $month == $current_month); // 현재 날짜가 속한 년도와 월을 확인하여 현재 달인지를 판단합니다.
+        
+
+            $arr_param = [
+                ":board_no" => $no
+            ];
+            $result = db_select_boards_no($conn, $arr_param);
+            if(count($result) !== 1) {
+                throw new Exception("Select Boards board_no count");
+            }
+
+            $item = $result[0];
+            $created_at = $item["created_at"]; // 예시 데이터베이스에서 날짜 정보를 가져온다고 가정
+            // 가져온 날짜 정보를 이용하여 연도와 월을 추출합니다.
+            $day = date('j', strtotime($created_at));
+            $mon = date('n', strtotime($created_at));
+            // BACK_BTN의 링크에 GET 파라미터를 추가합니다.
+            
+            $back_btn_link = "./otter_list.php?year=$year&month=$mon&date=$day";
+
+
+
             $arr_err_param = [];
             if($no === "") {
                 $arr_err_param[] = "board_no";
@@ -63,7 +119,7 @@
     
             $conn->commit();
     
-            header("Location: otter_list.php?page=".$page."#list".$board_no);
+            header("Location: $back_btn_link");
             exit;
         }
     } catch (\Throwable $e) {
@@ -82,26 +138,6 @@
     if(isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER'])){
         $previous_page = $_SERVER['HTTP_REFERER'];
     }
-?>
-<?php
-	// GET으로 넘겨 받은 year값이 있다면 넘겨 받은걸 year변수에 적용하고 없다면 현재 년도
-	$year = isset($_GET['year']) ? $_GET['year'] : date('Y');
-	// GET으로 넘겨 받은 month값이 있다면 넘겨 받은걸 month변수에 적용하고 없다면 현재 월
-	$month = isset($_GET['month']) ? $_GET['month'] : date('m');
-
-	$date = "$year-$month-01"; // 현재 날짜의 1일
-	$time = strtotime($date); // 현재 날짜의 타임스탬프
-	$start_week = date('w', $time); // 1. 시작 요일
-	$total_day = date('t', $time); // 2. 현재 달의 총 날짜
-	$total_week = ceil(($total_day + $start_week) / 7);  // 3. 현재 달의 총 주차 (현재 요일부터 요일수를 구한뒤 7로 나눔 ($start_week = 일 = 0 월 = 1 ... 토 = 6))
-
-    // 현재 날짜 표시하기
-    $current_timestamp = time();
-    $current_year = date("Y", $current_timestamp); // 현재 연도
-    $current_month = date("n", $current_timestamp); // 현재 월
-    $current_day = date("d", $current_timestamp); // 현재 일
-    $is_current_month = ($year == $current_year && $month == $current_month); // 현재 날짜가 속한 년도와 월을 확인하여 현재 달인지를 판단합니다.
-	
 ?>
 <!DOCTYPE html>
 <html lang="ko">

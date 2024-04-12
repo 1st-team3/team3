@@ -1,5 +1,5 @@
 <?php 
-require_once( $_SERVER["DOCUMENT_ROOT"]."/config_khs.php"); // 설정 파일 호출
+require_once( $_SERVER["DOCUMENT_ROOT"]."/config.php"); // 설정 파일 호출
 require_once(FILE_LIB_DB);
 
 	// GET으로 넘겨 받은 year값이 있다면 넘겨 받은걸 year변수에 적용하고 없다면 현재 년도
@@ -224,19 +224,13 @@ if (REQUEST_METHOD === "POST") {
                         </div>
                         <div class="insert-footer">
                             <button type="submit" class="button-submit" >작성</button>
-                            <a href="./otter_list.php" class="button-submit">취소</a>
+                            <a href="./otter_list.php?year=<?php echo $now_year ?>&month=<?php echo $now_month ?>&date=<?php echo $now_day ?> " class="button-submit">취소</a>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-        <!-- <div class="folder_header">
-            <div class="folder_header_otter4"></div>
-            <div class="folder_header_otter4"></div>
-            <div class="folder_header_otter4"></div>
-            <div class="folder_header_otter4"></div>
-        </div> -->
 </body>
 <script src="./js/img.js"></script>
 </html>

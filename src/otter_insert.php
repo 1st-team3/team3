@@ -28,6 +28,7 @@ if (REQUEST_METHOD === "POST") {
         // title과 content 파라미터 획득
         $title = isset($_POST["board_title"]) ? trim($_POST["board_title"]) : ""; // title 획득
         $content = isset($_POST["board_content"]) ? trim($_POST["board_content"]) : ""; // content 획득  
+        $targetFilePath = "";
 
         $img_file = "upload_img/"; // 서버 이미지 폴더 경로
 

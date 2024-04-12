@@ -272,8 +272,9 @@ input:focus {
     background-color: #4A6B74;
     color: white;
     grid-row: 3/4;
-    
+    overflow-y: scroll;
     text-align: center;
+    padding: 10px;
 }
 
 .insert-footer {

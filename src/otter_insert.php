@@ -209,7 +209,7 @@ if (REQUEST_METHOD === "POST") {
                     <form action="./otter_insert.php" method="post" enctype="multipart/form-data">
                         <div class="insert-main">
                             <div class="insert-header">
-                                <input type="text" name="board_title" id="title" class="title-text" required placeholder="제목을 입력하세요">
+                                <input type="text" name="board_title" id="title" class="title-text" required placeholder="제목을 입력하세요" autocomplete="off">
                             </div>
                             <div class="insert-middle">
                                 <label for="file">

@@ -171,20 +171,19 @@ finally {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./css/update_otter.css">
+    <link rel="stylesheet" href="./css/otter_update.css">
 </head>
 <body>
     <div class="container">
-        <div class="side">
-        <img class="icon-delete" src="./image/delete_otter.png" alt="">
-        <br>
-        <img class="icon" src="./image/209_2-1.png" alt="">
-    </div>
+    <div class="side">
+            <div class="icon_1"></div>
+            <div class="icon_2"></div>
+        </div>
     <div class="folder">
         <div class="folder_1">
             <div class="folder_title">
                 <div class="folder_title_circle"></div>
-                <div class="folder_title_x"><a href="./main_otter.html" class="X_btn">X</a></div>
+                <div class="folder_title_x"><a href="./otter_main.php" class="X_btn">X</a></div>
             </div>
             <div class="folder_back">
                 <div class="folder_back_btn"><a href="" class="back_btn">◁</a></div>
@@ -199,19 +198,19 @@ finally {
                         <!-- 현재가 1월이라 이전 달이 작년 12월인경우 -->
                         <?php if ($month == 1){ ?>
                             <!-- 작년 12월 -->
-                            <a class="calendar-day" href="./update_otter.php?board_no=<?php echo $no ?>&page=<?php echo $page ?>&year=<?php echo $year-1 ?>&month=12"><img src="./image/left.png" alt=""></a>
+                            <a class="calendar-day" href="./otter_update.php?board_no=<?php echo $no ?>&page=<?php echo $page ?>&year=<?php echo $year-1 ?>&month=12"><img src="./image/left.png" alt=""></a>
                         <?php }else{ ?>
                             <!-- 이번 년 이전 월 -->
-                            <a class="calendar-day" href="./update_otter.php?board_no=<?php echo $no ?>&page=<?php echo $page ?>&year=<?php echo $year ?>&month=<?php echo $month-1 ?>"><img src="./image/left.png" alt=""></a>
+                            <a class="calendar-day" href="./otter_update.php?board_no=<?php echo $no ?>&page=<?php echo $page ?>&year=<?php echo $year ?>&month=<?php echo $month-1 ?>"><img src="./image/left.png" alt=""></a>
                         <?php }; ?>
                         <div class="calendar-year"><?php echo "$year 년 $month 월" ?></div>
                         <!-- 현재가 12월이라 다음 달이 내년 1월인경우 -->
                         <?php if ($month == 12){ ?>
                             <!-- 내년 1월 -->
-                            <a class="calendar-day" href="./update_otter.php?board_no=<?php echo $no ?>&page=<?php echo $page ?>&year=<?php echo $year+1 ?>&month=1"><img src="./image/right.png" alt=""></a>
+                            <a class="calendar-day" href="./otter_update.php?board_no=<?php echo $no ?>&page=<?php echo $page ?>&year=<?php echo $year+1 ?>&month=1"><img src="./image/right.png" alt=""></a>
                         <?php }else{ ?>
                             <!-- 이번 년 다음 월 -->
-                            <a class="calendar-day" href="./update_otter.php?board_no=<?php echo $no ?>&page=<?php echo $page ?>&year=<?php echo $year ?>&month=<?php echo $month+1 ?>"><img src="./image/right.png" alt=""></a>
+                            <a class="calendar-day" href="./otter_update.php?board_no=<?php echo $no ?>&page=<?php echo $page ?>&year=<?php echo $year ?>&month=<?php echo $month+1 ?>"><img src="./image/right.png" alt=""></a>
                         <?php }; ?>
 
 
@@ -254,7 +253,7 @@ finally {
                 <?php require_once(ROOT."/memo_list_khs.php"); ?>
 
                 <div class="insert-list">
-                    <form action="./update_otter.php" method="post"  enctype="multipart/form-data">
+                    <form action="./otter_update.php" method="post"  enctype="multipart/form-data">
                     <input type="hidden" name="board_no" value="<?php echo $no; ?>">
                     <input type="hidden" name="page" value="<?php echo $page; ?>">
                         <div class="insert-main">
@@ -277,7 +276,7 @@ finally {
                         </div>
                         <div class="insert-footer">
                             <button type="submit" class="button-submit" >수정 완료</button>
-                            <a href="./detail_otter.php?board_no=<?php echo $no ?>&page=<?php echo $page ?>" class="button-submit">취소</a>
+                            <a href="./otter_detail.php?board_no=<?php echo $no ?>&page=<?php echo $page ?>" class="button-submit">취소</a>
                         </div>
                     </form>
                 </div>

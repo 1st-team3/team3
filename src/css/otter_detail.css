@@ -23,7 +23,9 @@ body {
     display: grid;
     grid-template-columns: 180px 1fr;
 }
-.gbicon {
+
+/* 아이콘 수정 작업 - 서보원 : 내용 확인후 삭제 */
+/* .gbicon {
     background-image: url("../image/delete_otter.png");
     background-size : cover;
     background-position: center;
@@ -42,7 +44,7 @@ body {
     width: 100px;
     height: 125px;
     padding: 10px;   
-}
+} */
 .folder {
     margin-top: 3rem;
     margin-bottom: 3rem;

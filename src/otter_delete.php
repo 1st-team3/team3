@@ -36,7 +36,7 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./css/delete_otter.css">
+    <link rel="stylesheet" href="./css/otter_delete.css">
 </head>
 <body>
     <div class="container">
@@ -48,7 +48,7 @@ try {
             <div class="folder_1">
                 <div class="folder_title">
                     <div class="folder_title_circle"></div>
-                    <div class="folder_title_x"><a href="./main_otter.php" class="X_btn">X</a>
+                    <div class="folder_title_x"><a href="./otter_main.php" class="X_btn">X</a>
                     </div>
                 </div>
                 <div class="folder_back">
@@ -58,6 +58,12 @@ try {
             </div>
 
             <div class="folder_main">
+                <form class="form_margin" action="./delete_otter_all_delete.php" method="POST">
+                    <ul>
+                        <button class="form_btn_all_delete" type="submit">전체 삭제</button>
+                        <li><strong style="color: red;">※주의!!</strong>&nbsp삭제하면 영원히 복구할 수 없습니다.</li>
+                    </ul>
+                </form>
                 <div class="folder_icon">
                     
                     <?php
@@ -66,7 +72,6 @@ try {
 
                     <div class="icon_item">
                         <div class="icon_item_card">
-
 
                             <div class="icon_item_title">
                                 <div class="icon_item_title1">제목</div>
@@ -81,13 +86,12 @@ try {
                                 <div class="icon_item_deleted2"><?php echo $item["deleted_at"] ?></div>
                             </div>
 
-
-
                             <div class="form_btn">
                                 <form action="./delete_otter_restore.php" method="POST">
                                     <input type="hidden" name="board_no" value="<?php echo $item["board_no"]; ?>">
                                     <button class="form_btn_restore" type="submit">복구</button>
                                 </form>
+
                                 <form  action="./delete_otter_delete.php" method="POST">
                                     <ul>
                                         <button class="form_btn_delete" type="submit">삭제</button>
@@ -106,19 +110,7 @@ try {
 
                 </div>
             </div>
-                <form class="form_margin" action="./delete_otter_all_delete.php" method="POST">
-                    <ul>
-                        <button class="form_btn_all_delete" type="submit">전체 삭제</button>
-                        <li><strong style="color: red;">※주의!!</strong>&nbsp삭제하면 영원히 복구할 수 없습니다.</li>
-                    </ul>
-                </form>
         </div>
     </div>
-    <!-- <div class="folder_header">
-        <div class="folder_header_otter4"></div>
-        <div class="folder_header_otter4"></div>
-        <div class="folder_header_otter4"></div>
-        <div class="folder_header_otter4"></div>
-    </div> -->
 </body>
 </html>

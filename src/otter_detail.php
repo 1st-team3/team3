@@ -63,7 +63,7 @@
     
             $conn->commit();
     
-            header("Location: list_otter.php?page=".$page."#list".$board_no);
+            header("Location: otter_list.php?page=".$page."#list".$board_no);
             exit;
         }
     } catch (\Throwable $e) {
@@ -109,19 +109,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>디테일 페이지</title>
-    <link rel="stylesheet" href="./css/detail_otter.css">
+    <link rel="stylesheet" href="./css/otter_detail.css">
 </head>
 <body>
     <div class="container">
-        <div class="side">
-            <div class="gbicon"></div>
-            <div class="icon"></div>
+    <div class="side">
+            <div class="icon_1"></div>
+            <div class="icon_2"></div>
         </div>
         <div class="folder">
             <div class="folder_1">
                 <div class="folder_title">
                     <div class="folder_title_circle"></div>
-                    <div class="folder_title_x"><a href="./main_otter.php" class="X_btn">X</a>
+                    <div class="folder_title_x"><a href="./otter_main.php" class="X_btn">X</a>
                     </div>
                 </div>
                 <div class="folder_back">
@@ -129,9 +129,9 @@
                     <?php $created_at = $item["created_at"]; // 예시 데이터베이스에서 날짜 정보를 가져온다고 가정
                     // 가져온 날짜 정보를 이용하여 연도와 월을 추출합니다.
                     $day = date('j', strtotime($created_at));
-                    $month = date('n', strtotime($created_at));
+                    $mon = date('n', strtotime($created_at));
                     // BACK_BTN의 링크에 GET 파라미터를 추가합니다.
-                    $back_btn_link = "./list_otter.php?year=$year&month=$month&date=$day";
+                    $back_btn_link = "./otter_list.php?year=$year&month=$mon&date=$day";
                     ?>
 
                     <div class="folder_back_btn"><a href="<?php echo $back_btn_link; ?>" class="back_btn">◁</a></div>
@@ -147,20 +147,20 @@
                         <!-- 현재가 1월이라 이전 달이 작년 12월인경우 -->
                         <?php if ($month == 1){ ?>
                             <!-- 작년 12월 -->
-                            <a class="calendar-day" href="./detail_otter.php?year=<?php echo $year-1 ?>&month=12&board_no=<?php echo $no ?>&page=<?php echo $page ?>"><img src="./image/left.png" alt=""></a>
+                            <a class="calendar-day" href="./otter_detail.php?year=<?php echo $year-1 ?>&month=12&board_no=<?php echo $no ?>&page=<?php echo $page ?>"><img src="./image/left.png" alt=""></a>
                         <?php }else{ ?>
                             <!-- 이번 년 이전 월 -->
-                            <a class="calendar-day" href="./detail_otter.php?year=<?php echo $year ?>&month=<?php echo $month-1 ?>&board_no=<?php echo $no ?>&page=<?php echo $page ?>"><img src="./image/left.png" alt=""></a>
+                            <a class="calendar-day" href="./otter_detail.php?year=<?php echo $year ?>&month=<?php echo $month-1 ?>&board_no=<?php echo $no ?>&page=<?php echo $page ?>"><img src="./image/left.png" alt=""></a>
                             
                         <?php }; ?>
                         <div class="calendar-year"><?php echo "$year 년 $month 월" ?></div>
                         <!-- 현재가 12월이라 다음 달이 내년 1월인경우 -->
                         <?php if ($month == 12){ ?>
                             <!-- 내년 1월 -->
-                            <a class="calendar-day" href="./detail_otter.php?year=<?php echo $year+1 ?>&month=1&board_no=<?php echo $no ?>&page=<?php echo $page ?>"><img src="./image/right.png" alt=""></a>
+                            <a class="calendar-day" href="./otter_detail.php?year=<?php echo $year+1 ?>&month=1&board_no=<?php echo $no ?>&page=<?php echo $page ?>"><img src="./image/right.png" alt=""></a>
                         <?php }else{ ?>
                             <!-- 이번 년 다음 월 -->
-                            <a class="calendar-day" href="./detail_otter.php?year=<?php echo $year ?>&month=<?php echo $month+1 ?>&board_no=<?php echo $no ?>&page=<?php echo $page ?>"><img src="./image/right.png" alt=""></a>
+                            <a class="calendar-day" href="./otter_detail.php?year=<?php echo $year ?>&month=<?php echo $month+1 ?>&board_no=<?php echo $no ?>&page=<?php echo $page ?>"><img src="./image/right.png" alt=""></a>
                         <?php }; ?>
                         <table>
                             <tr>
@@ -235,9 +235,9 @@
                         
                        
                         
-                        <a href="./detail_otter.php?year=<?php echo $year ?>&month=<?php echo $month ?>&board_no=<?php if($prev_btn_result !== null){ echo $prev_btn_result; } if($no == $min_board_no){ echo $min_board_no; }?>&page=<?php echo $page ?>" class="prevbtn">◁</a>
+                        <a href="./otter_detail.php?year=<?php echo $year ?>&month=<?php echo $month ?>&board_no=<?php if($prev_btn_result !== null){ echo $prev_btn_result; } if($no == $min_board_no){ echo $min_board_no; }?>&page=<?php echo $page ?>" class="prevbtn">◁</a>
 
-                        <a href="./update_otter.php?board_no=<?php echo $no ?>&page=<?php echo $page ?>" class="updatebtn">수정</a>
+                        <a href="./otter_update.php?board_no=<?php echo $no ?>&page=<?php echo $page ?>" class="updatebtn">수정</a>
 
                         <form method="POST">
                         <input type="hidden" name="board_no" value="<?php echo $no ?>">
@@ -245,7 +245,7 @@
                         </form>
 
                     
-                        <a href="./detail_otter.php?year=<?php echo $year ?>&month=<?php echo $month ?>&board_no=<?php if($next_btn_result !== null){ echo $next_btn_result; } if($no == $max_board_no){ echo $max_board_no; } ?>&page=<?php echo $page ?>" class="nextbtn">▷</a>
+                        <a href="./otter_detail.php?year=<?php echo $year ?>&month=<?php echo $month ?>&board_no=<?php if($next_btn_result !== null){ echo $next_btn_result; } if($no == $max_board_no){ echo $max_board_no; } ?>&page=<?php echo $page ?>" class="nextbtn">▷</a>
                         
 
                     </div>

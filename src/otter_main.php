@@ -11,7 +11,6 @@ try {
         "today" => $today
     ];
     $result = db_boards_select_created_at($conn, $arr_param);
-    var_dump($result);
     // 쿼리 결과가 비어 있는지 확인하고, 비어 있지 않은 경우에만 변수를 설정합니다.
     if (!empty($result)) {
         // 쿼리 결과에서 날짜를 추출합니다.

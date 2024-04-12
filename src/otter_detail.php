@@ -1,5 +1,5 @@
 <?php 
-    require_once($_SERVER["DOCUMENT_ROOT"]."/config3.php"); 
+    require_once($_SERVER["DOCUMENT_ROOT"]."/config.php"); 
     require_once(FILE_LIB_DB); 
     
     try {
@@ -247,7 +247,7 @@
                     </div>
                 </div> -->
 
-                <?php require_once(ROOT."/memo_list_ksh.php"); ?>
+                <?php require_once(ROOT."/memo_list.php"); ?>
                 <?php foreach ($result as $item){ ?>  
                 
                 <div class="insert-list">

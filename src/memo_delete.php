@@ -58,6 +58,8 @@ try {
     ];
     $result_memo = db_memo_delete($conn, $arr_param);
 
+    $previous_page = $_SERVER['HTTP_REFERER'];
+
     // 삭제 예외 처리
     if($result_memo !== 1) {
         throw new Exception("Delete memos no count");
@@ -65,7 +67,7 @@ try {
 
     // commit
     $conn->commit();
-    header("Location: list_otter.php");
+    header("Location: $previous_page");
 
 }   catch (\Throwable $e) {
     if(!empty($conn) && $conn->inTransaction()) {

@@ -5,6 +5,8 @@ require_once(FILE_LIB_DB);
 
 if(REQUEST_METHOD === "POST") {
   try{
+    $previous_page = $_SERVER['HTTP_REFERER'];
+
     
     $content = isset($_POST["memo_content"]) ? trim($_POST["memo_content"]) : ""; 
     
@@ -35,7 +37,7 @@ if(REQUEST_METHOD === "POST") {
     $conn->commit();
 
     
-    header("Location: list_otter.php");
+    header("Location:  $previous_page");
     exit;
 
   } catch (\Throwable $e) {

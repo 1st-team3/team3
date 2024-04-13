@@ -16,14 +16,14 @@ try {
         // 쿼리 결과에서 날짜를 추출합니다.
         $created_at = $result[0]['created_at'];
         // 첫 번째 결과의 'created_at' 값을 사용합니다.
-        
+
         // 추출한 날짜에서 연, 월, 일을 추출합니다.
         $year = date('Y', strtotime($created_at));
+        $month = date('n', strtotime($created_at));
         $day = date('j', strtotime($created_at));
-        $mon = date('n', strtotime($created_at));
         
         // 버튼 링크를 생성합니다.
-        $back_btn_link = "./otter_list.php?year=$year&month=$mon&date=$day";
+        $back_btn_link = "./otter_list.php?year=".$year."&month=".$month."&date=".$day;
     } else {
         // 오늘 생성된 데이터가 없을 경우, 기본 링크를 생성합니다.
         $back_btn_link = "./otter_list.php"; // 기본 링크는 필요에 따라 변경할 수 있습니다.

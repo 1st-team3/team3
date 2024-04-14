@@ -15,9 +15,10 @@ try {
         // 파라미터 획득
         $board_no = isset($_POST["board_no"]) ? $_POST["board_no"] : "";
         
+        // 파라미터 예외 처리
         $arr_err_param = [];
         if($board_no === ""){
-           $arr_err_param[] = "board_no";
+            $arr_err_param[] = "board_no";
         }
         if(count($arr_err_param) > 0) {
             throw new Exception("Parameter Error : ".implode(",", $arr_err_param));
@@ -34,7 +35,7 @@ try {
   
         // 삭제 예외 처리
         if($result !== 1 ){
-          throw new Exception("삭제된 파일이 없습니다.");
+            throw new Exception("삭제할 파일이 없습니다.");
         }
   
         // commmit

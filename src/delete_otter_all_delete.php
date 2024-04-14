@@ -17,11 +17,10 @@ try {
         $conn->beginTransaction();
   
         // 게시글 정보 전체 삭제
-
         $result = db_boards_all_delete($conn);
         
   
-        // 복구 예외 처리
+        // 전체 삭제 예외 처리
         if($result === 0 ){
           throw new Exception("삭제할 파일이 없습니다.");
         }

@@ -24,6 +24,7 @@ require_once(FILE_LIB_DB);
 // REQUEST_METHOD(요청방식)이 POST 일 경우 처리
 if (REQUEST_METHOD === "POST") {
     try {
+        
 
         // title과 content 파라미터 획득
         $title = isset($_POST["board_title"]) ? trim($_POST["board_title"]) : ""; // title 획득
@@ -49,7 +50,7 @@ if (REQUEST_METHOD === "POST") {
         // strtolower(pathinfo() : 파일경로를 가져오는 내장함수
         // $_FILES["file"]["name"] : 슈퍼 글로벌 변수 $_FILES에 있는 file모든정보를 가져오는 file 안에 name을 써서 이름만 가져옴
         //  PATHINFO_EXTENSION 파일의 확장자 명을 가져옴
-        if(isset($_FILES["file"]["name"]) && !empty($_FILES["file"]["name"]))  { 
+        if(!isset($_FILES["file"]["name"]))  { 
             $imageFileType = strtolower(pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION));
       
             if ($imageFileType != "jpg" && $imageFileType != "jpeg" && $imageFileType != "png") {
@@ -106,8 +107,9 @@ if (REQUEST_METHOD === "POST") {
     }
 
     finally {
-        if(!empty($conn))
+        if(!empty($conn)) {
         $conn = null;
+        }
     }
 
 }
@@ -234,5 +236,9 @@ if (REQUEST_METHOD === "POST") {
         </div>
     </div>
 </body>
+
+
 <script src="./js/img.js"></script>
+
+
 </html>

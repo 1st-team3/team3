@@ -268,7 +268,7 @@ finally {
                                 <input type="file" accept="img/*" name="file" id="file" onchange="readURL(this)">
                             </div>
                             <div class="insert-text">
-                                <img id="preview" />
+                                <img id="preview">
                                 <?php if (!empty($item["board_img"])){ ?>
                                 <img src="<?php echo $item["board_img"]; ?>" id="existing_image">
                                 <?php } ?>

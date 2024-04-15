@@ -9,7 +9,7 @@ if(REQUEST_METHOD === "POST") {
 
     
     $content = isset($_POST["memo_content"]) ? trim($_POST["memo_content"]) : ""; 
-    
+
     $arr_err_param = [];
     if($content === ""){
       $arr_err_param[] ="memo_content";

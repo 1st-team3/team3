@@ -1,36 +1,38 @@
 <?php 
 require_once( $_SERVER["DOCUMENT_ROOT"]."/config.php"); // 설정 파일 호출
 require_once(FILE_LIB_DB);
-
-	// GET으로 넘겨 받은 year값이 있다면 넘겨 받은걸 year변수에 적용하고 없다면 현재 년도
-	$year = isset($_GET['year']) ? $_GET['year'] : date('Y');
-	// GET으로 넘겨 받은 month값이 있다면 넘겨 받은걸 month변수에 적용하고 없다면 현재 월
-	$month = isset($_GET['month']) ? $_GET['month'] : date('m');
-
-	$first_date = "$year-$month-01"; // 현재 날짜의 1일
-	$time = strtotime($first_date); // 현재 날짜의 타임스탬프
-	$start_week = date('w', $time); // 1. 시작 요일
-	$total_day = date('t', $time); // 2. 현재 달의 총 날짜
-	$total_week = ceil(($total_day + $start_week) / 7);  // 3. 현재 달의 총 주차 (현재 요일부터 요일수를 구한뒤 7로 나눔 ($start_week = 일 = 0 월 = 1 ... 토 = 6))
-
-
-     // 현재 날짜 표시하기
-     $now_year = date("Y"); // 현재 연도
-     $now_month = date("n"); // 현재 월
-     $now_day = date("d"); // 현재 일
-     $is_now_month = ($year == $now_year && $month == $now_month); // 현재 년도와 달이 맞는지 확인
-    
+ 
 
 // REQUEST_METHOD(요청방식)이 POST 일 경우 처리
-if (REQUEST_METHOD === "POST") {
-    try {
-        
 
+try {
+   // 현재 날짜 표시하기
+        $now_year = date("Y"); // 현재 연도
+        $now_month = date("n"); // 현재 월
+        $now_day = date("d"); // 현재 일
+
+    if (REQUEST_METHOD === "GET") {
+
+        // GET으로 넘겨 받은 year값이 있다면 넘겨 받은걸 year변수에 적용하고 없다면 현재 년도
+        $year = isset($_GET['year']) ? $_GET['year'] : date('Y');
+        // GET으로 넘겨 받은 month값이 있다면 넘겨 받은걸 month변수에 적용하고 없다면 현재 월
+        $month = isset($_GET['month']) ? $_GET['month'] : date('m');
+
+        $first_date = "$year-$month-01"; // 현재 날짜의 1일
+        $time = strtotime($first_date); // 현재 날짜의 타임스탬프
+        $start_week = date('w', $time); // 1. 시작 요일
+        $total_day = date('t', $time); // 2. 현재 달의 총 날짜
+        $total_week = ceil(($total_day + $start_week) / 7);  // 3. 현재 달의 총 주차 (현재 요일부터 요일수를 구한뒤 7로 나눔 ($start_week = 일 = 0 월 = 1 ... 토 = 6))
+     
+        $is_now_month = ($year == $now_year && $month == $now_month); // 현재 년도와 달이 맞는지 확인
+
+    }    
+    else if (REQUEST_METHOD === "POST") {
         // title과 content 파라미터 획득
         $title = isset($_POST["board_title"]) ? trim($_POST["board_title"]) : ""; // title 획득
         $content = isset($_POST["board_content"]) ? trim($_POST["board_content"]) : ""; // content 획득  
-        $targetFilePath = "";
 
+        $targetFilePath = null;
         $img_file = "upload_img/"; // 서버 이미지 폴더 경로
 
         // 파라미터 에러 체크
@@ -50,7 +52,7 @@ if (REQUEST_METHOD === "POST") {
         // strtolower(pathinfo() : 파일경로를 가져오는 내장함수
         // $_FILES["file"]["name"] : 슈퍼 글로벌 변수 $_FILES에 있는 file모든정보를 가져오는 file 안에 name을 써서 이름만 가져옴
         //  PATHINFO_EXTENSION 파일의 확장자 명을 가져옴
-        if(!isset($_FILES["file"]["name"]))  { 
+        if(!empty($_FILES["file"]["name"]))  { 
             $imageFileType = strtolower(pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION));
       
             if ($imageFileType != "jpg" && $imageFileType != "jpeg" && $imageFileType != "png") {
@@ -64,13 +66,14 @@ if (REQUEST_METHOD === "POST") {
             // 이미지 파일을 디렉토리에 저장
             if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)) {
               // 파일 업로드 성공
-            } 
+            }
+            
             else {
               throw new Exception("Sorry, there was an error uploading your file.");
             }
-          }
+        }
 
-        
+    
         // DB Connect
         $conn = my_db_conn(); // PDO 인스턴스
 
@@ -96,23 +99,23 @@ if (REQUEST_METHOD === "POST") {
         //리스트 페이지로 이동
         header("Location: otter_list.php?year=$now_year&month=$now_month&date=$now_day"); 
         // 위의 입력 처리를 한 후에 list.php에서 추가된 데이터를 포함해서 새로 리스트를 만들고 사용자에게 출력해줌
-    }
-
-    catch (\Throwable $e) {
-        if(!empty($conn)) {
-            $conn->rollBack();
-        }
-        echo $e->getMessage();
-        exit;
-    }
-
-    finally {
-        if(!empty($conn)) {
-        $conn = null;
-        }
-    }
-
 }
+}
+catch (\Throwable $e) {
+    if(!empty($conn)) {
+        $conn->rollBack();
+    }
+    echo $e->getMessage();
+    exit;
+}
+
+finally {
+    if(!empty($conn)) {
+    $conn = null;
+    }
+}
+
+
 ?>
 
 <!DOCTYPE html>

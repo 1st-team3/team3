@@ -148,6 +148,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OTTER OS</title>
     <link rel="stylesheet" href="./css/otter_detail.css">
+    <link rel="icon" href="./image/otter_face_end.png">
 </head>
 <body>
     <div class="container">

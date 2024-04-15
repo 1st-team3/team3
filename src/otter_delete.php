@@ -9,8 +9,7 @@ try {
 
     if(REQUEST_METHOD === "GET") {
     // 파라미터 획득
-    $board_no = isset($_GET["board_no"]) ? $_GET["board_no"] : ""; // no 획득
-    // var_dump($board_no);
+    $board_no = isset($_GET["board_no"]) ? $_GET["board_no"] : "";
     // 삭제된 파일 정보 불러오기
     $result = db_boards_select_delete_list($conn);
     }
@@ -31,12 +30,13 @@ try {
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="KO">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OTTER OS</title>
     <link rel="stylesheet" href="./css/otter_delete.css">
+    <link rel="icon" href="./image/otter_face_end.png">
 </head>
 <body>
     <div class="container">
@@ -70,7 +70,7 @@ try {
                     foreach($result as $item) {
                     ?>  
 
-                    <div class="icon_item">
+                    <!-- <div class="icon_item"> -->
                         <div class="icon_item_card">
 
                             <div class="icon_item_title">
@@ -102,7 +102,7 @@ try {
                             </div>
 
                         </div>
-                    </div>
+                    <!-- </div> -->
 
                     <?php
                     }

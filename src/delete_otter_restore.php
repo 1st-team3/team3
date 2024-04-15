@@ -15,9 +15,10 @@ try {
         // 파라미터 획득
         $board_no = isset($_POST["board_no"]) ? $_POST["board_no"] : "";
         
+        // 파라미터 예외 처리
         $arr_err_param = [];
         if($board_no === ""){
-           $arr_err_param[] = "board_no";
+            $arr_err_param[] = "board_no";
         }
         if(count($arr_err_param) > 0) {
             throw new Exception("Parameter Error : ".implode(",", $arr_err_param));
@@ -34,27 +35,27 @@ try {
   
         // 복구 예외 처리
         if($result !== 1 ){
-          throw new Exception("There are no restored boards");
+            throw new Exception("복구할 파일이 없습니다.");
         }
   
         // commmit
         $conn->commit();
         header("Location: otter_delete.php");
         exit;
-      }
+    }
   
-  } catch (\Throwable $err) {
-      if(!empty($conn)) {
-          $conn->rollBack();
-      }
-      echo $err->getMessage();
-      exit;
-  } finally {
-      // PDO 파기
-      if(!empty($conn)) {
-          $conn = null;
-      }
-  }
+} catch (\Throwable $err) {
+    if(!empty($conn)) {
+        $conn->rollBack();
+    }
+    echo $err->getMessage();
+    exit;
+} finally {
+    // PDO 파기
+    if(!empty($conn)) {
+        $conn = null;
+    }
+}
 
 
 ?>

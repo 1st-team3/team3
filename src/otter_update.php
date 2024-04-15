@@ -166,12 +166,13 @@ finally {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="KO">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>OTTER OS</title>
     <link rel="stylesheet" href="./css/otter_update.css">
+    <link rel="icon" href="./image/otter_face_end.png">
 </head>
 <body>
     <div class="container">
@@ -267,7 +268,7 @@ finally {
                                 <input type="file" accept="img/*" name="file" id="file" onchange="readURL(this)">
                             </div>
                             <div class="insert-text">
-                                <img id="preview" />
+                                <img id="preview">
                                 <?php if (!empty($item["board_img"])){ ?>
                                 <img src="<?php echo $item["board_img"]; ?>" id="existing_image">
                                 <?php } ?>

@@ -23,10 +23,10 @@ try {
         $month = date("m", strtotime($created_at));
         $day = date("d", strtotime($created_at));
         
-        $back_btn_link = "./otter_list.php?year=".$year."&month=".$month."&date=".$day;
+        $list_btn_today = "./otter_list.php?year=".$year."&month=".$month."&date=".$day;
 
     } else { // 오늘 생성된 데이터가 없을 경우
-        $back_btn_link = "./otter_list.php";
+        $list_btn_today = "./otter_list.php";
     }
 } catch (\Throwable $err) {
     echo $err->getMessage();
@@ -52,8 +52,8 @@ try {
 <div class="container">
     <div class="side">
         <div class="icon_1"><a href="./otter_delete.php"></a></div>
-        <?php // if(isset($back_btn_link)): ?>
-            <div class="icon_2"><a href="<?php echo $back_btn_link; ?>"></a></div>
+        <?php // if(isset($list_btn_today)): ?>
+            <div class="icon_2"><a href="<?php echo $list_btn_today; ?>"></a></div>
         <?php // endif; ?>
     </div>
 </div>

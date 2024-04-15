@@ -44,18 +44,18 @@ try {
         exit;
     }
   
-  } catch (\Throwable $err) {
+} catch (\Throwable $err) {
     if(!empty($conn)) {
         $conn->rollBack();
     }
     echo $err->getMessage();
     exit;
-  } finally {
+} finally {
     // PDO 파기
     if(!empty($conn)) {
         $conn = null;
     }
-  }
+}
 
 
 ?>

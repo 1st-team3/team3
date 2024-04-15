@@ -29,20 +29,20 @@ try {
         $conn->commit();
         header("Location: otter_delete.php");
         exit;
-      }
+    }
   
-  } catch (\Throwable $err) {
-      if(!empty($conn)) {
-          $conn->rollBack();
-      }
-      echo $err->getMessage();
-      exit;
-  } finally {
-      // PDO 파기
-      if(!empty($conn)) {
-          $conn = null;
-      }
-  }
+} catch (\Throwable $err) {
+    if(!empty($conn)) {
+        $conn->rollBack();
+    }
+    echo $err->getMessage();
+    exit;
+} finally {
+    // PDO 파기
+    if(!empty($conn)) {
+        $conn = null;
+    }
+}
 
 
 ?>

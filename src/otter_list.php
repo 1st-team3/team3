@@ -13,22 +13,27 @@
             $year = isset($_GET['year']) ? $_GET['year'] : date('Y');
             // GET으로 넘겨 받은 month값이 있다면 넘겨 받은걸 month변수에 적용하고 없다면 현재 월
             $month = isset($_GET['month']) ? $_GET['month'] : date('m');
+
+
             $date = "$year-$month-01"; // 현재 날짜의 1일
             $time = strtotime($date); // 현재 날짜의 타임스탬프
             $start_week = date('w', $time); // 1. 시작 요일
             $total_day = date('t', $time); // 2. 현재 달의 총 날짜
             $total_week = ceil(($total_day + $start_week) / 7);  // 3. 현재 달의 총 주차 (현재 요일부터 요일수를 구한뒤 7로 나눔 ($start_week = 일 = 0 월 = 1 ... 토 = 6))
+
+
             // 현재 날짜 표시하기
             $now_year = date("Y"); // 현재 연도
-            $now_month = date("n"); // 현재 월
+            $now_month = date("m"); // 현재 월
             $now_day = date("d"); // 현재 일
             $is_now_month = ($year == $now_year && $month == $now_month); // 현재 년도와 달이 맞는지 확인
             $date = isset($_GET["date"]) ? $_GET["date"] : $date;
             $month = str_pad($month, 2, '0', STR_PAD_LEFT); // 한 자리 숫자를 왼쪽에 0을 추가하여 두 자리 숫자로 만듦
-            $date = str_pad($date, 2, '0', STR_PAD_LEFT); // 한 자리 숫자를 왼쪽에 0을 추가하여 두 자리 숫자로 만듦
-            $days = "$year-$month-$date";
+            // $date = str_pad($date, 2, '0', STR_PAD_LEFT); // 한 자리 숫자를 왼쪽에 0을 추가하여 두 자리 숫자로 만듦
+
             $start_date = "";
             $end_date = "";
+
             if(isset($_GET["date"])) {
                 $start_date = $year.$month.$date."000000";
                 $end_date = $year.$month.$date."235959";
@@ -56,33 +61,33 @@
                 ,"offset" => $offset
             ];
             $result = db_select_boards_title($conn, $arr_param);
-    }
-    if (REQUEST_METHOD === "POST") {
-    // GET으로 넘겨 받은 year값이 있다면 넘겨 받은걸 year변수에 적용하고 없다면 현재 년도
-    $post_year = isset($_POST['year']) ? $_POST['year'] : date('Y');
-    // GET으로 넘겨 받은 month값이 있다면 넘겨 받은걸 month변수에 적용하고 없다면 현재 월
-    $post_month = isset($_POST['month']) ? $_POST['month'] : date('m');
-    $post_date = isset($_POST['date']) ? $_POST['date'] : date('n');
-    $board_no = isset($_POST["board_no"]) ? $_POST["board_no"] : "";
-    $page = isset($_POST["page"]) ? $_POST["page"] : "";
-    $arr_err_param = [];
-    if($board_no === ""){
-        $arr_err_param[] = "board_no";
-    }
-    if($page === "") {
-    $arr_err_param[] = "page";
-    }
-    if(count($arr_err_param) > 0) {
-    throw new Exception("Parameter Error : ".implode(",", $arr_err_param));
-    }
-   $arr_param = [
-       "board_no" => $board_no
-   ];
-   $conn->beginTransaction();
-   $result = db_list_update_no($conn, $arr_param);
-   $conn->commit();
-   header("Location: otter_list.php?year=" . $post_year . "&month=" . $post_month . "&date=" . $post_date . "&page=" . $page . "#list" . $board_no);
-    }
+        }
+        if (REQUEST_METHOD === "POST") {
+        // GET으로 넘겨 받은 year값이 있다면 넘겨 받은걸 year변수에 적용하고 없다면 현재 년도
+        $post_year = isset($_POST['year']) ? $_POST['year'] : date('Y');
+        // GET으로 넘겨 받은 month값이 있다면 넘겨 받은걸 month변수에 적용하고 없다면 현재 월
+        $post_month = isset($_POST['month']) ? $_POST['month'] : date('m');
+        $post_date = isset($_POST['date']) ? $_POST['date'] : date('n');
+        $board_no = isset($_POST["board_no"]) ? $_POST["board_no"] : "";
+        $page = isset($_POST["page"]) ? $_POST["page"] : "";
+        $arr_err_param = [];
+        if($board_no === ""){
+            $arr_err_param[] = "board_no";
+        }
+        if($page === "") {
+        $arr_err_param[] = "page";
+        }
+        if(count($arr_err_param) > 0) {
+        throw new Exception("Parameter Error : ".implode(",", $arr_err_param));
+        }
+    $arr_param = [
+        "board_no" => $board_no
+    ];
+    $conn->beginTransaction();
+    $result = db_list_update_no($conn, $arr_param);
+    $conn->commit();
+    header("Location: otter_list.php?year=" . $post_year . "&month=" . $post_month . "&date=" . $post_date . "&page=" . $page . "#list" . $board_no);
+        }
 }   catch(\Throwable $e){
     echo $e ->getMessage();
     exit;
@@ -157,8 +162,7 @@
                                         <?php for ($k = 0; $k < 7; $k++){ ?>
                                             <td>
                                                 <!-- 시작 요일부터 마지막 날짜까지만 날짜를 보여주도록 -->
-                                                <?php if ( ($n > 1 || $k >= $start_week) && ($total_day >= $n) ){
-                                                    $button_date = date('Y-m-d', strtotime($year . '-' . $month . '-' . $n)); // 날짜를 YYYY-MM-DD 형식으로 변환
+                                                <?php if ( ($n > 1 || $k >= $start_week) && ($total_day >= $n) ){ // k의 값이 시작요일 (일 = 0 월 = 1 화 = 2 ... 토 = 6 ) 보다 클경우 n값을 넣고 아니면 공백출력
                                                     if ($is_now_month && $n == $now_day) { // GET으로 가져온 달이 다르면 (출력된 년도나 달이 다르면) false가 돼서 else로 넘어감
                                                         // 현재 날짜에 해당하는 경우
                                                         echo '<a href="./otter_list.php?year=' . $year . '&month=' . $month . '&date=' . $n . '" class="today">' . $n++ . '</a>';
@@ -166,9 +170,6 @@
                                                         // 다른 날짜에 해당하는 경우
                                                         echo '<a href="./otter_list.php?year=' . $year . '&month=' . $month . '&date=' . $n . '" class="day-button' . (($date == $n) ? ' selected' : '') . '">' . $n++ . '</a>';
                                                     }
-                                                    echo '<input type="hidden" name="year" value="' . $year . '">';
-                                                    echo '<input type="hidden" name="month" value="' . $month . '">';
-                                                    echo '<input type="hidden" name="date" value="' . $n . '">';
                                                 }?>
                                             </td>
                                         <?php }; ?>
@@ -197,11 +198,6 @@
                                 <a href="./otter_detail.php?board_no=<?php echo $item["board_no"]; ?>&page=<?php echo $page_num ; ?>" class="text_box <?php echo $item["board_chkbox"] === 1 ? "strikethrough" : ""; ?>" id="text_box_<?php echo $item["board_no"]; ?>">
                                     <?php echo $item["board_title"]; ?>
                                 </a>
-                                <?php
-                                    echo '<input type="hidden" name="year" value="' . $year . '">';
-                                    echo '<input type="hidden" name="month" value="' . $month . '">';
-                                    echo '<input type="hidden" name="date" value="' . $date . '">';
-                                ?>
                             </form>
                         </div>
                     <?php } ?>

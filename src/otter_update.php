@@ -2,33 +2,34 @@
 require_once( $_SERVER["DOCUMENT_ROOT"]."/config.php"); // 설정 파일 호출
 require_once(FILE_LIB_DB);
 
+
+// 달 이동 하는 쪽의 a태그에서 year month board_no page의 값을 get 으로 받아옴 
+$year = isset($_GET['year']) ? $_GET['year'] : date('Y');
+$month = isset($_GET['month']) ? $_GET['month'] : date('m');
+
+$date = "$year-$month-01"; // 현재 날짜의 1일
+$time = strtotime($date); // 현재 날짜의 타임스탬프
+$start_week = date('w', $time); // 1. 시작 요일
+$total_day = date('t', $time); // 2. 현재 달의 총 날짜
+$total_week = ceil(($total_day + $start_week) / 7);  // 3. 현재 달의 총 주차 (현재 요일부터 요일수를 구한뒤 7로 나눔 ($start_week = 일 = 0 월 = 1 ... 토 = 6))
+
+// 현재 날짜 표시하기
+$now_year = date("Y"); // 현재 연도
+$now_month = date("n"); // 현재 월
+$now_day = date("d"); // 현재 일
+$is_now_month = ($year == $now_year && $month == $now_month); // 현재 년도와 달이 맞는지 확인
+	
+
 try {
   // DB Connect
   $conn = my_db_conn(); // PDO 인스턴스 생성
-
+      
   if(REQUEST_METHOD === "GET") {
       
     // 게시글 데이터 조회
     // 파라미터
     $no = isset($_GET["board_no"]) ? $_GET["board_no"] : ""; // no 획득
     $page = isset($_GET["page"]) ? $_GET["page"] : ""; // page 획득
-
-    // GET으로 넘겨 받은 year값이 있다면 넘겨 받은걸 year변수에 적용하고 없다면 현재 년도
-    $year = isset($_GET['year']) ? $_GET['year'] : date('Y');
-    // GET으로 넘겨 받은 month값이 있다면 넘겨 받은걸 month변수에 적용하고 없다면 현재 월
-    $month = isset($_GET['month']) ? $_GET['month'] : date('m');  
-
-    $date = "$year-$month-01"; // 현재 날짜의 1일
-    $time = strtotime($date); 
-    $start_week = date('w', $time); // 1. 시작 요일 date('w') : (일 = 0 월 = 1 ... 토 = 6)
-    $total_day = date('t', $time); // 2. 현재 달의 총 날짜
-    $total_week = ceil(($total_day + $start_week) / 7);  // 3. 현재 달의 총 주차 (현재 요일부터 요일수를 구한뒤 7로 나눔 ($start_week = 일 = 0 월 = 1 ... 토 = 6)
-
-      // 현재 날짜 표시하기
-    $now_year = date("Y"); // 현재 연도
-    $now_month = date("n"); // 현재 월
-    $now_day = date("d"); // 현재 일
-    $is_now_month = ($year == $now_year && $month == $now_month); // 현재 년도와 달이 맞는지 확인
           
     // 파라미터 예외처리
     $arr_err_param = [];
@@ -66,11 +67,11 @@ try {
     $page = isset($_POST["page"]) ? $_POST["page"] : ""; // page 획득
     $title = isset($_POST["board_title"]) ? $_POST["board_title"] : ""; // title 획득
     $content = isset($_POST["board_content"]) ? $_POST["board_content"] : ""; // content 획득
-    $targetFilePath = null;
+    $targetFilePath = "";
 
     $img_file = "upload_img/";
       
-    if($_FILES["file"]["name"] !== null)  { 
+    if($_FILES["file"]["name"] !== "")  { 
       $imageFileType = strtolower(pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION));
       
       if ($imageFileType != "jpg" && $imageFileType != "jpeg" && $imageFileType != "png") {
@@ -140,7 +141,7 @@ try {
       
     // 상세 페이지 이동
     header("Location: otter_detail.php?board_no={$no}&page={$page}");
-          
+    exit;
   }
 }
 
@@ -231,7 +232,7 @@ finally {
                                     <?php for ($k = 0; $k < 7; $k++){ ?> 
                                         <td> 
                                             <!-- 시작 요일부터 마지막 날짜까지만 날짜를 보여주도록 -->
-                                            <?php if ( ($n > 1 || $k >= $start_week) && ($total_day >= $n) ){
+                                            <?php if ( ($n > 1 || $k >= $start_week) && ($total_day >= $n) ){ // ( 날짜가 1일이전 || 요일의 값(k = 월화수목...)이 그 달의 시작 요일보다 크거나 같을때 && 총 일수가 $n보다 크거나 같을때만 돌아감 
                                                 if ($is_now_month && $n == $now_day) { // GET으로 가져온 달이 다르면 (출력된 년도나 달이 다르면) false가 돼서 else로 넘어감
                                                     // 현재 날짜에 해당하는 경우
                                                     echo '<div class="today">' . $n++ . '</div>';
@@ -263,12 +264,12 @@ finally {
                                 <label for="file">
                                     <div class="btn-upload">이미지 파일</div>
                                 </label>
-                                <input type="file" accept="img/*" name="file" id="file" onchange="readURL(this)">
+                                <input type="file" accept="img/*" name="file" id="file" onchange="readURL(this)"> <!-- onchange : 요소값이 바뀔 때 실행 / this : 현재는 form 안의 모든 요소를 가져옴-->
                             </div>
                             <div class="insert-text">
                                 <img id="preview">
                                 <?php if (!empty($item["board_img"])){ ?>
-                                  <img src="<?php echo $item["board_img"]; ?>" id="existing_image">
+                                <img src="<?php echo $item["board_img"]; ?>" id="existing_image">
                                 <?php } ?>
                                 <textarea name="board_content" id="content" cols="30" rows="10" required placeholder="내용을 입력하세요"><?php echo $item["board_content"]; ?></textarea>
                             </div>

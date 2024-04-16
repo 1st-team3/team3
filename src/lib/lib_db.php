@@ -73,10 +73,10 @@ function db_insert_boards(&$conn, &$array_param) {
         ." ) "
     ;
 
-        $stmt = $conn->prepare($sql);
-        $stmt->execute($array_param);
+        $stmt = $conn->prepare($sql); //sql 문을 객체에 담고 그걸 $stmt에 담음
+        $stmt->execute($array_param); // $stmt 의 sql 문에 바인딩된 $array_param 의 매개변수들을 넣어서 실행함
 
-        return $stmt->rowCount();
+        return $stmt->rowCount(); // 실행된 쿼리문에서 영향을 받은 행을 숫자로 반환함
 }
 
 function db_select_boards_no(&$conn, &$array_param) {
@@ -121,7 +121,6 @@ function db_update_boards_no(&$conn, &$array_param) {
     if(isset($array_param["board_img"])) {
         $add_file_path = " ,board_img = :board_img ";
     }
-
 
     $sql = 
         " UPDATE boards"

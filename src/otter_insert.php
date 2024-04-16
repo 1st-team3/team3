@@ -1,42 +1,42 @@
 <?php 
 require_once( $_SERVER["DOCUMENT_ROOT"]."/config.php"); // 설정 파일 호출
 require_once(FILE_LIB_DB);
- 
+
+// 달 이동하는 부분하는 a 태그에서 year과 month 값을 가져오는데 빈 값일 경우 현재 연도와 달을 넣음
+$year = isset($_GET['year']) ? $_GET['year'] : date('Y');
+$month = isset($_GET['month']) ? $_GET['month'] : date('m');
+// 이 부분은 밑에 GET 처리 부분을 따로 만들어서 하는게 좋음
+
+
+$first_date = "$year-$month-01"; // 현재 달의 1일
+$time = strtotime($first_date); // 현재 달의 1일을 TIMESTAMP로 변환
+$start_week = date('w',$time); // date('w') 일 = 0 월 = 1 ... 토 = 6 / date('w', $time) : $year-$month-01를 타임스탬프로 바꾼 $time 을 기준으로 date('w')을 찾아서 $start_week에 담음
+$total_day = date('t',$time); // 2. 현재 달의 총 날짜
+$total_week = ceil(($total_day + $start_week) / 7);  // 3. 현재 달의 총 주차 (현재 요일부터 요일수를 구한뒤 7로 나눔 ($start_week = 일 = 0 월 = 1 ... 토 = 6))
+// 여기까지 GET처리
+
+// 현재 날짜 표시하기
+$now_year = date("Y"); // 현재 연도
+$now_month = date("m"); // 현재 월
+$now_day = date("d"); // 현재 일
+$is_now_month = ($year == $now_year && $month == $now_month); // 현재 년도와 달이 맞는지 확인하고 if문으로 달력에 현재 날짜를 표시
+// 여기는 get 과 post 둘다 사용 할 수 있게 이동
 
 // REQUEST_METHOD(요청방식)이 POST 일 경우 처리
+if (REQUEST_METHOD === "POST") {
 
-try {
-   // 현재 날짜 표시하기
-        $now_year = date("Y"); // 현재 연도
-        $now_month = date("n"); // 현재 월
-        $now_day = date("d"); // 현재 일
-
-    if (REQUEST_METHOD === "GET") {
-
-        // GET으로 넘겨 받은 year값이 있다면 넘겨 받은걸 year변수에 적용하고 없다면 현재 년도
-        $year = isset($_GET['year']) ? $_GET['year'] : date('Y');
-        // GET으로 넘겨 받은 month값이 있다면 넘겨 받은걸 month변수에 적용하고 없다면 현재 월
-        $month = isset($_GET['month']) ? $_GET['month'] : date('m');
-
-        $first_date = "$year-$month-01"; // 현재 날짜의 1일
-        $time = strtotime($first_date); // 현재 날짜의 타임스탬프
-        $start_week = date('w', $time); // 1. 시작 요일
-        $total_day = date('t', $time); // 2. 현재 달의 총 날짜
-        $total_week = ceil(($total_day + $start_week) / 7);  // 3. 현재 달의 총 주차 (현재 요일부터 요일수를 구한뒤 7로 나눔 ($start_week = 일 = 0 월 = 1 ... 토 = 6))
-     
-        $is_now_month = ($year == $now_year && $month == $now_month); // 현재 년도와 달이 맞는지 확인
-
-    }    
-    else if (REQUEST_METHOD === "POST") {
-        // title과 content 파라미터 획득
+    try {
+        
+        // 수정 된 제목과 내용 값을 POST로 업데이트하기위해 받음
         $title = isset($_POST["board_title"]) ? trim($_POST["board_title"]) : ""; // title 획득
         $content = isset($_POST["board_content"]) ? trim($_POST["board_content"]) : ""; // content 획득  
+        $targetFilePath = ""; // 빈 문자열 보단 null을 넣을 것
 
-        $targetFilePath = null;
         $img_file = "upload_img/"; // 서버 이미지 폴더 경로
 
         // 파라미터 에러 체크
         $arr_err_param = [];
+
         if($title === "") {
             $arr_err_param[] = "board_title";
         }
@@ -47,10 +47,9 @@ try {
             // 예외 처리
             throw new Exception("Parameter Error : ".implode(", ", $arr_err_param));
         }
-        
-        // 파일이 이미지인지 확인
+
         // strtolower(pathinfo() : 파일경로를 가져오는 내장함수
-        // $_FILES["file"]["name"] : 슈퍼 글로벌 변수 $_FILES에 있는 file모든정보를 가져오는 file 안에 name을 써서 이름만 가져옴
+        // $_FILES["file"]["name"] : 슈퍼 글로벌 변수 $_FILES에 있는 file모든정보 안에 name을 써서 이름만 가져옴
         //  PATHINFO_EXTENSION 파일의 확장자 명을 가져옴
         if(!empty($_FILES["file"]["name"]))  { 
             $imageFileType = strtolower(pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION));
@@ -64,17 +63,17 @@ try {
             $targetFilePath = $img_file . $_FILES["file"]["name"];
       
             // 이미지 파일을 디렉토리에 저장
+            // if 문에 !를 넣어서 else의 exception 처리도 같이 하게 바꿀수도 있음
             if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)) {
               // 파일 업로드 성공
-            }
-            
+            } 
             else {
               throw new Exception("Sorry, there was an error uploading your file.");
             }
-        }
+          }
 
-    
-        // DB Connect
+        
+        // DB 연결
         $conn = my_db_conn(); // PDO 인스턴스
 
         // Transaction 시작
@@ -86,6 +85,7 @@ try {
             "board_content" => $content,
             "board_img" => $targetFilePath
         ];
+        
         $result = db_insert_boards($conn, $arr_param);
 
         // 글 작성 예외 처리
@@ -99,23 +99,23 @@ try {
         //리스트 페이지로 이동
         header("Location: otter_list.php?year=$now_year&month=$now_month&date=$now_day"); 
         // 위의 입력 처리를 한 후에 list.php에서 추가된 데이터를 포함해서 새로 리스트를 만들고 사용자에게 출력해줌
-}
-}
-catch (\Throwable $e) {
-    if(!empty($conn)) {
-        $conn->rollBack();
     }
-    echo $e->getMessage();
-    exit;
-}
 
-finally {
-    if(!empty($conn)) {
-    $conn = null;
+    catch (\Throwable $e) {
+        if(!empty($conn)) {
+            $conn->rollBack();
+        }
+        echo $e->getMessage();
+        exit;
     }
+
+    finally {
+        if(!empty($conn)) {
+        $conn = null;
+        }
+    }
+
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -222,7 +222,7 @@ finally {
                                 <label for="file">
                                     <div class="btn-upload">이미지 파일</div>
                                 </label>
-                                <input type="file" accept="img/*" name="file" id="file" onchange="readURL(this)">
+                                <input type="file" accept="img/*" name="file" id="file" onchange="readURL(this)"> <!-- onchange : 요소값이 바뀔 때 실행 / this : 현재는 form 안의 모든 요소를 가져옴-->
                             </div>
                             <div class="insert-text">
                                 <img id="preview" />
@@ -242,6 +242,7 @@ finally {
 
 
 <script src="./js/img.js"></script>
+
 
 
 </html>
